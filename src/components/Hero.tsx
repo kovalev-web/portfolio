@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import GradientCanvas, { type Palette } from '../webgl/GradientCanvas';
+import { FRAG, FRAG_LIGHT } from '../webgl/gradient.glsl';
+import { useTheme } from '../hooks/useTheme';
 import { profile, heroMedia } from '../data/content';
 import type { ReactNode } from 'react';
 import './hero.css';
@@ -29,14 +31,16 @@ function MediaCard({ item, index }: { item: { src: string; alt: string }; index:
  * should read as that colour, slowly breathing, not as a rainbow gradient.
  */
 const PALETTE: Palette = ['#1c2739', '#27364e', '#31455f', '#3a5271'];
+const PALETTE_LIGHT: Palette = ['#c4b5a5', '#d6c8b8', '#e2d5c8', '#ede2d8'];
 
 export default function Hero() {
+  const { theme } = useTheme();
 
   return (
     <section className="hero">
       <div className="shell">
         <div className="hero-card">
-          <GradientCanvas palette={PALETTE} className="hero-canvas" speed={1.5} grain={0.012} />
+          <GradientCanvas palette={theme === 'dark' ? PALETTE : PALETTE_LIGHT} className="hero-canvas" speed={1.5} grain={0.012} frag={theme === 'dark' ? FRAG : FRAG_LIGHT} />
 
           <div className="hero-media">
             {heroMedia.map((item, i) => (

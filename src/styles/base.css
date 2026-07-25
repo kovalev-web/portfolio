@@ -47,6 +47,7 @@
   --glass: rgba(255, 255, 255, 0.5);
   --glass-line: rgba(209, 213, 219, 0.5);
   --shadow: 0 3px 20px -5px rgba(0, 0, 0, 0.15);
+  --hero-blue: #c4b5a5;
 }
 
 :root[data-theme='dark'] {

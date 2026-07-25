@@ -8,13 +8,14 @@ import Experience from './components/Experience';
 // import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import { ThemeProvider } from './hooks/useTheme';
 import { useReveal } from './hooks/useReveal';
 
 export default function App() {
   useReveal();
 
   return (
-    <>
+    <ThemeProvider>
       <Header />
       <main>
         <Hero />
@@ -25,6 +26,6 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
-    </>
+    </ThemeProvider>
   );
 }

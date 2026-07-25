@@ -5,6 +5,8 @@ export type Palette = [string, string, string, string];
 
 type Props = {
   palette: Palette;
+  /** Fragment shader source. */
+  frag?: string;
   /** Grain intensity, 0–0.1. */
   grain?: number;
   /** Animation speed multiplier. */
@@ -45,7 +47,7 @@ function compile(gl: WebGLRenderingContext, type: number, src: string) {
  * single fullscreen triangle. Pauses when scrolled out of view, when the tab
  * is hidden, and when the user asks for reduced motion.
  */
-export default function GradientCanvas({ palette, grain = 0.035, speed = 1, className }: Props) {
+export default function GradientCanvas({ palette, frag = FRAG, grain = 0.035, speed = 1, className }: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -64,7 +66,7 @@ export default function GradientCanvas({ palette, grain = 0.035, speed = 1, clas
     if (!gl) return;
 
     const vs = compile(gl, gl.VERTEX_SHADER, VERT);
-    const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
+    const fs = compile(gl, gl.FRAGMENT_SHADER, frag);
     if (!vs || !fs) return;
 
     const prog = gl.createProgram()!;
@@ -173,7 +175,7 @@ export default function GradientCanvas({ palette, grain = 0.035, speed = 1, clas
       gl.deleteShader(fs);
       gl.deleteBuffer(buf);
     };
-  }, [palette, grain, speed]);
+  }, [palette, frag, grain, speed]);
 
   return <canvas ref={ref} className={className} aria-hidden="true" />;
 }
