@@ -1,0 +1,252 @@
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 99;
+  pointer-events: none;
+}
+
+/* Fixed bar at the very top — sits behind the notch. The ::after fillet is
+   flush against its bottom edge so the transparent cutout always reads as a
+   solid page-background colour, never revealing scrolled content beneath. */
+.top-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--hero-top);
+  background: var(--bg);
+  pointer-events: none;
+}
+
+/* Right-side corner fillet — sits at the hero-card's top-right position so
+   the rounded corner always reads as round when the card scrolls. */
+.right-corner {
+  position: fixed;
+  top: var(--hero-top);
+  right: var(--page-pad);
+  width: 38px;
+  height: 38px;
+  background: radial-gradient(
+    circle 38px at 0% 100%,
+    transparent 38px,
+    var(--bg) 38.5px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.header-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.header-inner > * {
+  pointer-events: auto;
+}
+
+/* ---------- Logo notch ---------- */
+/* A block of page background that reads as a bite taken out of the hero
+   card, with the two pseudo-elements carving the concave corners. Always
+   visible — same as the reference whose SVG corners never disappear.
+
+   NB: no border on this element, ever. `box-sizing: border-box` makes the
+   padding box the reference for `top: 100%` / `left: 100%` below, so even a
+   1px transparent border knocks both fillets out of alignment and leaves
+   visible hairlines along the card edge. */
+.notch {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  height: var(--header-h);
+  padding-right: 30px;
+  background: var(--bg);
+  border-radius: 0 0 var(--radius) 0;
+}
+
+.notch::before,
+.notch::after {
+  content: '';
+  position: absolute;
+  background: radial-gradient(
+    circle var(--radius) at 100% 100%,
+    transparent var(--radius),
+    var(--bg) calc(var(--radius) + 0.5px)
+  );
+}
+
+  /* Fillet below the notch's left edge. Each is 1px larger on the side facing
+     the notch and offset back by the same 1px, so the gradient's antialiased
+     edge overlaps the solid fill instead of leaving a seam. The circle stays
+     pinned to the box's bottom-right corner, so the arc itself is unchanged. */
+  .notch::before {
+    left: 0;
+    top: calc(100% - 1px);
+    width: var(--radius);
+    height: calc(var(--radius) + 1px);
+  }
+
+  /* Fillet at the notch's right edge, creating the "bitten" shape */
+  .notch::after {
+    left: calc(100% - 1px);
+    top: var(--hero-top);
+    width: calc(var(--radius) + 1px);
+    height: var(--radius);
+    background: radial-gradient(
+      circle var(--radius) at 100% 100%,
+      transparent var(--radius),
+      var(--bg) calc(var(--radius) + 0.5px)
+    );
+  }
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  background: var(--surface);
+}
+
+.logo-text {
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+/* ---------- Nav pill ---------- */
+/* Glass so it stays legible over the hero card and over any section that
+   scrolls beneath it. */
+.nav-pill {
+  margin-top: 42px;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: 0 8px;
+  margin-right: 12px;
+  border-radius: 50px;
+  background: var(--glass);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px) saturate(200%);
+  -webkit-backdrop-filter: blur(10px) saturate(200%);
+  color: var(--ink);
+}
+
+.nav-pill a {
+  padding: 0 1.1em;
+  font-size: 1.05rem;
+  transition: opacity 0.2s var(--ease);
+}
+
+.pill-theme-toggle {
+  padding: 0 1.1em;
+  font-size: 1.05rem;
+  color: var(--ink);
+  transition: opacity 0.2s var(--ease);
+}
+
+.pill-theme-toggle:hover {
+  opacity: 0.6;
+}
+
+.nav-pill a:hover {
+  opacity: 0.6;
+}
+
+/* ---------- Mobile ---------- */
+.menu-toggle {
+  display: none;
+  height: 40px;
+  padding: 0 18px;
+  margin-left: 14px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 20px;
+}
+
+.mobile-sheet {
+  position: fixed;
+  inset: var(--header-h) var(--page-pad) auto;
+  display: none;
+  flex-direction: column;
+  gap: 0.2em;
+  padding: 1.6em 1.2em;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--radius) 0 var(--radius) var(--radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.mobile-sheet a {
+  padding: 0.35em 0;
+  font-size: 1.8rem;
+  border-bottom: 1px solid rgba(249, 248, 246, 0.35);
+}
+
+.mobile-theme-toggle {
+  padding: 0.35em 0;
+  font-size: 1.8rem;
+  text-align: left;
+  color: var(--accent-ink);
+  border-bottom: 1px solid rgba(249, 248, 246, 0.35);
+  transition: opacity 0.2s var(--ease);
+}
+
+.mobile-theme-toggle:hover {
+  opacity: 0.6;
+}
+
+@media (max-width: 860px) {
+  :root {
+    --header-h: 72px;
+  }
+
+  /* Full-width solid bar instead of a carved notch: at this width the card
+     is the full column, so there is nothing to carve into. Keeping the page
+     background opaque is what stops the logo from colliding with whatever
+     heading scrolls underneath it — the hero gets matching top padding so
+     the bar never covers the card. */
+  .notch {
+    flex: 1;
+    justify-content: space-between;
+    padding-right: 0;
+    border-radius: 0;
+  }
+
+  .notch::before,
+  .notch::after,
+  .right-corner {
+    display: none;
+  }
+
+  .logo-avatar {
+    width: 38px;
+    height: 38px;
+  }
+
+  .logo-text {
+    font-size: 1rem;
+  }
+
+  .nav-pill {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .mobile-sheet[data-open='true'] {
+    display: flex;
+  }
+}

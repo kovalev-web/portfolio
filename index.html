@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <title>Dmitrii Kovalev — Product Designer</title>
+    <meta
+      name="description"
+      content="Senior product designer with 9 years of experience building design systems, fintech CRMs and SaaS products."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.fraimye.com/" />
+    <meta property="og:title" content="Dmitrii Kovalev — Product Designer" />
+    <meta
+      property="og:description"
+      content="Design systems, fintech CRMs and SaaS products. 9 years of practice."
+    />
+
+    <!--
+      Display typeface. The reference uses Matter (commercial).
+      General Sans / Switzer from Fontshare are the closest free substitutes.
+      Swap to a self-hosted woff2 before production.
+    -->
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&f[]=jetbrains-mono@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- No-flash theme bootstrap: runs before first paint -->
+    <script>
+      (function () {
+        var t = localStorage.getItem('theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

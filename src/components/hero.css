@@ -1,0 +1,267 @@
+.hero {
+  padding-top: var(--hero-top);
+}
+
+/* ---------- Card ---------- */
+.hero-card {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  height: 92vh;
+  min-height: 620px;
+  max-height: 1000px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--hero-blue);
+}
+
+/* Sits behind everything in the card. The flat --hero-blue on .hero-card
+   stays as the fallback for the first frame and for no-WebGL. */
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* ---------- Product shot ---------- */
+/* 3 cards in a row, rightmost (card 1) is full height, others to its left. */
+.hero-media {
+  position: absolute;
+  bottom: 0;
+  right: 12.8%;
+  width: 75%;
+  height: 84%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: stretch;
+  z-index: 1;
+}
+
+.hero-media .hero-media-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px 30px 0 0;
+}
+
+.hero-media .hero-media-card:nth-child(1) {
+  flex: 0 0 auto;
+  z-index: 3;
+  box-shadow: -20px 0 60px rgba(0,0,0,0.35);
+}
+.hero-media .hero-media-card:nth-child(2) { flex: 1; z-index: 2; margin-right: clamp(-60px, -3vw, -15px); transform: translateY(20px); box-shadow: -15px 0 50px rgba(0,0,0,0.3); }
+.hero-media .hero-media-card:nth-child(3) { flex: 1; z-index: 1; margin-right: clamp(-60px, -3vw, -15px); transform: translateY(40px); }
+
+/* Cards 2/3: image fills assigned flex area, crops bottom excess */
+.hero-media .hero-media-card:nth-child(2) img,
+.hero-media .hero-media-card:nth-child(3) img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+/* Card 1: natural size, no cropping */
+.hero-media .hero-media-card:nth-child(1) img {
+  width: auto;
+  height: 100%;
+  display: block;
+}
+
+.hero-media-placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 12, 18, 0.55);
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+}
+
+.hero-media-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ---------- Copy notch ---------- */
+/* Mirrors the header notch: a page-background block carved out of the card's
+   bottom-left corner, with a concave fillet where the two meet. */
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  width: min(56%, 780px);
+  padding: 30px 30px 0 12px;
+  background: var(--bg);
+  border-radius: 0 var(--radius) 0 0;
+}
+
+/* Same 1px overlap trick as the header notch: the box extends a pixel back
+   into the solid block so the gradient's antialiased edge never leaves a
+   hairline. Keep `.hero-copy` border-free — a border would shift the padding
+   box and knock `left: 100%` out of alignment. */
+
+/* Top-left fillet — sits flush above hero-copy's top-left corner.
+   --hc-mirror-y: 1 = normal, -1 = mirror vertically */
+.hero-copy::before {
+  --hc-mirror-y: 1;
+  --hc-rotate: -90deg;
+
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: calc(100% - 1px);
+  width: var(--radius);
+  height: calc(var(--radius) + 1px);
+  background: radial-gradient(
+    circle var(--radius) at 100% 100%,
+    transparent var(--radius),
+    var(--bg) calc(var(--radius) + 0.5px)
+  );
+  transform: scaleY(var(--hc-mirror-y)) rotate(var(--hc-rotate));
+  transform-origin: center center;
+}
+
+.hero-copy::after {
+  content: '';
+  position: absolute;
+  left: calc(100% - 1px);
+  bottom: 0;
+  width: calc(var(--radius) + 1px);
+  height: var(--radius);
+  background: radial-gradient(
+    circle var(--radius) at 100% 0,
+    transparent var(--radius),
+    var(--bg) calc(var(--radius) + 0.5px)
+  );
+}
+
+.hero-title {
+  flex: 1;
+  font-size: clamp(1.9rem, 1.35rem + 1.9vw, 2.9rem);
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.scroll-cue {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 6px;
+  /* Explicit, not inherited — the arrow is drawn with currentColor */
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  /* Also `.reveal` — blur-in properties repeated so the shorthand keeps them */
+  transition: background-color 0.3s var(--ease), color 0.3s var(--ease),
+    opacity 0.8s var(--ease), filter 1s var(--ease), transform 0.5s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+
+.scroll-cue:hover {
+  background: var(--ink);
+  color: var(--bg);
+  transform: translateY(4px);
+  transition-delay: 0ms;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .hero-copy {
+    width: min(70%, 640px);
+  }
+
+  .hero-media {
+    bottom: 0;
+    right: 7.8%;
+    height: 65%;
+    width: 80%;
+  }
+}
+
+@media (max-width: 860px) {
+  /* The desktop composition (media absolutely overlapping a fixed-height
+     card, copy notched into one corner) only works because the card is much
+     taller than its content needs. On mobile that leaves either a stray
+     "bite" out of nothing or the media bleeding past the card — see
+     REFERENCE.md notes. Simpler and more robust: drop the overlap trick and
+     stack media above copy in normal flow, both full width. */
+  /* Header is an opaque full-width bar here, so the card starts below it
+     rather than being half-covered. */
+  .hero {
+    padding-top: calc(var(--header-h) + 10px);
+  }
+
+  .hero-card {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    min-height: 0;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  /* `relative`, not `static` — a static element would paint underneath the
+     absolutely positioned shader canvas. */
+  .hero-media {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  .hero-media .hero-media-card:nth-child(2),
+  .hero-media .hero-media-card:nth-child(3) {
+    display: none;
+  }
+
+  .hero-copy {
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  /* The corner fillet only makes sense when the copy block is carved out of
+     the card's own background — irrelevant once it's just stacked content. */
+  .hero-copy::before,
+  .hero-copy::after {
+    display: none;
+  }
+
+  .hero-title {
+    color: var(--accent-ink);
+  }
+
+  .scroll-cue {
+    color: var(--accent-ink);
+    border-color: var(--accent-ink);
+  }
+
+  .scroll-cue:hover {
+    background: var(--accent-ink);
+    color: var(--hero-blue);
+  }
+}
+
+@media (max-width: 620px) {
+  .hero-copy {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .scroll-cue {
+    margin-bottom: 0;
+  }
+}

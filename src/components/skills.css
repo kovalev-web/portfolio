@@ -1,0 +1,84 @@
+.skills {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(2rem, 6vw, 4rem);
+  padding: clamp(6rem, 12vw, 11rem) var(--page-pad);
+  overflow: hidden; /* rows are wider than the viewport by design */
+}
+
+.skill-rows {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1em;
+}
+
+.skill-row {
+  display: flex;
+  align-items: center;
+  font-size: var(--fs-huge);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+}
+
+/* Pointer users get the same reveal on hover, wherever the row sits */
+.skill-row:hover .skill-media {
+  width: 1.15em;
+}
+
+.skill-row:hover .skill-media-fill {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Dim the rest of the list so the hovered row carries the eye.
+   Scoped to .is-visible so it can't fight the blur-in mid-reveal. */
+.skill-rows:hover .skill-row.is-visible:not(:hover) {
+  opacity: 0.3;
+}
+
+/* Collapsed by default; IntersectionObserver adds .is-open */
+.skill-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0;
+  height: 0.72em;
+  margin: 0 0.16em;
+  border-radius: 0.22em;
+  overflow: hidden;
+  transition: width 0.55s var(--ease);
+}
+
+.skill-media.is-open {
+  width: 1.15em;
+}
+
+.skill-media-fill {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(140deg, #12d6c4, #2f6df6 60%, #5b53f5);
+  transform: scale(0.4);
+  opacity: 0;
+  transition: transform 0.55s var(--ease), opacity 0.4s var(--ease);
+}
+
+.skill-media.is-open .skill-media-fill {
+  transform: scale(1);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-media {
+    width: 1.15em;
+  }
+
+  .skill-media-fill {
+    transform: none;
+    opacity: 1;
+  }
+}

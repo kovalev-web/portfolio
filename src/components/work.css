@@ -1,0 +1,105 @@
+.work {
+  padding-top: clamp(5rem, 10vw, 9rem);
+}
+
+.work .kicker {
+  display: block;
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.work-list {
+  position: relative;
+}
+
+.work-row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 0.5em;
+  margin-bottom: 1.4em;
+  border-bottom: 1.5px solid var(--line);
+  /* Rows are also `.reveal`, and `transition` is a shorthand — the blur-in
+     properties have to be repeated here or they get dropped. */
+  transition: padding-left 0.35s var(--ease), border-bottom-color 0.35s var(--ease),
+    opacity 0.5s var(--ease), filter 1s var(--ease), transform 0.8s var(--ease);
+  /* No `--d` stagger here on purpose: a delay would also lag the hover. */
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Ccircle cx='25' cy='25' r='24' fill='%230a0a0b'/%3E%3Cpath d='M18 25h14m0 0-5-5m5 5-5 5' stroke='%23fff' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      25 25,
+    pointer;
+}
+
+/* Inverted arrow puck for dark theme — a black-filled cursor disappears */
+:root[data-theme='dark'] .work-row {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Ccircle cx='25' cy='25' r='24' fill='%23f9f8f6'/%3E%3Cpath d='M18 25h14m0 0-5-5m5 5-5 5' stroke='%230a0a0b' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      25 25,
+    pointer;
+}
+
+.work-row:hover {
+  padding-left: 0.5em;
+  border-bottom-color: var(--ink);
+}
+
+/* Everything except the active row recedes */
+.work-list[data-dim='true'] .work-row.is-visible:not([data-active='true']) {
+  opacity: 0.35;
+}
+
+.work-row .work-title {
+  transition: letter-spacing 0.35s var(--ease);
+}
+
+.work-row:hover .work-title {
+  letter-spacing: -0.035em;
+}
+
+.work-kicker {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.4em;
+}
+
+.work-title {
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+/* ---------- Cursor preview ---------- */
+.work-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+  opacity: 0;
+  scale: 0.92;
+  transition: opacity 0.35s var(--ease), scale 0.35s var(--ease);
+  background: linear-gradient(140deg, #2f6df6, #12d6c4 55%, #5b53f5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  z-index: 3;
+}
+
+.work-preview[data-on='true'] {
+  opacity: 1;
+  scale: 1;
+}
+
+/* The preview is a pointer affordance — pointless without a pointer. */
+@media (hover: none), (max-width: 860px) {
+  .work-preview {
+    display: none;
+  }
+
+  .work-row {
+    cursor: pointer;
+  }
+}

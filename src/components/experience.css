@@ -1,0 +1,236 @@
+.experience {
+  padding-top: clamp(5rem, 10vw, 9rem);
+}
+
+.experience .kicker {
+  display: block;
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+/* ---------- Row ---------- */
+.exp-item {
+  border-bottom: 1.5px solid var(--line);
+  /* Also `.reveal` — blur-in properties repeated so the shorthand keeps them */
+  transition: border-bottom-color 0.35s var(--ease), opacity 0.5s var(--ease),
+    filter 1s var(--ease), transform 0.8s var(--ease);
+}
+
+.exp-item[data-open='true'] {
+  border-bottom-color: var(--ink);
+}
+
+.exp-heading {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.exp-trigger {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  width: 100%;
+  padding: 1.4rem 0;
+  text-align: left;
+  transition: padding-left 0.35s var(--ease);
+}
+
+.exp-trigger:hover {
+  padding-left: 0.5em;
+}
+
+.exp-list:hover .exp-item:not(:hover) {
+  opacity: 0.45;
+}
+
+/* ---------- Logo ---------- */
+.exp-logo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  /* Constant light tile in both themes: these are brand marks drawn for a
+     white background, and several of them are dark-on-transparent. */
+  background: #f9f8f6;
+}
+
+/* Initials sit underneath the <img>; if the file 404s the image hides and
+   this shows through. */
+.exp-logo::before {
+  content: attr(data-initials);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: rgba(10, 10, 11, 0.5);
+}
+
+.exp-logo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 7px;
+  background: #f9f8f6;
+}
+
+/* ---------- Text ---------- */
+.exp-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.exp-company {
+  font-size: clamp(1.15rem, 0.95rem + 0.7vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+.exp-role {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.exp-period {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------- Plus / minus ---------- */
+.exp-toggle {
+  position: relative;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border: 1.5px solid var(--line);
+  border-radius: 50%;
+  transition: background-color 0.35s var(--ease), border-color 0.35s var(--ease),
+    transform 0.45s var(--ease);
+}
+
+.exp-toggle span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 13px;
+  height: 1.5px;
+  background: var(--ink);
+  transform: translate(-50%, -50%);
+  transition: transform 0.45s var(--ease), background-color 0.35s var(--ease);
+}
+
+/* The vertical bar collapses into the horizontal one — plus becomes minus */
+.exp-toggle span:last-child {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.exp-item[data-open='true'] .exp-toggle {
+  background: var(--ink);
+  border-color: var(--ink);
+  transform: rotate(180deg);
+}
+
+.exp-item[data-open='true'] .exp-toggle span {
+  background: var(--bg);
+}
+
+.exp-item[data-open='true'] .exp-toggle span:last-child {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.exp-trigger:hover .exp-toggle {
+  border-color: var(--ink);
+}
+
+/* ---------- Panel ---------- */
+/* 0fr → 1fr animates to the content's natural height without measuring it. */
+.exp-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s var(--ease), opacity 0.35s var(--ease);
+  opacity: 0;
+}
+
+.exp-item[data-open='true'] .exp-panel {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.exp-panel-inner {
+  overflow: hidden;
+}
+
+.exp-summary {
+  max-width: 68ch;
+  margin-bottom: 0.9rem;
+  padding-left: calc(46px + 1.1rem);
+  font-size: 1rem;
+  color: var(--ink-soft);
+}
+
+.exp-bullets {
+  max-width: 68ch;
+  padding-left: calc(46px + 1.1rem);
+  padding-bottom: 1.8rem;
+  list-style: none;
+}
+
+.exp-bullets li {
+  position: relative;
+  padding-left: 1.1em;
+  margin-bottom: 0.5em;
+  font-size: 1rem;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.exp-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ink);
+  opacity: 0.35;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+  .exp-trigger {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    padding: 1.1rem 0;
+  }
+
+  .exp-period {
+    order: 3;
+    width: 100%;
+    padding-left: calc(46px + 0.8rem);
+  }
+
+  .exp-summary,
+  .exp-bullets {
+    padding-left: 0;
+  }
+}
+
+@media (hover: none) {
+  .exp-list:hover .exp-item:not(:hover) {
+    opacity: 1;
+  }
+}
