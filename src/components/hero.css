@@ -43,6 +43,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 30px 30px 0 0;
+  will-change: transform;
 }
 
 .hero-media .hero-media-card:nth-child(1) {
@@ -59,14 +60,6 @@
 .hero-media .hero-media-card:nth-child(2) { flex: 1; z-index: 2; margin-right: clamp(-60px, -3vw, -15px); transform: translateY(20px); box-shadow: -15px 0 50px rgba(0,0,0,0.3); }
 .hero-media .hero-media-card:nth-child(3) { flex: 1; z-index: 1; margin-right: clamp(-60px, -3vw, -15px); transform: translateY(40px); }
 
-/* ---------- Rotating shot layers ----------
-   Each card can hold two shots at once — the project that's leaving and the
-   one arriving — stacked with `position: absolute` and swapped with a
-   vertical "push": the current shot slides down and exits through the
-   card's own `overflow: hidden` edge while the next one slides down into
-   place from above, at the same rate, so the two never visibly overlap.
-   Hero.tsx drives it by toggling `.is-shifting`; without it, either layer
-   sits at its own parked position (0% resting, ±100% waiting its turn). */
 .hero-shot {
   position: absolute;
   top: 0;
@@ -76,11 +69,17 @@
   transition: transform 900ms var(--ease);
 }
 
-.hero-shot-out { transform: translateY(0); }
-.hero-shot-out.is-shifting { transform: translateY(100%); }
+/* Forward (next): outgoing slides down, incoming slides in from top */
+[data-dir="next"] .hero-shot-out { transform: translateY(0); }
+[data-dir="next"] .hero-shot-out.is-shifting { transform: translateY(100%); }
+[data-dir="next"] .hero-shot-in { transform: translateY(-100%); }
+[data-dir="next"] .hero-shot-in.is-shifting { transform: translateY(0); }
 
-.hero-shot-in { transform: translateY(-100%); }
-.hero-shot-in.is-shifting { transform: translateY(0); }
+/* Reverse (prev): outgoing slides up, incoming slides in from bottom */
+[data-dir="prev"] .hero-shot-out { transform: translateY(0); }
+[data-dir="prev"] .hero-shot-out.is-shifting { transform: translateY(-100%); }
+[data-dir="prev"] .hero-shot-in { transform: translateY(100%); }
+[data-dir="prev"] .hero-shot-in.is-shifting { transform: translateY(0); }
 
 /* Slight stagger per card so the three shots don't move in lockstep */
 .hero-media .hero-media-card:nth-child(2) .hero-shot { transition-delay: 70ms; }
@@ -97,10 +96,12 @@
   object-position: top;
 }
 
-/* Card 1: natural size, no cropping */
+/* Card 1: fills the card, crops excess from the right */
 .hero-media .hero-media-card:nth-child(1) .hero-shot {
-  width: auto;
+  width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: left top;
 }
 
 .hero-shot-placeholder {
@@ -306,11 +307,7 @@
     position: relative;
     right: auto;
     bottom: auto;
-    align-self: flex-start;
-    /* Full copy width, so the shot's left edge lines up with the headline.
-       Width-driven, so the image scales proportionally instead of being
-       cropped. The vh term keeps it inside the card on short viewports — it
-       shrinks from the right, which preserves that alignment. */
+    align-self: center;
     width: min(100%, 46vh);
     height: auto;
   }

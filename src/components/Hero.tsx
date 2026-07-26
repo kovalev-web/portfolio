@@ -66,13 +66,18 @@ export default function Hero() {
   const shots = heroProjects[settled];
   const incomingShots = incoming !== null ? heroProjects[incoming] : null;
 
+  // Shortest-path direction: forward 1 step = next, anything else = prev
+  const slideDir = incoming !== null
+    ? ((incoming - settled + heroProjects.length) % heroProjects.length) === 1 ? 'next' : 'prev'
+    : 'next';
+
   return (
     <section className="hero">
       <div className="shell">
         <div className="hero-card">
           <GradientCanvas palette={theme === 'dark' ? SURFACE_PALETTE : SURFACE_PALETTE_LIGHT} className="hero-canvas" speed={1.5} grain={0.012} frag={theme === 'dark' ? FRAG : FRAG_LIGHT} />
 
-          <div className="hero-media" {...hoverProps}>
+          <div className="hero-media" data-dir={slideDir} {...hoverProps}>
             {shots.map((shot, i) => (
               <div className="hero-media-card" key={i}>
                 {/* Both layers need an explicit, distinctly-namespaced key —

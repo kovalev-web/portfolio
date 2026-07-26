@@ -78,19 +78,19 @@ export const projects = [
  */
 export const heroProjects: { src: string; alt: string }[][] = [
   [
-    { src: '/media/screela%201.png', alt: `${projects[0].title} — main view` },
-    { src: '/media/screela%201.png', alt: `${projects[0].title} — detail` },
-    { src: '/media/screela%201.png', alt: `${projects[0].title} — detail` },
+    { src: '/media/project-1/1.png', alt: `${projects[0].title} — main view` },
+    { src: '/media/project-1/2.png', alt: `${projects[0].title} — detail` },
+    { src: '/media/project-1/3.png', alt: `${projects[0].title} — detail` },
   ],
   [
-    { src: '/media/screela%201.png', alt: `${projects[1].title} — main view` },
-    { src: '/media/screela%201.png', alt: `${projects[1].title} — detail` },
-    { src: '/media/screela%201.png', alt: `${projects[1].title} — detail` },
+    { src: '/media/project-2/1.png', alt: `${projects[1].title} — main view` },
+    { src: '/media/project-2/2.png', alt: `${projects[1].title} — detail` },
+    { src: '/media/project-2/3.png', alt: `${projects[1].title} — detail` },
   ],
   [
-    { src: '/media/screela%201.png', alt: `${projects[2].title} — main view` },
-    { src: '/media/screela%201.png', alt: `${projects[2].title} — detail` },
-    { src: '/media/screela%201.png', alt: `${projects[2].title} — detail` },
+    { src: '/media/project-3/1.png', alt: `${projects[2].title} — main view` },
+    { src: '/media/project-3/2.png', alt: `${projects[2].title} — detail` },
+    { src: '/media/project-3/3.png', alt: `${projects[2].title} — detail` },
   ],
 ];
 
