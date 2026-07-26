@@ -63,8 +63,8 @@
    this shows through. */
 .exp-logo::before {
   content: attr(data-initials);
-  font-family: var(--mono);
-  font-size: 0.72rem;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
   letter-spacing: 0.04em;
   color: rgba(10, 10, 11, 0.5);
 }
@@ -89,21 +89,21 @@
 }
 
 .exp-company {
-  font-size: clamp(1.15rem, 0.95rem + 0.7vw, 1.6rem);
+  font-size: var(--fs-lg);
   font-weight: 500;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
   line-height: 1.15;
 }
 
 .exp-role {
-  font-size: 0.92rem;
+  font-size: var(--fs-sm);
   color: var(--ink-soft);
 }
 
 .exp-period {
   flex-shrink: 0;
-  font-family: var(--mono);
-  font-size: 0.72rem;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-soft);

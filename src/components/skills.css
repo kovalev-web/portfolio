@@ -17,10 +17,10 @@
 .skill-row {
   display: flex;
   align-items: center;
-  font-size: var(--fs-huge);
+  font-size: var(--fs-xl);
   font-weight: 600;
   line-height: 1.1;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
   white-space: nowrap;
 }
 

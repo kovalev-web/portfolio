@@ -27,7 +27,7 @@ function Shot({ shot, className }: { shot: { src: string; alt: string }; classNa
 
 export default function Hero() {
   const { theme } = useTheme();
-  const { index, hoverProps } = useCarousel(heroProjects.length, ROTATE_MS);
+  const { index, go, hoverProps } = useCarousel(heroProjects.length, ROTATE_MS);
 
   // `settled` is the project actually painted at rest. It trails `index` by
   // one transition — that's what keeps the outgoing shot on screen for the
@@ -92,6 +92,18 @@ export default function Hero() {
                   className={incomingShots ? `hero-shot hero-shot-in${armed ? ' is-shifting' : ''}` : 'hero-shot'}
                 />
               </div>
+            ))}
+          </div>
+          <div className="hero-dots" role="tablist" aria-label="Project carousel">
+            {heroProjects.map((_, i) => (
+              <button
+                key={i}
+                role="tab"
+                className={`hero-dot${i === (incoming ?? settled) ? ' is-active' : ''}`}
+                onClick={() => go(i)}
+                aria-label={`Show project ${i + 1}`}
+                aria-selected={i === (incoming ?? settled)}
+              />
             ))}
           </div>
 

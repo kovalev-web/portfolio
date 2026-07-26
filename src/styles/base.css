@@ -1,7 +1,18 @@
 /* ============================================================
+   Registered custom properties (enable smooth transitions)
+   ============================================================ */
+@property --bg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #f2f1ee;
+}
+
+/* ============================================================
    Design tokens
    ============================================================ */
 :root {
+  /* Animate --bg on every element that uses it (fixes corner-fillet blink) */
+  transition: --bg var(--dur) var(--ease);
   /* Layout */
   --page-max: 1800px;
   --page-pad: 40px;
@@ -15,15 +26,19 @@
   --hero-top: 30px;
 
   /* Type */
-  --font: 'General Sans', 'Inter', -apple-system, system-ui, sans-serif;
-  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', menlo, monospace;
+  --font: 'Mona Sans', 'Inter', -apple-system, system-ui, sans-serif;
 
-  /* Fluid type scale */
-  --fs-display: clamp(2.35rem, 1.9rem + 2.2vw, 4rem);
-  --fs-huge: clamp(2.5rem, 1rem + 7vw, 7rem);
+  /* Type scale */
+  --fs-xs: 0.72rem;
+  --fs-sm: 0.925rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.15rem;
   --fs-xl: clamp(2rem, 1rem + 4.5vw, 6rem);
+  --fs-display: clamp(2.35rem, 1.9rem + 2.2vw, 4rem);
   --fs-lead: clamp(1.05rem, 0.95rem + 0.5vw, 1.5rem);
   --fs-kicker: 0.8rem;
+  /* Parked — was used by the disabled Skills section */
+  /* --fs-huge: clamp(2.5rem, 1rem + 7vw, 7rem); */
 
   /* Motion */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -88,7 +103,7 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
+  transition: color var(--dur) var(--ease);
 }
 
 a {
@@ -159,10 +174,10 @@ canvas {
 
 /* Section kicker — the small uppercase label above each block */
 .kicker {
-  font-family: var(--mono);
-  font-size: var(--fs-kicker);
-  font-weight: 400;
-  letter-spacing: 0.14em;
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-soft);
 }

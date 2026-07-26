@@ -65,7 +65,7 @@
   display: flex;
   align-items: center;
   height: var(--header-h);
-  padding-right: 30px;
+  padding: 18px 20px 0 0;
   background: var(--bg);
   border-radius: 0 0 var(--radius) 0;
 }
@@ -109,6 +109,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
+  padding-left: 12px;
 }
 
 .logo-avatar {
@@ -121,7 +122,7 @@
 }
 
 .logo-text {
-  font-size: 1.15rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.015em;
@@ -147,7 +148,7 @@
 
 .nav-pill a {
   padding: 0 1.1em;
-  font-size: 1.05rem;
+  font-size: var(--fs-sm);
   transition: opacity 0.2s var(--ease);
 }
 
@@ -161,7 +162,7 @@
   height: 40px;
   padding: 0 18px;
   margin-left: 14px;
-  font-size: 0.95rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   border: none;
   border-radius: 20px;
@@ -228,7 +229,7 @@
   }
 
   .logo-text {
-    font-size: 1rem;
+    font-size: var(--fs-sm);
   }
 
   .nav-pill {
