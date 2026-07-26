@@ -49,34 +49,71 @@
   flex: 0 0 auto;
   z-index: 3;
   box-shadow: -20px 0 60px rgba(0,0,0,0.35);
+  /* Card 1's shot is `position: absolute` (see `.hero-shot` below) to make
+     room for the two-layer slide, so it can no longer size this box the way
+     an ordinary in-flow image would. An explicit ratio takes over that job —
+     it also drives the mobile aspect-ratio below, so real assets that aren't
+     this exact shape should update it here. */
+  aspect-ratio: 1306 / 1384;
 }
 .hero-media .hero-media-card:nth-child(2) { flex: 1; z-index: 2; margin-right: clamp(-60px, -3vw, -15px); transform: translateY(20px); box-shadow: -15px 0 50px rgba(0,0,0,0.3); }
 .hero-media .hero-media-card:nth-child(3) { flex: 1; z-index: 1; margin-right: clamp(-60px, -3vw, -15px); transform: translateY(40px); }
 
-/* Cards 2/3: image fills assigned flex area, crops bottom excess */
-.hero-media .hero-media-card:nth-child(2) img,
-.hero-media .hero-media-card:nth-child(3) img {
+/* ---------- Rotating shot layers ----------
+   Each card can hold two shots at once — the project that's leaving and the
+   one arriving — stacked with `position: absolute` and swapped with a
+   vertical "push": the current shot slides down and exits through the
+   card's own `overflow: hidden` edge while the next one slides down into
+   place from above, at the same rate, so the two never visibly overlap.
+   Hero.tsx drives it by toggling `.is-shifting`; without it, either layer
+   sits at its own parked position (0% resting, ±100% waiting its turn). */
+.hero-shot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  transform: translateY(0);
+  transition: transform 900ms var(--ease);
+}
+
+.hero-shot-out { transform: translateY(0); }
+.hero-shot-out.is-shifting { transform: translateY(100%); }
+
+.hero-shot-in { transform: translateY(-100%); }
+.hero-shot-in.is-shifting { transform: translateY(0); }
+
+/* Slight stagger per card so the three shots don't move in lockstep */
+.hero-media .hero-media-card:nth-child(2) .hero-shot { transition-delay: 70ms; }
+.hero-media .hero-media-card:nth-child(3) .hero-shot { transition-delay: 140ms; }
+
+/* Cards 2/3: shot fills the assigned flex area, crops bottom excess */
+.hero-media .hero-media-card:nth-child(2) .hero-shot,
+.hero-media .hero-media-card:nth-child(3) .hero-shot {
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top;
-  display: block;
 }
 
 /* Card 1: natural size, no cropping */
-.hero-media .hero-media-card:nth-child(1) img {
+.hero-media .hero-media-card:nth-child(1) .hero-shot {
   width: auto;
   height: 100%;
-  display: block;
 }
 
-.hero-media-placeholder {
+.hero-shot-placeholder {
   display: grid;
   place-items: center;
-  width: 100%;
-  height: 100%;
   background: rgba(10, 12, 18, 0.55);
   border: 1px dashed rgba(255, 255, 255, 0.18);
+}
+
+/* The placeholder has no intrinsic size to drive card 1's auto width —
+   force it to fill like the other two cards do. */
+.hero-media .hero-media-card:nth-child(1) .hero-shot-placeholder {
+  width: 100%;
 }
 
 .hero-media-label {
@@ -176,48 +213,67 @@
 }
 
 /* ---------- Responsive ---------- */
+
+/* Tablet — iPad landscape and smaller (860–1100px) */
 @media (max-width: 1100px) {
+  .hero-card {
+    height: 70vh;
+    min-height: 480px;
+    max-height: 700px;
+  }
+
   .hero-copy {
     width: min(70%, 640px);
   }
 
   .hero-media {
-    bottom: 0;
+    height: 82%;
+    width: 82%;
     right: 7.8%;
-    height: 65%;
-    width: 80%;
   }
 }
 
 @media (max-width: 860px) {
-  /* The desktop composition (media absolutely overlapping a fixed-height
-     card, copy notched into one corner) only works because the card is much
-     taller than its content needs. On mobile that leaves either a stray
-     "bite" out of nothing or the media bleeding past the card — see
-     REFERENCE.md notes. Simpler and more robust: drop the overlap trick and
-     stack media above copy in normal flow, both full width. */
+  /* Same card composition as desktop, proportionally scaled for mobile. */
   /* Header is an opaque full-width bar here, so the card starts below it
      rather than being half-covered. */
   .hero {
     padding-top: calc(var(--header-h) + 10px);
   }
 
+  /* One shot instead of the overlapping trio. The desktop composition can't
+     survive here: cards 2 and 3 get squeezed to zero width by the negative
+     margins, while card 1 keeps its height-driven natural width and spills
+     past the card edge. So the card becomes a column — copy on top, a single
+     width-driven shot sitting on the bottom edge. */
   .hero-card {
     flex-direction: column;
+    justify-content: flex-start;
     align-items: stretch;
+    /* Height follows the content instead of the viewport: a fixed 80vh left a
+       dead band of gradient between the copy and the shot. */
+    gap: clamp(1.75rem, 7vw, 3rem);
     height: auto;
     min-height: 0;
-    padding: 16px;
-    gap: 16px;
+    max-height: none;
+    padding: clamp(1.5rem, 5vw, 2rem) clamp(1.25rem, 4vw, 1.75rem) 0;
   }
 
-  /* `relative`, not `static` — a static element would paint underneath the
-     absolutely positioned shader canvas. */
   .hero-media {
     position: relative;
-    inset: auto;
-    width: 100%;
-    aspect-ratio: 4 / 3;
+    right: auto;
+    bottom: auto;
+    align-self: flex-start;
+    /* Full copy width, so the shot's left edge lines up with the headline.
+       Width-driven, so the image scales proportionally instead of being
+       cropped. The vh term keeps it inside the card on short viewports — it
+       shrinks from the right, which preserves that alignment. */
+    width: min(100%, 46vh);
+    height: auto;
+  }
+
+  .hero-media .hero-media-card {
+    border-radius: 18px 18px 0 0;
   }
 
   .hero-media .hero-media-card:nth-child(2),
@@ -225,7 +281,25 @@
     display: none;
   }
 
+  .hero-media .hero-media-card:nth-child(1) {
+    flex: 1;
+    transform: none;
+    box-shadow: 0 -18px 50px rgba(0, 0, 0, 0.32);
+  }
+
+  /* Fills the card (sized by the aspect-ratio set on nth-child(1) above)
+     instead of the old width:100%/height:auto — the shot is absolutely
+     positioned now, so it can't size the box itself the way an in-flow img
+     did. */
+  .hero-media .hero-media-card:nth-child(1) .hero-shot {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
   .hero-copy {
+    order: -1;
     width: 100%;
     padding: 0;
     background: transparent;
@@ -239,19 +313,6 @@
     display: none;
   }
 
-  .hero-title {
-    color: var(--accent-ink);
-  }
-
-  .scroll-cue {
-    color: var(--accent-ink);
-    border-color: var(--accent-ink);
-  }
-
-  .scroll-cue:hover {
-    background: var(--accent-ink);
-    color: var(--hero-blue);
-  }
 }
 
 @media (max-width: 620px) {

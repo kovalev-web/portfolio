@@ -1,50 +1,97 @@
-import { useState } from 'react';
-import GradientCanvas, { type Palette } from '../webgl/GradientCanvas';
+import { useEffect, useState } from 'react';
+import GradientCanvas, { SURFACE_PALETTE, SURFACE_PALETTE_LIGHT } from '../webgl/GradientCanvas';
 import { FRAG, FRAG_LIGHT } from '../webgl/gradient.glsl';
 import { useTheme } from '../hooks/useTheme';
-import { profile, heroMedia } from '../data/content';
+import { useCarousel } from '../hooks/useCarousel';
+import { profile, heroProjects } from '../data/content';
 import type { ReactNode } from 'react';
 import './hero.css';
 
-function MediaCard({ item, index }: { item: { src: string; alt: string }; index: number }): ReactNode {
+/** Must match the transform transition duration in hero.css. */
+const TRANSITION_MS = 900;
+const ROTATE_MS = 4500;
+
+function Shot({ shot, className }: { shot: { src: string; alt: string }; className: string }): ReactNode {
   const [ok, setOk] = useState(true);
 
-  if (!item.src || !ok) {
+  if (!shot.src || !ok) {
     return (
-      <div className="hero-media-card" style={{ '--i': index } as React.CSSProperties}>
-        <div className="hero-media-placeholder">
-          <span className="hero-media-label">{item.alt || `Shot ${index + 1}`}</span>
-        </div>
+      <div className={`${className} hero-shot-placeholder`}>
+        <span className="hero-media-label">{shot.alt || 'Shot'}</span>
       </div>
     );
   }
 
-  return (
-    <div className="hero-media-card" style={{ '--i': index } as React.CSSProperties}>
-      <img src={item.src} alt={item.alt} onError={() => setOk(false)} />
-    </div>
-  );
+  return <img className={className} src={shot.src} alt={shot.alt} onError={() => setOk(false)} />;
 }
-
-/**
- * Four tones of #27364E. Kept inside one colour family on purpose — the card
- * should read as that colour, slowly breathing, not as a rainbow gradient.
- */
-const PALETTE: Palette = ['#1c2739', '#27364e', '#31455f', '#3a5271'];
-const PALETTE_LIGHT: Palette = ['#c4b5a5', '#d6c8b8', '#e2d5c8', '#ede2d8'];
 
 export default function Hero() {
   const { theme } = useTheme();
+  const { index, hoverProps } = useCarousel(heroProjects.length, ROTATE_MS);
+
+  // `settled` is the project actually painted at rest. It trails `index` by
+  // one transition — that's what keeps the outgoing shot on screen for the
+  // full slide instead of it popping away the instant the carousel advances.
+  const [settled, setSettled] = useState(index);
+  const [incoming, setIncoming] = useState<number | null>(null);
+  const [armed, setArmed] = useState(false);
+
+  useEffect(() => {
+    if (index === settled) return;
+
+    setIncoming(index);
+    setArmed(false);
+
+    // Two rAFs, not one: the browser needs a committed paint of the "parked"
+    // start position before `.is-shifting` lands, or the transition has
+    // nothing to animate from and the shot just snaps to its end state.
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setArmed(true));
+    });
+
+    const t = window.setTimeout(() => {
+      setSettled(index);
+      setIncoming(null);
+      setArmed(false);
+    }, TRANSITION_MS);
+
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      window.clearTimeout(t);
+    };
+  }, [index, settled]);
+
+  const shots = heroProjects[settled];
+  const incomingShots = incoming !== null ? heroProjects[incoming] : null;
 
   return (
     <section className="hero">
       <div className="shell">
         <div className="hero-card">
-          <GradientCanvas palette={theme === 'dark' ? PALETTE : PALETTE_LIGHT} className="hero-canvas" speed={1.5} grain={0.012} frag={theme === 'dark' ? FRAG : FRAG_LIGHT} />
+          <GradientCanvas palette={theme === 'dark' ? SURFACE_PALETTE : SURFACE_PALETTE_LIGHT} className="hero-canvas" speed={1.5} grain={0.012} frag={theme === 'dark' ? FRAG : FRAG_LIGHT} />
 
-          <div className="hero-media">
-            {heroMedia.map((item, i) => (
-              <MediaCard key={i} item={item} index={i} />
+          <div className="hero-media" {...hoverProps}>
+            {shots.map((shot, i) => (
+              <div className="hero-media-card" key={i}>
+                {/* Both layers need an explicit, distinctly-namespaced key —
+                    React only reconciles a mix of keyed and unkeyed siblings
+                    by position, which briefly mismatched instances here and
+                    left a shot stuck off-screen after the slide finished. */}
+                {incomingShots && (
+                  <Shot
+                    key={`out-${settled}`}
+                    shot={shot}
+                    className={`hero-shot hero-shot-out${armed ? ' is-shifting' : ''}`}
+                  />
+                )}
+                <Shot
+                  key={`in-${incoming ?? settled}`}
+                  shot={(incomingShots ?? shots)[i]}
+                  className={incomingShots ? `hero-shot hero-shot-in${armed ? ' is-shifting' : ''}` : 'hero-shot'}
+                />
+              </div>
             ))}
           </div>
 

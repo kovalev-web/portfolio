@@ -3,6 +3,15 @@ import { VERT, FRAG } from './gradient.glsl';
 
 export type Palette = [string, string, string, string];
 
+/**
+ * The hero card's surface, one variant per theme. Kept inside one colour
+ * family on purpose — the card should read as that colour slowly breathing,
+ * not as a rainbow. Shared rather than per-component so the contact card
+ * presents the same surface instead of a second, unrelated gradient.
+ */
+export const SURFACE_PALETTE: Palette = ['#1c2739', '#27364e', '#31455f', '#3a5271'];
+export const SURFACE_PALETTE_LIGHT: Palette = ['#c4b5a5', '#d6c8b8', '#e2d5c8', '#ede2d8'];
+
 type Props = {
   palette: Palette;
   /** Fragment shader source. */
@@ -41,11 +50,37 @@ function compile(gl: WebGLRenderingContext, type: number, src: string) {
 }
 
 /**
+ * One-shot check for "don't run a fullscreen shader on this device". Every
+ * branch is a synchronous property read, so the check itself costs nothing
+ * worth measuring.
+ *
+ * Evaluated once at module load rather than per render: a device does not
+ * grow cores mid-session. The trade-off is that toggling the OS reduced-motion
+ * setting only takes effect on reload.
+ */
+function shouldSkipShader(): boolean {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
+
+  // Neither field is universally supported — Safari and Firefox report
+  // deviceMemory as undefined — so each is only trusted when actually present.
+  const nav = navigator as Navigator & {
+    connection?: { saveData?: boolean };
+    deviceMemory?: number;
+  };
+  if (nav.connection?.saveData) return true;
+  if (nav.deviceMemory !== undefined && nav.deviceMemory <= 2) return true;
+  return nav.hardwareConcurrency !== undefined && nav.hardwareConcurrency <= 2;
+}
+
+const SKIP_SHADER = shouldSkipShader();
+
+/**
  * Fullscreen animated gradient on a raw WebGL context.
  *
  * Deliberately dependency-free — three.js/OGL would add 150kb+ for what is a
- * single fullscreen triangle. Pauses when scrolled out of view, when the tab
- * is hidden, and when the user asks for reduced motion.
+ * single fullscreen triangle. Pauses when scrolled out of view and when the
+ * tab is hidden. On reduced-motion or low-end devices it renders nothing at
+ * all, leaving the card's own solid background as the fill.
  */
 export default function GradientCanvas({ palette, frag = FRAG, grain = 0.035, speed = 1, className }: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -100,6 +135,16 @@ export default function GradientCanvas({ palette, frag = FRAG, grain = 0.035, sp
     gl.uniform3fv(u.d, cd);
     gl.uniform1f(u.grain, grain);
 
+    let raf = 0;
+    let visible = true;
+    let t = 0;
+    let last = performance.now();
+
+    const draw = () => {
+      gl.uniform1f(u.time, t);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    };
+
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       const w = Math.max(1, Math.round(canvas.clientWidth * dpr));
@@ -117,40 +162,34 @@ export default function GradientCanvas({ palette, frag = FRAG, grain = 0.035, sp
       }
       gl.viewport(0, 0, w, h);
       gl.uniform2f(u.res, w, h);
+      // Force redraw — changing canvas.width/height clears the buffer, and
+      // while the card is off-screen there is no RAF loop to repaint it.
+      draw();
     };
     resize();
 
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    let raf = 0;
-    let visible = true;
-    let t = 0;
-    let last = performance.now();
-
     const frame = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
       t += dt * speed;
-      gl.uniform1f(u.time, t);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-      if (visible && !reduced && !document.hidden) raf = requestAnimationFrame(frame);
+      draw();
+      if (visible && !document.hidden) raf = requestAnimationFrame(frame);
       else raf = 0;
     };
 
     const play = () => {
-      if (!raf && visible && !reduced && !document.hidden) {
+      if (!raf && visible && !document.hidden) {
         last = performance.now();
         raf = requestAnimationFrame(frame);
       }
     };
 
-    // Render one frame even under reduced-motion / hidden tab, so there is
-    // never an empty black rectangle.
-    gl.uniform1f(u.time, 0);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    // Render one frame even in a hidden tab, so there is never an empty black
+    // rectangle waiting for the loop to start.
+    draw();
     play();
 
     const io = new IntersectionObserver(
@@ -176,6 +215,10 @@ export default function GradientCanvas({ palette, frag = FRAG, grain = 0.035, sp
       gl.deleteBuffer(buf);
     };
   }, [palette, frag, grain, speed]);
+
+  // Nothing to mount — the effect above bails on the missing ref, and the
+  // card's solid background becomes the fill.
+  if (SKIP_SHADER) return null;
 
   return <canvas ref={ref} className={className} aria-hidden="true" />;
 }

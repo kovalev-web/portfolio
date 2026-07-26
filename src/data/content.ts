@@ -20,15 +20,6 @@ export const profile = {
   ],
 };
 
-/**
- * Product shot sitting in the hero card.
- */
-export const heroMedia: { src: string; alt: string }[] = [
-  { src: '/media/screela%201.png', alt: 'QuestTick — altcoin pump monitor' },
-  { src: '/media/screela%201.png', alt: 'Project screenshot 2' },
-  { src: '/media/screela%201.png', alt: 'Project screenshot 3' },
-];
-
 /* `stats` and `highlights` fed the old right-hand rail in the hero, which is
    gone. Kept here in case they come back somewhere else. */
 export const stats = [
@@ -69,6 +60,38 @@ export const projects = [
   { title: 'My Path', kicker: 'EdTech · Mobile app', href: '/work/my-path' },
   { title: 'Control Panel', kicker: 'Fintech · Admin panel', href: '/work/control-panel' },
   { title: 'FlowForge', kicker: 'SaaS · Workflow tool', href: '/work/flowforge' },
+];
+
+/**
+ * Hero shot rotation: the three stacked cards in the hero show one project
+ * at a time (3 shots each) and auto-advance to the next project. Each inner
+ * array is one project's [main, side, side] shots, in the same left-to-right
+ * order as the cards. Titles borrow from `projects` above just for the alt
+ * text — the rotation itself doesn't otherwise depend on that list.
+ *
+ * Placeholder: every slot below points at the one shot we have. Swapping in
+ * real screenshots is just replacing `src`/`alt` per project — the rotation
+ * and the slide transition don't change. Real shots don't need to match the
+ * placeholder's aspect ratio exactly (every slot uses `object-fit: cover`
+ * except desktop's card 1), but a similar portrait ratio looks most natural
+ * there.
+ */
+export const heroProjects: { src: string; alt: string }[][] = [
+  [
+    { src: '/media/screela%201.png', alt: `${projects[0].title} — main view` },
+    { src: '/media/screela%201.png', alt: `${projects[0].title} — detail` },
+    { src: '/media/screela%201.png', alt: `${projects[0].title} — detail` },
+  ],
+  [
+    { src: '/media/screela%201.png', alt: `${projects[1].title} — main view` },
+    { src: '/media/screela%201.png', alt: `${projects[1].title} — detail` },
+    { src: '/media/screela%201.png', alt: `${projects[1].title} — detail` },
+  ],
+  [
+    { src: '/media/screela%201.png', alt: `${projects[2].title} — main view` },
+    { src: '/media/screela%201.png', alt: `${projects[2].title} — detail` },
+    { src: '/media/screela%201.png', alt: `${projects[2].title} — detail` },
+  ],
 ];
 
 /** Big type rows in the skills band. `media` expands inline on scroll-in. */

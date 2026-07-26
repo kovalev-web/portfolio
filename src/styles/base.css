@@ -32,8 +32,6 @@
   /* Brand */
   --accent: #5b53f5;
   --accent-ink: #f9f8f6;
-  /* Hero card fill — same value in both themes, it is a brand surface */
-  --hero-blue: #27364e;
 }
 
 /* Light theme (default) */
@@ -47,6 +45,9 @@
   --glass: rgba(255, 255, 255, 0.5);
   --glass-line: rgba(209, 213, 219, 0.5);
   --shadow: 0 3px 20px -5px rgba(0, 0, 0, 0.15);
+  /* Card surface shared by the hero and the contact block. Must be declared in
+     both theme blocks: this selector also matches bare `:root`, so a value put
+     in the brand block above would never survive into the dark theme. */
   --hero-blue: #c4b5a5;
 }
 
@@ -59,6 +60,7 @@
   --glass: rgba(20, 20, 22, 0.5);
   --glass-line: rgba(249, 248, 246, 0.14);
   --shadow: 0 3px 20px -5px rgba(0, 0, 0, 0.5);
+  --hero-blue: #27364e;
 }
 
 /* ============================================================
@@ -122,6 +124,11 @@ canvas {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    /* Without this, a looping animation is not stopped but sped up: shrinking
+       `twinkle 2s infinite` to 0.01ms makes it repeat thousands of times a
+       second, which reads as a flicker. Capping the count lets it finish once
+       and settle. */
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }

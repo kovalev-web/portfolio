@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { profile } from '../data/content';
 import { useTheme } from '../hooks/useTheme';
+import ThemeToggle from './ThemeToggle';
 import './header.css';
 
 const NAV = [
@@ -58,13 +59,7 @@ export default function Header() {
               {item.label}
             </a>
           ))}
-          <button
-            className="pill-theme-toggle"
-            onClick={toggle}
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-          >
-            {theme === 'dark' ? '☀︎' : '☾'}
-          </button>
+          <ThemeToggle />
         </nav>
       </div>
 

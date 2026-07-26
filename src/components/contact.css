@@ -11,45 +11,10 @@
   padding: clamp(1.6rem, 5vw, 5rem);
   border-radius: var(--radius);
   overflow: hidden;
-  color: var(--accent-ink);
-  background: #1a0f3d;
-}
-
-.contact-bg {
-  position: absolute;
-  inset: 0;
-}
-
-/* Blur + overscale: the shader becomes a soft light source rather than a
-   pattern competing with the headline. */
-.contact-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  filter: blur(28px);
-  transform: scale(1.25);
-}
-
-.contact-scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-      120deg,
-      rgba(10, 6, 26, 0.55) 0%,
-      rgba(10, 6, 26, 0.15) 45%,
-      transparent 70%
-    ),
-    linear-gradient(0deg, rgba(10, 6, 26, 0.45) 0%, transparent 45%);
-}
-
-.grain {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  mix-blend-mode: overlay;
-  pointer-events: none;
+  /* Matches the hero card: --hero-blue is the flat fallback under the shader
+     and flips with the theme, --ink is the copy colour that flips with it. */
+  color: var(--ink);
+  background: var(--hero-blue);
 }
 
 .contact-body {

@@ -17,7 +17,12 @@ export function useReveal() {
           }
         }
       },
-      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' },
+      // The bottom inset must stay smaller than the last element's clearance
+      // from the end of the document, or that element can never intersect and
+      // stays at opacity 0 forever. A percentage cannot guarantee that — at
+      // viewport heights above ~960px, -8% exceeded the footer's own bottom
+      // padding and permanently hid it. A fixed inset is viewport-independent.
+      { threshold: 0.15, rootMargin: '0px 0px -16px 0px' },
     );
 
     document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
