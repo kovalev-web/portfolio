@@ -55,8 +55,7 @@ export default function Work() {
             </a>
           ))}
 
-          {/* Cursor-following preview. Replace the gradient with a real
-              screenshot once /public/media is populated. */}
+          {/* Cursor-following preview: the hovered project's cover. */}
           <div
             className="work-preview"
             data-on={hover !== null && pos !== null}
@@ -66,7 +65,24 @@ export default function Work() {
                 : undefined
             }
             aria-hidden="true"
-          />
+          >
+            {projects.map((p, i) => (
+              <img
+                key={p.href}
+                className="work-preview-shot"
+                data-active={hover === i}
+                src={p.cover}
+                alt=""
+                width={900}
+                height={584}
+                decoding="async"
+                // Low, not lazy: lazy would never fire for a tile that is
+                // `position: fixed` at zero opacity, but these must not race the
+                // hero for bandwidth either.
+                fetchPriority="low"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
