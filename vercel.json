@@ -1,0 +1,4 @@
+{
+  "$comment": "Client-side routing: /projects/<slug> exists only in the bundle, so every non-file request has to be served index.html or a direct hit (or a refresh) 404s. Vite's dev server does this on its own; production does not.",
+  "rewrites": [{ "source": "/((?!assets/|media/).*)", "destination": "/" }]
+}

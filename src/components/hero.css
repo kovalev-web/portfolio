@@ -25,96 +25,161 @@
   z-index: 0;
 }
 
-/* ---------- Product shot ---------- */
-/* 3 cards in a row, rightmost (card 1) is full height, others to its left. */
+/* ---------- Product shot deck ---------- */
+/* A fan of identically-sized cards, each parked on a slot by `data-slot`.
+   Slots are transforms, not layout — that's the whole point: a card can then
+   physically travel from one slot to the next when the deck advances. All the
+   geometry below is relative to the card's own box, so the fan scales with the
+   hero and there's nothing per-breakpoint to keep in sync except the offsets.
+
+   The box keeps real dimensions even though every child is absolute: it's what
+   carries the hover-to-pause handlers, and — see `--fan-travel` — what the fan
+   measures itself against.
+
+   Both edges are inset by the same amount, so the box *is* the space the deck
+   is allowed to occupy: the front card sits on its right edge, the back card on
+   its left, and the gaps either side of the fan come out equal for free. */
 .hero-media {
   position: absolute;
   bottom: 0;
+  left: 12.8%;
   right: 12.8%;
-  width: 75%;
   height: 84%;
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: stretch;
   z-index: 1;
+  /* Makes `100cqw` below mean "width of this box" */
+  container-type: inline-size;
+
+  /* Fan geometry — depth only; the horizontal spread is derived, not set */
+  --fan-y1: 2.5%;
+  --fan-s1: 0.945;
+  --fan-y2: 5%;
+  --fan-s2: 0.89;
+
+  /* Widest the fan may spread, as a fraction of a card. Past roughly this the
+     cards stop overlapping and it reads as three separate pictures rather than
+     a deck. */
+  --fan-spread-max: 0.79;
 }
 
-.hero-media .hero-media-card {
-  position: relative;
+.hero-media-card {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  /* The cards no longer have an in-flow image to size them, and they must all
+     be one shape anyway — a card can't change proportions mid-flight. Real
+     assets that aren't this ratio should update it here, once. */
+  aspect-ratio: 1306 / 1384;
   overflow: hidden;
   border-radius: 30px 30px 0 0;
+  /* Bottom-right: the deck stands on the card's bottom edge, so scaling a card
+     back must not lift it off that edge. */
+  transform-origin: 100% 100%;
   will-change: transform;
+  /* Transform only — see the exit slots below for why nothing fades. */
+  transition: transform 900ms var(--ease);
+
+  /* Leftward travel that lands the back card's left edge exactly on the box's
+     left edge: the card's own scaled width, minus the full width of the box.
+     It has to mix the two units — `100%` is the card, `100cqw` is the box —
+     because the cards are sized from the hero's *height* while the box is inset
+     from its *width*. No single percentage can track both, which is why this
+     isn't just another `--fan-x`: the value that squares the gaps swings from
+     about -64% to -108% across ordinary desktop window shapes.
+
+     `max()` caps it: on a wide, short window the exact fit would pull the cards
+     clear of each other, and a deck that doesn't overlap isn't a deck. */
+  --fan-travel: max(calc(var(--fan-s2) * 100% - 100cqw), calc(var(--fan-spread-max) * -100%));
+
+  /* Width the box has left over once the fan hits that cap — zero whenever the
+     fan still fits, because then the two conditions are the same one. */
+  --fan-slack: max(0px, calc(100cqw - (var(--fan-s2) + var(--fan-spread-max)) * 100%));
+
+  /* Spend half the leftover on each side. Without this a capped fan stays
+     pinned to the box's right edge and dumps all the slack on the left, which
+     is the lopsided gap this whole derivation exists to avoid. Applied to every
+     slot, so the deck shifts as one piece. */
+  --fan-center: calc(var(--fan-slack) / -2);
 }
 
-.hero-media .hero-media-card:nth-child(1) {
-  flex: 0 0 auto;
+/* Front of the fan */
+.hero-media-card[data-slot='0'] {
+  transform: translateX(var(--fan-center));
   z-index: 3;
-  box-shadow: -20px 0 60px rgba(0,0,0,0.35);
-  /* Card 1's shot is `position: absolute` (see `.hero-shot` below) to make
-     room for the two-layer slide, so it can no longer size this box the way
-     an ordinary in-flow image would. An explicit ratio takes over that job —
-     it also drives the mobile aspect-ratio below, so real assets that aren't
-     this exact shape should update it here. */
-  aspect-ratio: 1306 / 1384;
+  box-shadow: -24px 0 64px rgba(0, 0, 0, 0.38);
 }
-.hero-media .hero-media-card:nth-child(2) { flex: 1; z-index: 2; margin-right: clamp(-60px, -3vw, -15px); transform: translateY(20px); box-shadow: -15px 0 50px rgba(0,0,0,0.3); }
-.hero-media .hero-media-card:nth-child(3) { flex: 1; z-index: 1; margin-right: clamp(-60px, -3vw, -15px); transform: translateY(40px); }
+
+/* Half the travel — the middle card lands midway across the box */
+.hero-media-card[data-slot='1'] {
+  transform: translate(calc(var(--fan-center) + var(--fan-travel) / 2), var(--fan-y1))
+    scale(var(--fan-s1));
+  z-index: 2;
+  box-shadow: -18px 0 52px rgba(0, 0, 0, 0.32);
+}
+
+.hero-media-card[data-slot='2'] {
+  transform: translate(calc(var(--fan-center) + var(--fan-travel)), var(--fan-y2))
+    scale(var(--fan-s2));
+  z-index: 1;
+  box-shadow: -14px 0 44px rgba(0, 0, 0, 0.26);
+}
+
+/* Peeling off the front: straight down and clean out of the hero card, which
+   clips it with its own `overflow: hidden`. It travels the full height of the
+   card so it is genuinely gone rather than faded — nothing here ever goes
+   translucent, or an outgoing card would ghost over the ones it passes.
+   Exiting *outward* is also what keeps the shuffle honest: a card returning to
+   the back of the deck never flies through the stack, so nothing has to cross
+   z-order mid-flight. */
+.hero-media-card[data-slot='out-front'] {
+  transform: translate(calc(var(--fan-center) + 8%), 110%) scale(0.97);
+  z-index: 4;
+}
+
+/* Everything waiting its turn parks on the back slot's exact geometry, one
+   layer down. That is the whole trick for keeping the deck opaque: a card here
+   is invisible because the slot-2 card covers it pixel for pixel, not because
+   it faded out. It gets revealed by that card sliding forward, the way the next
+   card in a real deck appears.
+
+   `transition: none` is load-bearing: cards recycle from below the card round
+   to the tail of the deck through this state, and that jump must never be
+   drawn. Leaving the state animates normally — a transition is governed by the
+   style being moved *to*. */
+.hero-media-card[data-slot='hidden'] {
+  transform: translate(calc(var(--fan-center) + var(--fan-travel)), var(--fan-y2))
+    scale(var(--fan-s2));
+  z-index: 0;
+  transition: none;
+}
+
+/* Pagination jump — see `jumped` in Hero.tsx. Several cards change slot at
+   once, and letting them all travel means they cross each other on the way,
+   which reads as stray extra slides drifting through the fan. Only the card
+   peeling off the front keeps its travel; the rest of the deck is simply
+   already in place behind it. */
+.hero-media[data-jump='true'] .hero-media-card:not([data-slot='out-front']) {
+  transition: none;
+}
 
 .hero-shot {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   display: block;
-  transform: translateY(0);
-  transition: transform 900ms var(--ease);
-}
-
-/* Forward (next): outgoing slides down, incoming slides in from top */
-[data-dir="next"] .hero-shot-out { transform: translateY(0); }
-[data-dir="next"] .hero-shot-out.is-shifting { transform: translateY(100%); }
-[data-dir="next"] .hero-shot-in { transform: translateY(-100%); }
-[data-dir="next"] .hero-shot-in.is-shifting { transform: translateY(0); }
-
-/* Reverse (prev): outgoing slides up, incoming slides in from bottom */
-[data-dir="prev"] .hero-shot-out { transform: translateY(0); }
-[data-dir="prev"] .hero-shot-out.is-shifting { transform: translateY(-100%); }
-[data-dir="prev"] .hero-shot-in { transform: translateY(100%); }
-[data-dir="prev"] .hero-shot-in.is-shifting { transform: translateY(0); }
-
-/* Slight stagger per card so the three shots don't move in lockstep */
-.hero-media .hero-media-card:nth-child(2) .hero-shot { transition-delay: 70ms; }
-.hero-media .hero-media-card:nth-child(3) .hero-shot { transition-delay: 140ms; }
-
-/* Cards 2/3: shot fills the assigned flex area, crops bottom excess */
-.hero-media .hero-media-card:nth-child(2) .hero-shot,
-.hero-media .hero-media-card:nth-child(3) .hero-shot {
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-}
-
-/* Card 1: fills the card, crops excess from the right */
-.hero-media .hero-media-card:nth-child(1) .hero-shot {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: left top;
 }
 
+/* Opaque, not tinted: cards in the deck overlap heavily, and a translucent
+   front card lets the one behind bleed through it — which reads as a bug
+   rather than as a missing asset. */
 .hero-shot-placeholder {
   display: grid;
   place-items: center;
-  background: rgba(10, 12, 18, 0.55);
+  background: #14171f;
   border: 1px dashed rgba(255, 255, 255, 0.18);
-}
-
-/* The placeholder has no intrinsic size to drive card 1's auto width —
-   force it to fill like the other two cards do. */
-.hero-media .hero-media-card:nth-child(1) .hero-shot-placeholder {
-  width: 100%;
 }
 
 .hero-media-label {
@@ -126,15 +191,22 @@
 }
 
 /* ---------- Pagination dots ---------- */
+/* This box is also the pause target for the rotation, so it needs to be
+   catchable — three 10px dots are not. The padding is hit area only: `right`
+   is pulled back by the same amount, and the vertical centring is unaffected,
+   so the dots themselves don't move. */
 .hero-dots {
   position: absolute;
-  right: clamp(0.75rem, 2vw, 1.5rem);
+  right: calc(clamp(0.75rem, 2vw, 1.5rem) - var(--dots-hit));
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: var(--dots-hit);
   z-index: 5;
+
+  --dots-hit: 14px;
 }
 
 .hero-dot {
@@ -272,7 +344,7 @@
 
   .hero-media {
     height: 82%;
-    width: 82%;
+    left: 7.8%;
     right: 7.8%;
   }
 }
@@ -285,11 +357,9 @@
     padding-top: calc(var(--header-h) + 10px);
   }
 
-  /* One shot instead of the overlapping trio. The desktop composition can't
-     survive here: cards 2 and 3 get squeezed to zero width by the negative
-     margins, while card 1 keeps its height-driven natural width and spills
-     past the card edge. So the card becomes a column — copy on top, a single
-     width-driven shot sitting on the bottom edge. */
+  /* Copy on top, deck below. The overlapping trio survives the move now that
+     the fan is transform-driven — it scales with the container instead of
+     being squeezed to nothing by flex, so all three cards can stay. */
   .hero-card {
     flex-direction: column;
     justify-content: flex-start;
@@ -305,37 +375,27 @@
 
   .hero-media {
     position: relative;
+    left: auto;
     right: auto;
     bottom: auto;
-    align-self: center;
-    width: min(100%, 46vh);
-    height: auto;
-  }
-
-  .hero-media .hero-media-card {
-    border-radius: 18px 18px 0 0;
-  }
-
-  .hero-media .hero-media-card:nth-child(2),
-  .hero-media .hero-media-card:nth-child(3) {
-    display: none;
-  }
-
-  .hero-media .hero-media-card:nth-child(1) {
-    flex: 1;
-    transform: none;
-    box-shadow: 0 -18px 50px rgba(0, 0, 0, 0.32);
-  }
-
-  /* Fills the card (sized by the aspect-ratio set on nth-child(1) above)
-     instead of the old width:100%/height:auto — the shot is absolutely
-     positioned now, so it can't size the box itself the way an in-flow img
-     did. */
-  .hero-media .hero-media-card:nth-child(1) .hero-shot {
+    /* Full content width, same as desktop's symmetric inset — the fan fills it
+       and the gaps either side stay equal. */
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
+    /* Cards inherit their height from here and derive their width from it, so
+       this is also what decides how much narrower than the box a card is —
+       i.e. how much room the fan has to spread. Absolutely-positioned children
+       can't give the box a height, hence the explicit value. */
+    height: min(46vh, 68vw);
+
+    /* Shallower depth than desktop; the spread itself is still derived */
+    --fan-y1: 2%;
+    --fan-s1: 0.955;
+    --fan-y2: 4%;
+    --fan-s2: 0.91;
+  }
+
+  .hero-media-card {
+    border-radius: 18px 18px 0 0;
   }
 
   .hero-dots {
@@ -344,6 +404,9 @@
     justify-content: center;
     transform: none;
     order: -1;
+    /* In the stack the padding would read as spacing; cancel it so the rhythm
+       is unchanged and it stays purely a hit area. */
+    margin-block: calc(-1 * var(--dots-hit));
   }
 
   .hero-copy {

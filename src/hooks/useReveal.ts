@@ -4,9 +4,11 @@ import { useEffect } from 'react';
  * Adds `.is-visible` to every `.reveal` element once it enters the viewport.
  * One observer for the whole page rather than one per component.
  *
- * Re-scans on mount only; call `rescan()` if you ever add nodes dynamically.
+ * Pass `key` to re-scan — a route change swaps the whole page, and elements
+ * mounted after the observer was built would otherwise never be observed and
+ * sit at opacity 0 forever.
  */
-export function useReveal() {
+export function useReveal(key?: unknown) {
   useEffect(() => {
     const io = new IntersectionObserver(
       (entries) => {
@@ -27,5 +29,5 @@ export function useReveal() {
 
     document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, [key]);
 }

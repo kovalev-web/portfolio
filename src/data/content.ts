@@ -2,7 +2,11 @@
  * Single source of truth for homepage copy.
  * Everything the site renders comes from here — swapping content should never
  * mean touching a component.
+ *
+ * Case-study bodies live in `cases.ts`; this file only reaches in for the list
+ * of them.
  */
+import { cases } from './cases';
 
 export const profile = {
   name: 'Dmitrii Kovalev',
@@ -54,27 +58,34 @@ export const highlights = [
   },
 ];
 
-export const projects = [
-  { title: 'Trade Scope', kicker: 'Fintech · Mobile + Web', href: '/work/trade-scope' },
-  { title: 'Brokerage CRM', kicker: 'Fintech · Dashboard', href: '/work/brokerage-crm' },
-  { title: 'My Path', kicker: 'EdTech · Mobile app', href: '/work/my-path' },
-  { title: 'Control Panel', kicker: 'Fintech · Admin panel', href: '/work/control-panel' },
-  { title: 'FlowForge', kicker: 'SaaS · Workflow tool', href: '/work/flowforge' },
-];
+/**
+ * Derived from the case studies rather than listed again: the work list and
+ * the pages it links to drifting apart is the one failure mode worth designing
+ * out. Order here is the order of `cases`.
+ *
+ * Paths keep the previous site's `/projects/<slug>/` shape — those URLs are
+ * live and indexed, and there is nothing to gain from breaking them.
+ */
+export const projects = cases.map((c) => ({
+  title: c.title,
+  kicker: c.tag,
+  href: `/projects/${c.slug}`,
+  cover: c.cover,
+}));
 
 /**
- * Hero shot rotation: the three stacked cards in the hero show one project
- * at a time (3 shots each) and auto-advance to the next project. Each inner
- * array is one project's [main, side, side] shots, in the same left-to-right
- * order as the cards. Titles borrow from `projects` above just for the alt
+ * Hero shot deck, grouped by project. Each inner array is one project's shots,
+ * shown front-most first. Titles borrow from `projects` above just for the alt
  * text — the rotation itself doesn't otherwise depend on that list.
  *
+ * Grouping only drives the pagination dots (one per project). The rotation
+ * itself runs over the flattened `heroDeck` below, one card at a time.
+ *
  * Placeholder: every slot below points at the one shot we have. Swapping in
- * real screenshots is just replacing `src`/`alt` per project — the rotation
- * and the slide transition don't change. Real shots don't need to match the
- * placeholder's aspect ratio exactly (every slot uses `object-fit: cover`
- * except desktop's card 1), but a similar portrait ratio looks most natural
- * there.
+ * real screenshots is just replacing `src`/`alt` — nothing about the shuffle
+ * changes. Every card is the same box with `object-fit: cover`, so shots don't
+ * have to match the placeholder ratio exactly, but a similar portrait ratio
+ * crops most kindly.
  */
 export const heroProjects: { src: string; alt: string }[][] = [
   [
@@ -93,6 +104,19 @@ export const heroProjects: { src: string; alt: string }[][] = [
     { src: '/media/project-3/3.png', alt: `${projects[2].title} — detail` },
   ],
 ];
+
+/**
+ * The deck the hero actually cycles: every shot of every project, flattened
+ * into one ring. `project` is carried along so the dots can highlight whichever
+ * project owns the card currently at the front.
+ */
+export const heroDeck: { src: string; alt: string; project: number }[] =
+  heroProjects.flatMap((shots, project) => shots.map((shot) => ({ ...shot, project })));
+
+/** Deck index of each project's first shot — where a dot click jumps to. */
+export const heroProjectStarts: number[] = heroProjects.map((_, project) =>
+  heroDeck.findIndex((shot) => shot.project === project),
+);
 
 /** Big type rows in the skills band. `media` expands inline on scroll-in. */
 export const skills = [

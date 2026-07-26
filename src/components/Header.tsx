@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { profile } from '../data/content';
 import { useTheme } from '../hooks/useTheme';
+import { onNavClick } from '../hooks/useRoute';
 import ThemeToggle from './ThemeToggle';
 import './header.css';
 
+// Rooted, not bare fragments: these sections only exist on the homepage, so
+// from a case study the link has to go there first and then find the anchor.
 const NAV = [
-  { label: 'Work', href: '#work' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Work', href: '/#work' },
+  { label: 'About', href: '/#about' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export default function Header() {
@@ -34,7 +37,7 @@ export default function Header() {
           SVG corners never disappear.
         */}
         <div className="notch">
-          <a className="logo" href="/" aria-label="Home">
+          <a className="logo" href="/" aria-label="Home" onClick={onNavClick}>
             <img className="logo-avatar" src={profile.avatar} alt="" width="46" height="46" />
             <span className="logo-text">
               Dmitrii
