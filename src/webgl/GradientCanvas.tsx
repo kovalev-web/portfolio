@@ -10,7 +10,7 @@ export type Palette = [string, string, string, string];
  * presents the same surface instead of a second, unrelated gradient.
  */
 export const SURFACE_PALETTE: Palette = ['#1c2739', '#27364e', '#31455f', '#3a5271'];
-export const SURFACE_PALETTE_LIGHT: Palette = ['#c4b5a5', '#d6c8b8', '#e2d5c8', '#ede2d8'];
+export const SURFACE_PALETTE_LIGHT: Palette = ['#b7b5b2', '#cac8c5', '#d8d5d3', '#e4e2e1'];
 
 type Props = {
   palette: Palette;
