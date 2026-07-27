@@ -17,10 +17,9 @@ export const profile = {
   headline: 'Product designer with 9 years in SaaS, CRM systems, and admin interfaces',
   bio: "I'm a product designer with 9 years of practice, currently based in SE Asia. I work on the unglamorous end of software — fintech CRMs, admin panels, internal tools — where a design system and a clear flow are worth more than a hero animation.",
   socials: [
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/kovalev-web/' },
-    { label: 'Behance', href: 'https://www.behance.net/kovalev-web' },
-    { label: 'Telegram', href: 'https://t.me/weerdmolls' },
-    { label: 'CV', href: '/cv' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/kovalev-dmitry/' },
+    { label: 'Behance', href: 'https://www.behance.net/kohalov' },
+    { label: 'Telegram', href: 'https://t.me/near_anyone' },
   ],
 };
 
@@ -72,6 +71,11 @@ export const projects = cases.map((c) => ({
   href: `/projects/${c.slug}`,
   cover: c.cover,
 }));
+
+/** Hidden from the Work list for now — the case pages themselves still exist. */
+export const HIDDEN_FROM_WORK = new Set(['control-panel', 'organix']);
+
+export const visibleProjects = projects.filter((_, i) => !HIDDEN_FROM_WORK.has(cases[i].slug));
 
 /**
  * Hero shot deck, grouped by project. Each inner array is one project's shots,

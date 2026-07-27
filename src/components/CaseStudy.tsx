@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { CaseBlock, CaseStudy as Case } from '../data/cases';
 import { cases } from '../data/cases';
+import { HIDDEN_FROM_WORK } from '../data/content';
 import { onNavClick } from '../hooks/useRoute';
 import type { ReactNode } from 'react';
 import './case-study.css';
@@ -120,7 +121,9 @@ export default function CaseStudy({ study }: { study: Case }) {
     };
   }, [study]);
 
-  const others = cases.filter((c) => c.slug !== study.slug).slice(0, 3);
+  const others = cases
+    .filter((c) => c.slug !== study.slug && !HIDDEN_FROM_WORK.has(c.slug))
+    .slice(0, 3);
 
   return (
     <article className="case">

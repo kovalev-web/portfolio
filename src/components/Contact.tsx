@@ -7,12 +7,12 @@ export default function Contact() {
       <div className="shell">
         {/* Flat --hero-blue, no shader — the card is the same surface as the
             hero, just without the gradient running on it. */}
-        <div className="contact-card">
+        <div className="contact-card on-media">
           <div className="contact-body">
             <h2 className="contact-title reveal reveal-lg">
-              Got a product that needs
+              Have a product
               <br />
-              <strong>real design work?</strong>
+              <strong>that needs design work?</strong>
             </h2>
 
             <div className="contact-actions reveal" style={{ '--d': '220ms' } as React.CSSProperties}>

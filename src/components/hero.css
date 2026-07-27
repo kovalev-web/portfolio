@@ -50,9 +50,9 @@
   container-type: inline-size;
 
   /* Fan geometry — depth only; the horizontal spread is derived, not set */
-  --fan-y1: 2.5%;
+  --fan-y1: 0.9%;
   --fan-s1: 0.945;
-  --fan-y2: 5%;
+  --fan-y2: 1.8%;
   --fan-s2: 0.89;
 
   /* Widest the fan may spread, as a fraction of a card. Past roughly this the
@@ -83,7 +83,7 @@
   transform-origin: 100% 100%;
   will-change: transform;
   /* Transform only — see the exit slots below for why nothing fades. */
-  transition: transform 900ms var(--ease);
+  transition: transform 450ms var(--ease);
 
   /* Leftward travel that lands the back card's left edge exactly on the box's
      left edge: the card's own scaled width, minus the full width of the box.
@@ -137,6 +137,13 @@
     scale(var(--fan-s2)) translateZ(0);
   z-index: 1;
   box-shadow: -14px 0 44px rgba(0, 0, 0, 0.26), 0 0 0 1px var(--hero-blue);
+}
+
+/* Back cards are click targets — bring a card to front by clicking it
+   instead of waiting for the rotation or hunting for the right dot. */
+.hero-media-card[data-slot='1'],
+.hero-media-card[data-slot='2'] {
+  cursor: pointer;
 }
 
 /* Peeling off the front: straight down and clean out of the hero card, which
@@ -231,8 +238,8 @@
   background: transparent;
   cursor: pointer;
   padding: 0;
-  transition: background 0.3s var(--ease), transform 0.3s var(--ease),
-    border-color 0.3s var(--ease);
+  transition: background 0.15s var(--ease), transform 0.15s var(--ease),
+    border-color 0.15s var(--ease);
 }
 
 .hero-dot.is-active {
@@ -260,10 +267,11 @@
 .hero-copy {
   position: relative;
   z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  gap: clamp(1rem, 3vw, 2.5rem);
-  width: min(56%, 780px);
+  /* Hugs the balanced headline instead of a fixed fraction of the card —
+     text-wrap: balance already shapes the title to less than the card's
+     56%, so a fixed-width notch left a dead gap past the last line. */
+  width: fit-content;
+  max-width: min(56%, 780px);
   padding: 30px 30px 0 12px;
   background: var(--bg);
   border-radius: 0 var(--radius) 0 0;
@@ -310,36 +318,11 @@
 }
 
 .hero-title {
-  flex: 1;
   font-size: clamp(2.25rem, 1.6rem + 2vw, 3.4rem);
-  font-weight: 600;
-  line-height: 1.05;
+  font-weight: 500;
+  line-height: 1.18;
   letter-spacing: -0.03em;
   text-wrap: balance;
-}
-
-.scroll-cue {
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 50px;
-  height: 50px;
-  margin-bottom: 6px;
-  /* Explicit, not inherited — the arrow is drawn with currentColor */
-  color: var(--ink);
-  border: 1.5px solid var(--ink);
-  border-radius: 50%;
-  /* Also `.reveal` — blur-in properties repeated so the shorthand keeps them */
-  transition: background-color 0.3s var(--ease), color 0.3s var(--ease),
-    opacity 0.8s var(--ease), filter 1s var(--ease), transform 0.5s var(--ease);
-  transition-delay: var(--d, 0ms);
-}
-
-.scroll-cue:hover {
-  background: var(--ink);
-  color: var(--bg);
-  transform: translateY(4px);
-  transition-delay: 0ms;
 }
 
 /* ---------- Responsive ---------- */
@@ -353,7 +336,7 @@
   }
 
   .hero-copy {
-    width: min(70%, 640px);
+    max-width: min(70%, 640px);
   }
 
   .hero-media {
@@ -402,9 +385,9 @@
     height: min(46vh, 68vw);
 
     /* Shallower depth than desktop; the spread itself is still derived */
-    --fan-y1: 2%;
+    --fan-y1: 0.7%;
     --fan-s1: 0.955;
-    --fan-y2: 4%;
+    --fan-y2: 1.4%;
     --fan-s2: 0.91;
   }
 
@@ -426,6 +409,10 @@
   .hero-copy {
     order: -2;
     width: 100%;
+    /* The tablet breakpoint's max-width: min(70%, 640px) otherwise survives
+       down to phone widths too and caps this to a narrow column, wasting
+       most of the card's width. */
+    max-width: none;
     padding: 0;
     background: transparent;
     border-radius: 0;
@@ -438,16 +425,16 @@
     display: none;
   }
 
-}
-
-@media (max-width: 620px) {
-  .hero-copy {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
+  /* Below this width the copy sits directly on the card's own canvas instead
+     of the page-background notch, and that canvas is always the dark
+     surface — fixed light colour, not var(--ink), keeps the title readable
+     regardless of site theme. */
+  .hero-title {
+    color: #f9f8f6;
+    /* Balance shrinks the wrapping width to even out line lengths, which at
+       this narrow a column just wastes the card's width and stacks extra
+       short lines. Full-width wrap reads better here. */
+    text-wrap: wrap;
   }
 
-  .scroll-cue {
-    margin-bottom: 0;
-  }
 }

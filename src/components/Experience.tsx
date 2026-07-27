@@ -10,7 +10,7 @@ import './experience.css';
  * when the text reflows at a different width.
  */
 export default function Experience() {
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(null);
 
   return (
     <section id="experience" className="experience">

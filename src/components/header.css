@@ -123,7 +123,7 @@
 
 .logo-text {
   font-size: var(--fs-sm);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.015em;
 }
@@ -139,17 +139,50 @@
   padding: 0 12px;
   margin-right: 12px;
   border-radius: 50px;
-  background: var(--glass);
+  /* Fixed dark glass in light theme, not derived from --glass — the pill is
+     fixed over the whole page, so it needs to read the same over the light
+     page background as it does over the hero card. Inverted to light glass
+     in dark theme below, so the pill still contrasts with its surroundings. */
+  background: rgba(19, 26, 40, 0.55);
   box-shadow: var(--shadow);
   backdrop-filter: blur(10px) saturate(200%);
   -webkit-backdrop-filter: blur(10px) saturate(200%);
-  color: var(--ink);
+  color: #f9f8f6;
+}
+
+:root[data-theme='dark'] .nav-pill {
+  background: rgba(249, 248, 246, 0.65);
+  color: #14171f;
 }
 
 .nav-pill a {
   padding: 0 0.8em;
   font-size: var(--fs-sm);
+  font-weight: 500;
   transition: opacity 0.2s var(--ease);
+}
+
+/* The pill's own background flips with the theme (dark glass in light theme,
+   light glass in dark theme), so its theme toggle needs fixed colours too —
+   var(--ink-soft)/var(--line) would be near-invisible here. Scoped to the
+   pill: the same ThemeToggle in the footer sits on the page's own
+   (theme-driven) background and keeps the default. */
+.nav-pill .theme-toggle {
+  border: none;
+  color: rgba(249, 248, 246, 0.75);
+}
+
+.nav-pill .theme-toggle:hover {
+  color: #f9f8f6;
+  border-color: transparent;
+}
+
+:root[data-theme='dark'] .nav-pill .theme-toggle {
+  color: rgba(20, 23, 31, 0.65);
+}
+
+:root[data-theme='dark'] .nav-pill .theme-toggle:hover {
+  color: #14171f;
 }
 
 .nav-pill a:hover {
@@ -162,6 +195,7 @@
   height: 40px;
   padding: 0 18px;
   margin-left: 14px;
+  margin-bottom: 8px;
   font-size: var(--fs-sm);
   font-weight: 500;
   border: none;
@@ -175,10 +209,15 @@
   flex-direction: column;
   gap: 0.2em;
   padding: 1.6em 1.2em;
-  background: var(--accent);
+  /* Same fixed dark-blue surface as the hero card, not the purple --accent. */
+  background: var(--hero-blue);
   color: var(--accent-ink);
   border-radius: var(--radius) 0 var(--radius) var(--radius);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  /* Sits outside .header-inner, so it never picked up the `> *` override
+     below and inherited pointer-events: none from .site-header — every tap
+     on a link or the theme toggle was silently swallowed. */
+  pointer-events: auto;
 }
 
 .mobile-sheet a {
@@ -192,7 +231,6 @@
   font-size: 1.8rem;
   text-align: left;
   color: var(--accent-ink);
-  border-bottom: 1px solid rgba(249, 248, 246, 0.35);
   transition: opacity 0.2s var(--ease);
 }
 

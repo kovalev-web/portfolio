@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import GradientCanvas, { SURFACE_PALETTE, SURFACE_PALETTE_LIGHT } from '../webgl/GradientCanvas';
-import { FRAG, FRAG_LIGHT } from '../webgl/gradient.glsl';
-import { useTheme } from '../hooks/useTheme';
+import GradientCanvas, { SURFACE_PALETTE } from '../webgl/GradientCanvas';
+import { FRAG } from '../webgl/gradient.glsl';
 import { useCarousel } from '../hooks/useCarousel';
 import { profile, heroDeck, heroProjectStarts } from '../data/content';
 import type { ReactNode } from 'react';
 import './hero.css';
 
-const ROTATE_MS = 4500;
+const ROTATE_MS = 3000;
 
 /** Cards standing in the fan at rest. The rest of the deck waits off-stage. */
 const SLOTS = 3;
@@ -51,7 +50,6 @@ function slotOf(i: number, active: number, prev: number, length: number): string
 }
 
 export default function Hero() {
-  const { theme } = useTheme();
   const { index, go, hoverProps } = useCarousel(heroDeck.length, ROTATE_MS);
 
   // The previously-active card, read during render so each card can tell
@@ -79,24 +77,46 @@ export default function Hero() {
     <section className="hero">
       <div className="shell">
         <div className="hero-card">
-          <GradientCanvas palette={theme === 'dark' ? SURFACE_PALETTE : SURFACE_PALETTE_LIGHT} className="hero-canvas" speed={1.5} grain={0.012} frag={theme === 'dark' ? FRAG : FRAG_LIGHT} />
+          <GradientCanvas palette={SURFACE_PALETTE} className="hero-canvas" speed={1.5} grain={0.012} frag={FRAG} />
 
-          <div className="hero-media" data-jump={jumped ? 'true' : undefined}>
-            {heroDeck.map((shot, i) => (
-              <div
-                className="hero-media-card"
-                key={i}
-                data-slot={slotOf(i, index, prev, heroDeck.length)}
-                aria-hidden={i !== index}
-              >
-                <Shot shot={shot} className="hero-shot" />
-              </div>
-            ))}
+          {/* Hovering the deck pauses the rotation too — the back cards are
+              click targets now, and a card that drifts mid-aim defeats the
+              point. Focus pauses for the same reason: tabbing onto a back
+              card shouldn't have it slide away before Enter lands. */}
+          <div className="hero-media" data-jump={jumped ? 'true' : undefined} {...hoverProps}>
+            {heroDeck.map((shot, i) => {
+              const slot = slotOf(i, index, prev, heroDeck.length);
+              // Only the two back cards are real click targets — the front
+              // card is already active, and 'hidden'/'out-front' cards are
+              // either covered or mid-exit, so a click there can't land on
+              // the thing the user meant.
+              const isBackCard = slot === '1' || slot === '2';
+              return (
+                <div
+                  className="hero-media-card"
+                  key={i}
+                  data-slot={slot}
+                  aria-hidden={slot === 'hidden' || slot === 'out-front'}
+                  role={isBackCard ? 'button' : undefined}
+                  tabIndex={isBackCard ? 0 : undefined}
+                  onClick={isBackCard ? () => go(i) : undefined}
+                  onKeyDown={
+                    isBackCard
+                      ? (e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            go(i);
+                          }
+                        }
+                      : undefined
+                  }
+                  aria-label={isBackCard ? `Bring ${shot.alt || 'this shot'} to the front` : undefined}
+                >
+                  <Shot shot={shot} className="hero-shot" />
+                </div>
+              );
+            })}
           </div>
-          {/* Hovering here is the only thing that pauses the rotation — the
-              deck itself deliberately doesn't, so moving across the shots
-              never freezes them. Focus pauses too: the handlers sit on the
-              container, so they cover the buttons inside it. */}
           <div className="hero-dots" role="tablist" aria-label="Project carousel" {...hoverProps}>
             {heroProjectStarts.map((start, p) => (
               <button
@@ -113,23 +133,6 @@ export default function Hero() {
           {/* Copy sits in a notch carved out of the card's bottom-left */}
           <div className="hero-copy">
             <h1 className="hero-title reveal reveal-lg">{profile.headline}</h1>
-
-            <a
-              className="scroll-cue reveal"
-              style={{ '--d': '350ms' } as React.CSSProperties}
-              href="#work"
-              aria-label="Scroll to work"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path
-                  d="M12 4v15m0 0 6-6m-6 6-6-6"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </a>
           </div>
         </div>
       </div>

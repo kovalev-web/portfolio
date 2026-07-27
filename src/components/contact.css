@@ -11,9 +11,10 @@
   padding: clamp(1.6rem, 5vw, 5rem);
   border-radius: var(--radius);
   overflow: hidden;
-  /* Matches the hero card: --hero-blue is the flat fallback under the shader
-     and flips with the theme, --ink is the copy colour that flips with it. */
-  color: var(--ink);
+  /* Matches the hero card: --hero-blue is a fixed dark surface regardless of
+     site theme, so the copy colour has to be fixed too — var(--ink) flips
+     with the theme and goes dark-on-dark in light mode. */
+  color: var(--accent-ink);
   background: var(--hero-blue);
 }
 

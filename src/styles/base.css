@@ -66,7 +66,7 @@
   /* Card surface shared by the hero and the contact block. Must be declared in
      both theme blocks: this selector also matches bare `:root`, so a value put
      in the brand block above would never survive into the dark theme. */
-  --hero-blue: #27364e;
+  --hero-blue: #1b2637;
 }
 
 :root[data-theme='dark'] {
@@ -78,7 +78,7 @@
   --glass: rgba(20, 20, 22, 0.5);
   --glass-line: rgba(249, 248, 246, 0.14);
   --shadow: 0 3px 20px -5px rgba(0, 0, 0, 0.5);
-  --hero-blue: #27364e;
+  --hero-blue: #1b2637;
 }
 
 /* ============================================================

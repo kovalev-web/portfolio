@@ -4,13 +4,13 @@ import { VERT, FRAG } from './gradient.glsl';
 export type Palette = [string, string, string, string];
 
 /**
- * The hero card's surface, one variant per theme. Kept inside one colour
- * family on purpose — the card should read as that colour slowly breathing,
- * not as a rainbow. Shared rather than per-component so the contact card
- * presents the same surface instead of a second, unrelated gradient.
+ * The hero card's surface, same in both themes — matches --hero-blue, the
+ * flat fallback under it. Kept inside one colour family on purpose — the
+ * card should read as that colour slowly breathing, not as a rainbow. Shared
+ * rather than per-component so the contact card presents the same surface
+ * instead of a second, unrelated gradient.
  */
-export const SURFACE_PALETTE: Palette = ['#1c2739', '#27364e', '#31455f', '#3a5271'];
-export const SURFACE_PALETTE_LIGHT: Palette = ['#b7b5b2', '#cac8c5', '#d8d5d3', '#e4e2e1'];
+export const SURFACE_PALETTE: Palette = ['#12192a', '#1b2637', '#223043', '#29394f'];
 
 type Props = {
   palette: Palette;

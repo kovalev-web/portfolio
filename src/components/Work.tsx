@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { projects } from '../data/content';
+import { visibleProjects as projects } from '../data/content';
 import { onNavClick } from '../hooks/useRoute';
 import './work.css';
 

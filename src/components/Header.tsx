@@ -8,8 +8,10 @@ import './header.css';
 // Rooted, not bare fragments: these sections only exist on the homepage, so
 // from a case study the link has to go there first and then find the anchor.
 const NAV = [
-  { label: 'Work', href: '/#work' },
-  { label: 'About', href: '/#about' },
+  { label: 'Projects', href: '/#work' },
+  { label: 'Experience', href: '/#experience' },
+  // About — parked along with the section itself in App.tsx; restore both together.
+  // { label: 'About', href: '/#about' },
   { label: 'Contact', href: '/#contact' },
 ];
 

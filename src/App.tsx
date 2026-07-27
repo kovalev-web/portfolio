@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Work from './components/Work';
-import About from './components/About';
+// About — parked, not deleted. Restore the import and the <About /> below
+// when the section is wanted again.
+// import About from './components/About';
 import Experience from './components/Experience';
 // Skills & services — parked, not deleted. Restore the import and the
 // <Skills /> below when the section is wanted again.
@@ -21,7 +23,7 @@ function Home() {
     <main>
       <Hero />
       <Work />
-      <About />
+      {/* <About /> */}
       <Experience />
       {/* <Skills /> */}
       <Contact />
