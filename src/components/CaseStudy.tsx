@@ -13,7 +13,9 @@ import './case-study.css';
  */
 function Shot({ src, alt, w, h }: { src: string; alt: string; w?: number; h?: number }): ReactNode {
   const [ok, setOk] = useState(true);
-  const ratio = w && h ? { aspectRatio: `${w} / ${h}` } : undefined;
+  // Capped at its own pixel width — stretching a screenshot past its native
+  // resolution just upscales it, which reads as blur rather than "bigger".
+  const ratio = w && h ? { aspectRatio: `${w} / ${h}`, maxWidth: `${w}px` } : undefined;
 
   if (!ok) {
     return (

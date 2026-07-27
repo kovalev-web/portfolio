@@ -69,7 +69,7 @@
   /* The cards no longer have an in-flow image to size them, and they must all
      be one shape anyway — a card can't change proportions mid-flight. Real
      assets that aren't this ratio should update it here, once. */
-  aspect-ratio: 1306 / 1384;
+  aspect-ratio: 33 / 35;
   overflow: hidden;
   border-radius: 30px 30px 0 0;
   /* Bottom-right: the deck stands on the card's bottom edge, so scaling a card
@@ -179,7 +179,6 @@
   display: grid;
   place-items: center;
   background: #14171f;
-  border: 1px dashed rgba(255, 255, 255, 0.18);
 }
 
 .hero-media-label {
