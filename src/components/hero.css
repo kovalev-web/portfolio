@@ -65,13 +65,19 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  height: 100%;
+  /* Rounded to a whole pixel — left as a bare 100%, the box's own top edge
+     can land on a fractional device pixel and anti-alias against whatever's
+     behind it, the same seam the fan's horizontal `round()`s fix sideways. */
+  height: round(nearest, 100%, 1px);
   /* The cards no longer have an in-flow image to size them, and they must all
      be one shape anyway — a card can't change proportions mid-flight. Real
      assets that aren't this ratio should update it here, once. */
   aspect-ratio: 33 / 35;
   overflow: hidden;
   border-radius: 30px 30px 0 0;
+  /* Shots have transparent margins around a floating device mockup; without
+     an opaque base here, the card stacked behind shows through those gaps. */
+  background: #14171f;
   /* Bottom-right: the deck stands on the card's bottom edge, so scaling a card
      back must not lift it off that edge. */
   transform-origin: 100% 100%;
@@ -103,25 +109,34 @@
 }
 
 /* Front of the fan */
+/* `round()` snaps the horizontal offset to a whole device pixel — left
+   unrounded, fractional translate values land this card's edge between
+   pixels, and the anti-aliased boundary lets a hairline of the card behind
+   bleed through. */
 .hero-media-card[data-slot='0'] {
-  transform: translateX(var(--fan-center));
+  transform: translateX(round(nearest, var(--fan-center), 1px)) translateZ(0);
   z-index: 3;
   box-shadow: -24px 0 64px rgba(0, 0, 0, 0.38);
 }
 
 /* Half the travel — the middle card lands midway across the box */
+/* These two also get `scale()`, which turns the whole-pixel height from
+   above back into a fraction again — no translate rounding fixes that, so
+   the ring papers over the residual hairline instead. Tinted with the
+   hero's own background rather than black, so on a light shot it reads as
+   the card sitting against that backdrop, not as a stray outline. */
 .hero-media-card[data-slot='1'] {
-  transform: translate(calc(var(--fan-center) + var(--fan-travel) / 2), var(--fan-y1))
-    scale(var(--fan-s1));
+  transform: translate(round(nearest, calc(var(--fan-center) + var(--fan-travel) / 2), 1px), round(nearest, var(--fan-y1), 1px))
+    scale(var(--fan-s1)) translateZ(0);
   z-index: 2;
-  box-shadow: -18px 0 52px rgba(0, 0, 0, 0.32);
+  box-shadow: -18px 0 52px rgba(0, 0, 0, 0.32), 0 0 0 1px var(--hero-blue);
 }
 
 .hero-media-card[data-slot='2'] {
-  transform: translate(calc(var(--fan-center) + var(--fan-travel)), var(--fan-y2))
-    scale(var(--fan-s2));
+  transform: translate(round(nearest, calc(var(--fan-center) + var(--fan-travel)), 1px), round(nearest, var(--fan-y2), 1px))
+    scale(var(--fan-s2)) translateZ(0);
   z-index: 1;
-  box-shadow: -14px 0 44px rgba(0, 0, 0, 0.26);
+  box-shadow: -14px 0 44px rgba(0, 0, 0, 0.26), 0 0 0 1px var(--hero-blue);
 }
 
 /* Peeling off the front: straight down and clean out of the hero card, which

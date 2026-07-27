@@ -32,11 +32,6 @@
   width: 100%;
   padding: 1.4rem 0;
   text-align: left;
-  transition: padding-left 0.35s var(--ease);
-}
-
-.exp-trigger:hover {
-  padding-left: 0.5em;
 }
 
 .exp-list:hover .exp-item:not(:hover) {
