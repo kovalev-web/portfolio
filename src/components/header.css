@@ -270,7 +270,7 @@
   display: none;
   flex-direction: column;
   gap: 0.2em;
-  padding: 1.6em 1.2em;
+  padding: 1.2em;
   /* Same fixed dark-blue surface as the hero card, not the purple --accent. */
   background: var(--hero-blue);
   color: var(--accent-ink);
