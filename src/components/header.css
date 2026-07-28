@@ -314,6 +314,7 @@
     flex: 1;
     justify-content: space-between;
     padding-top: 0;
+    padding-right: var(--page-pad);
     border-radius: 0;
   }
 
@@ -365,7 +366,7 @@
     background: var(--hero-blue);
     color: var(--accent-ink);
     margin-inline: calc(-1 * var(--page-pad));
-    padding-left: var(--page-pad);
+    padding-inline: var(--page-pad);
   }
 
   .site-header[data-menu-open='true'] .mobile-sheet {
