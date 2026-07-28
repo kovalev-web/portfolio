@@ -249,13 +249,10 @@
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 3;
+  z-index: 50;
   background: rgba(10, 10, 11, 0.12);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  /* Sits outside .header-inner like the sheet itself, so it needs its own
-     opt-in — otherwise it inherits pointer-events: none from .site-header
-     and taps on it would fall through instead of registering as "outside". */
   pointer-events: auto;
 }
 
@@ -389,11 +386,7 @@
      Menu/Close button aligned with the rest of the page, and changing it
      directly resized that row every time the menu opened. Compensating with
      equal and opposite padding keeps the logo/button exactly where they were
-     — only the background stretches out to the edges. */
-  .site-header[data-menu-open='true'] {
-    inset: 0;
-  }
-
+      — only the background stretches out to the edges. */
   .site-header[data-menu-open='true'] .notch {
     background: var(--bg);
     color: var(--ink);

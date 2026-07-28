@@ -82,36 +82,27 @@ export default function Header() {
     };
   }, [open]);
 
-  // Tapping outside the sheet closes it. Window-level capture-phase listeners
-  // fire before any target handler, so preventDefault blocks the entire event
-  // chain (touchstart → pointerdown → mouseup → click) before it reaches
-  // page content under the backdrop.
+  const backdropRef = useRef<HTMLDivElement>(null);
+
+  // Tapping on the backdrop closes the menu. Native listener so it fires
+  // before React's synthetic delegation and stops the click from reaching
+  // page content behind the backdrop.
   useEffect(() => {
-    if (!open) return;
+    const el = backdropRef.current;
+    if (!el || !open) return;
 
-    const onTouchStart = (e: TouchEvent) => {
-      if (sheetRef.current?.contains(e.target as Node) || toggleRef.current?.contains(e.target as Node)) return;
-      e.preventDefault();
-      setOpen(false);
-    };
-
-    const onPointerDown = (e: PointerEvent) => {
-      if (sheetRef.current?.contains(e.target as Node) || toggleRef.current?.contains(e.target as Node)) return;
-      e.preventDefault();
+    const onBackdropClick = (e: MouseEvent) => {
       e.stopPropagation();
       setOpen(false);
     };
 
-    window.addEventListener('touchstart', onTouchStart, { capture: true, passive: false });
-    window.addEventListener('pointerdown', onPointerDown, { capture: true });
-    return () => {
-      window.removeEventListener('touchstart', onTouchStart, { capture: true });
-      window.removeEventListener('pointerdown', onPointerDown, { capture: true });
-    };
+    el.addEventListener('click', onBackdropClick, true);
+    return () => el.removeEventListener('click', onBackdropClick, true);
   }, [open]);
 
   return (
-    <header className="site-header" data-menu-open={open}>
+    <>
+      <header className="site-header" data-menu-open={open}>
       <div className="top-line" aria-hidden="true" />
       <div className="right-corner" aria-hidden="true" />
       <div className="shell header-inner">
@@ -177,10 +168,6 @@ export default function Header() {
         </nav>
       </div>
 
-      {/* Blurs the page behind the sheet. Not in sheetRef, so the existing
-          outside-click handler already closes the menu when this is tapped. */}
-      <div className="mobile-sheet-backdrop" data-open={open} aria-hidden="true" />
-
       <div id="mobile-nav" ref={sheetRef} className="mobile-sheet" data-open={open}>
         {NAV.map((item) => (
           <a
@@ -203,5 +190,7 @@ export default function Header() {
         </button>
       </div>
     </header>
+      <div ref={backdropRef} className="mobile-sheet-backdrop" data-open={open} aria-hidden="true" />
+    </>
   );
 }
