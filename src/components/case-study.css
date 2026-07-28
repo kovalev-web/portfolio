@@ -6,7 +6,7 @@
 .case {
   /* Clears the fixed header, which the homepage handles with its hero card */
   padding-top: calc(var(--header-h) + 1.25rem);
-  padding-bottom: 3.75rem;
+  padding-bottom: 3rem;
 }
 
 /* Narrower than the shared .rail (1160px): screenshots are stored around
@@ -188,7 +188,7 @@
 
 /* ---------- More work ---------- */
 .case-next {
-  margin-top: 3.75rem;
+  margin-top: 3rem;
   padding-top: 1.875rem;
   border-top: 1px solid var(--line);
 }
