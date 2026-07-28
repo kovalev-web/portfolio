@@ -323,9 +323,20 @@
     display: none;
   }
 
-  .notch::before {
+  .notch::before,
+  .notch::after {
+    display: none;
+  }
+
+  .mobile-sheet {
+    border-radius: 0 0 var(--radius) var(--radius);
+  }
+
+  .mobile-sheet::before {
+    content: '';
+    position: absolute;
     left: 16px;
-    top: calc(100% - 1px);
+    bottom: calc(-1 * var(--radius) + 1px);
     width: var(--radius);
     height: calc(var(--radius) + 1px);
     background: radial-gradient(
@@ -333,12 +344,14 @@
       transparent var(--radius),
       var(--bg) calc(var(--radius) + 0.5px)
     );
+    pointer-events: none;
   }
 
-  .notch::after {
-    left: auto;
+  .mobile-sheet::after {
+    content: '';
+    position: absolute;
     right: 16px;
-    top: calc(100% - 1px);
+    bottom: calc(-1 * var(--radius) + 1px);
     width: var(--radius);
     height: calc(var(--radius) + 1px);
     background: radial-gradient(
@@ -346,6 +359,7 @@
       transparent var(--radius),
       var(--bg) calc(var(--radius) + 0.5px)
     );
+    pointer-events: none;
   }
 
   .logo-avatar {
@@ -365,6 +379,40 @@
     display: block;
   }
 
+  .mobile-sheet {
+    border-radius: 0 0 var(--radius) var(--radius);
+  }
+
+  .mobile-sheet::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    bottom: calc(-1 * var(--radius));
+    width: var(--radius);
+    height: calc(var(--radius) + 1px);
+    background: radial-gradient(
+      circle var(--radius) at 100% 100%,
+      transparent var(--radius),
+      var(--bg) calc(var(--radius) + 0.5px)
+    );
+    pointer-events: none;
+  }
+
+  .mobile-sheet::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    bottom: calc(-1 * var(--radius));
+    width: var(--radius);
+    height: calc(var(--radius) + 1px);
+    background: radial-gradient(
+      circle var(--radius) at 0% 100%,
+      transparent var(--radius),
+      var(--bg) calc(var(--radius) + 0.5px)
+    );
+    pointer-events: none;
+  }
+
   .mobile-sheet[data-open='true'] {
     display: flex;
   }
@@ -372,10 +420,6 @@
   /* Square top corners at this width only: the sheet sits flush against the
      notch above it, and a rounded top-left corner here left a sliver of page
      background poking through the seam between the two. */
-  .mobile-sheet {
-    border-radius: 0 0 var(--radius) var(--radius);
-    overflow: hidden;
-  }
 
   /* While the menu is open, the notch becomes the top of the same card as the
      sheet below it rather than a separate light-coloured bar sitting on top
