@@ -1,4 +1,4 @@
-import { Ellipsis, Menu, Moon, Sun, X } from 'lucide-react';
+import { Menu, Moon, Sun, X } from 'lucide-react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { profile } from '../data/content';
 import { useTheme } from '../hooks/useTheme';
@@ -149,7 +149,7 @@ export default function Header() {
               aria-expanded={false}
               aria-label="Expand navigation"
             >
-              <Ellipsis size={18} />
+              <Menu size={18} />
             </button>
           )}
 
