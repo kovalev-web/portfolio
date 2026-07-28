@@ -96,8 +96,12 @@ export default function Header() {
   }, [open]);
 
   const onBackdropPointerDown = (e: React.PointerEvent) => {
-    e.stopPropagation();
+    e.preventDefault();
     setOpen(false);
+  };
+
+  const onBackdropClick = (e: React.MouseEvent) => {
+    e.preventDefault();
   };
 
   return (
@@ -169,7 +173,7 @@ export default function Header() {
 
       {/* Blurs the page behind the sheet. Not in sheetRef, so the existing
           outside-click handler already closes the menu when this is tapped. */}
-      <div className="mobile-sheet-backdrop" data-open={open} aria-hidden="true" onPointerDown={onBackdropPointerDown} />
+      <div className="mobile-sheet-backdrop" data-open={open} aria-hidden="true" onPointerDown={onBackdropPointerDown} onClick={onBackdropClick} />
 
       <div id="mobile-nav" ref={sheetRef} className="mobile-sheet" data-open={open}>
         {NAV.map((item) => (
