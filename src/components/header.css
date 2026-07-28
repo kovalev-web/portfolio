@@ -237,7 +237,7 @@
   height: 40px;
   width: 40px;
   margin-left: 14px;
-  margin-bottom: 8px;
+  margin-bottom: 0;
   border: none;
   border-radius: 50%;
 }
