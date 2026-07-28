@@ -82,20 +82,23 @@ export default function Header() {
     };
   }, [open]);
 
-  // Tapping outside the sheet closes it. The toggle button is excluded so its
-  // own click (which already flips `open`) doesn't get double-handled here.
+  // Tapping outside the sheet closes it.
   useEffect(() => {
     if (!open) return;
 
     const onPointerDown = (e: PointerEvent) => {
-      const target = e.target as Node;
-      if (sheetRef.current?.contains(target) || toggleRef.current?.contains(target)) return;
+      if (sheetRef.current?.contains(e.target as Node) || toggleRef.current?.contains(e.target as Node)) return;
       setOpen(false);
     };
 
     document.addEventListener('pointerdown', onPointerDown);
     return () => document.removeEventListener('pointerdown', onPointerDown);
   }, [open]);
+
+  const onBackdropPointerDown = (e: React.PointerEvent) => {
+    e.stopPropagation();
+    setOpen(false);
+  };
 
   return (
     <header className="site-header" data-menu-open={open}>
@@ -166,7 +169,7 @@ export default function Header() {
 
       {/* Blurs the page behind the sheet. Not in sheetRef, so the existing
           outside-click handler already closes the menu when this is tapped. */}
-      <div className="mobile-sheet-backdrop" data-open={open} aria-hidden="true" />
+      <div className="mobile-sheet-backdrop" data-open={open} aria-hidden="true" onPointerDown={onBackdropPointerDown} />
 
       <div id="mobile-nav" ref={sheetRef} className="mobile-sheet" data-open={open}>
         {NAV.map((item) => (
