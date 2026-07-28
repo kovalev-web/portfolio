@@ -1,14 +1,12 @@
 /* Long-form case page. Everything here is drawn from the shared scale in
    base.css — sizes come from `--fs-*`, colour from `--ink`/`--ink-soft`/
-   `--line`, rhythm from `--radius*` and `--ease`. Spacing is a local 10px
-   grid — every margin/padding/gap on the page is a multiple of 10px, rather
-   than the mix of rem/clamp/vw values that used to drift out of sync with
-   each other. */
+   `--line`, rhythm from `--radius*` and `--ease`. Spacing is rem-based,
+   derived from the 10px grid (1 rem ≈ 16 px). */
 
 .case {
   /* Clears the fixed header, which the homepage handles with its hero card */
-  padding-top: calc(var(--header-h) + 20px);
-  padding-bottom: 60px;
+  padding-top: calc(var(--header-h) + 1.25rem);
+  padding-bottom: 3.75rem;
 }
 
 /* Narrower than the shared .rail (1160px): screenshots are stored around
@@ -24,8 +22,8 @@
 .case-back {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 30px;
+  gap: 0.625rem;
+  margin-bottom: 1.875rem;
   color: var(--ink-soft);
   transition: color var(--dur) var(--ease);
 }
@@ -35,7 +33,7 @@
 }
 
 .case-header {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .case-title {
@@ -51,16 +49,16 @@
 .case-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
-  margin-bottom: 30px;
-  padding-top: 20px;
+  gap: 1.875rem;
+  margin-bottom: 1.875rem;
+  padding-top: 1.25rem;
   border-top: 1px solid var(--line);
 }
 
 .case-meta-item {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.625rem;
 }
 
 .case-meta-value {
@@ -74,25 +72,25 @@
    68ch reading-measure cap. */
 
 .case-lead {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   font-size: var(--fs-lead);
   font-weight: 400;
   line-height: 1.5;
 }
 
 .case-text {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   font-size: var(--fs-base);
   line-height: 1.75;
   color: var(--ink-soft);
 }
 
 .case-eyebrow {
-  margin-top: 40px;
+  margin-top: 2.5rem;
 }
 
 .case-heading {
-  margin: 40px 0 10px;
+  margin: 2.5rem 0 0.625rem;
   font-size: var(--fs-h2);
   font-weight: 550;
   letter-spacing: -0.02em;
@@ -101,7 +99,7 @@
 
 /* An eyebrow introduces the heading under it — they are one unit */
 .case-eyebrow + .case-heading {
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
 /* ---------- Numbered goals ---------- */
@@ -109,13 +107,13 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 0.625rem;
+  margin-bottom: 1.25rem;
 }
 
 .case-goals li {
   display: flex;
-  gap: 20px;
+  gap: 1.25rem;
   align-items: baseline;
 }
 
@@ -142,8 +140,8 @@
 
 /* ---------- Pull quote ---------- */
 .case-quote {
-  margin: 10px 0 30px;
-  padding-left: 20px;
+  margin: 0.625rem 0 1.875rem;
+  padding-left: 1.25rem;
   border-left: 2px solid var(--line);
 }
 
@@ -155,7 +153,7 @@
 
 /* ---------- Figures ---------- */
 .case-figure {
-  margin: 0 0 20px;
+  margin: 0 0 1.25rem;
 }
 
 .case-shot {
@@ -175,7 +173,7 @@
 }
 
 .case-caption {
-  margin-top: 10px;
+  margin-top: 0.625rem;
   /* Full column width, matching the image above it — 68ch left it wrapping
      narrower than the shot it's captioning. */
   max-width: none;
@@ -185,19 +183,19 @@
 }
 
 .case-break {
-  height: 40px;
+  height: 2.5rem;
 }
 
 /* ---------- More work ---------- */
 .case-next {
-  margin-top: 60px;
-  padding-top: 30px;
+  margin-top: 3.75rem;
+  padding-top: 1.875rem;
   border-top: 1px solid var(--line);
 }
 
 .case-next ul {
   list-style: none;
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
 .case-next li + li {
@@ -207,13 +205,13 @@
 .case-next a {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 20px 0;
+  gap: 0.625rem;
+  padding: 1.25rem 0;
   transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
 }
 
 .case-next a:hover {
-  transform: translateX(8px);
+  transform: translateX(0.5rem);
 }
 
 .case-next-kicker {
@@ -231,6 +229,6 @@
 
 @media (max-width: 720px) {
   .case-goals li {
-    gap: 10px;
+    gap: 0.625rem;
   }
 }
