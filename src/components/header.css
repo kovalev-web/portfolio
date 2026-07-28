@@ -319,10 +319,33 @@
     border-radius: 0;
   }
 
-  .notch::before,
-  .notch::after,
   .right-corner {
     display: none;
+  }
+
+  .notch::before {
+    left: 0;
+    top: calc(100% - 1px);
+    width: var(--radius);
+    height: calc(var(--radius) + 1px);
+    background: radial-gradient(
+      circle var(--radius) at 100% 100%,
+      transparent var(--radius),
+      var(--bg) calc(var(--radius) + 0.5px)
+    );
+  }
+
+  .notch::after {
+    left: auto;
+    right: 0;
+    top: calc(100% - 1px);
+    width: var(--radius);
+    height: calc(var(--radius) + 1px);
+    background: radial-gradient(
+      circle var(--radius) at 0% 100%,
+      transparent var(--radius),
+      var(--bg) calc(var(--radius) + 0.5px)
+    );
   }
 
   .logo-avatar {
