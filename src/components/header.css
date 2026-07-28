@@ -70,7 +70,7 @@
   display: flex;
   align-items: center;
   height: var(--header-h);
-  padding: 18px 20px 0 0;
+  padding: 28px 20px 0 0;
   background: var(--bg);
   border-radius: 0 0 var(--radius) 0;
 }
