@@ -324,7 +324,7 @@
   }
 
   .notch::before {
-    left: 0;
+    left: 16px;
     top: calc(100% - 1px);
     width: var(--radius);
     height: calc(var(--radius) + 1px);
@@ -337,7 +337,7 @@
 
   .notch::after {
     left: auto;
-    right: 0;
+    right: 16px;
     top: calc(100% - 1px);
     width: var(--radius);
     height: calc(var(--radius) + 1px);
