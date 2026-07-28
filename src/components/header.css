@@ -390,6 +390,10 @@
      directly resized that row every time the menu opened. Compensating with
      equal and opposite padding keeps the logo/button exactly where they were
      — only the background stretches out to the edges. */
+  .site-header[data-menu-open='true'] {
+    inset: 0;
+  }
+
   .site-header[data-menu-open='true'] .notch {
     background: var(--bg);
     color: var(--ink);

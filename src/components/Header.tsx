@@ -82,42 +82,31 @@ export default function Header() {
     };
   }, [open]);
 
-  const backdropRef = useRef<HTMLDivElement>(null);
-
-  // Tapping outside the sheet closes it.
+  // Tapping outside the sheet closes it. Window-level capture-phase listeners
+  // fire before any target handler, so preventDefault blocks the entire event
+  // chain (touchstart → pointerdown → mouseup → click) before it reaches
+  // page content under the backdrop.
   useEffect(() => {
     if (!open) return;
 
+    const onTouchStart = (e: TouchEvent) => {
+      if (sheetRef.current?.contains(e.target as Node) || toggleRef.current?.contains(e.target as Node)) return;
+      e.preventDefault();
+      setOpen(false);
+    };
+
     const onPointerDown = (e: PointerEvent) => {
       if (sheetRef.current?.contains(e.target as Node) || toggleRef.current?.contains(e.target as Node)) return;
+      e.preventDefault();
+      e.stopPropagation();
       setOpen(false);
     };
 
-    document.addEventListener('pointerdown', onPointerDown);
-    return () => document.removeEventListener('pointerdown', onPointerDown);
-  }, [open]);
-
-  // Native handlers on the backdrop element — preventDefault on pointerdown
-  // stops the browser from synthesising a click, and on touchstart kills the
-  // entire mouse-event chain on mobile before it starts.
-  useEffect(() => {
-    const el = backdropRef.current;
-    if (!el || !open) return;
-
-    const onDown = (e: PointerEvent) => {
-      e.preventDefault();
-      setOpen(false);
-    };
-
-    const onTouchStart = (e: TouchEvent) => {
-      e.preventDefault();
-    };
-
-    el.addEventListener('pointerdown', onDown);
-    el.addEventListener('touchstart', onTouchStart, { passive: false });
+    window.addEventListener('touchstart', onTouchStart, { capture: true, passive: false });
+    window.addEventListener('pointerdown', onPointerDown, { capture: true });
     return () => {
-      el.removeEventListener('pointerdown', onDown);
-      el.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchstart', onTouchStart, { capture: true });
+      window.removeEventListener('pointerdown', onPointerDown, { capture: true });
     };
   }, [open]);
 
@@ -190,7 +179,7 @@ export default function Header() {
 
       {/* Blurs the page behind the sheet. Not in sheetRef, so the existing
           outside-click handler already closes the menu when this is tapped. */}
-      <div ref={backdropRef} className="mobile-sheet-backdrop" data-open={open} aria-hidden="true" />
+      <div className="mobile-sheet-backdrop" data-open={open} aria-hidden="true" />
 
       <div id="mobile-nav" ref={sheetRef} className="mobile-sheet" data-open={open}>
         {NAV.map((item) => (
