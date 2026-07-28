@@ -40,6 +40,10 @@ export default function Header() {
       if (pillRef.current) setPillWidth(pillRef.current.scrollWidth);
     };
     measure();
+    // Re-measure once fonts settle — on hard refresh the Google Font may still
+    // be loading when useLayoutEffect fires, giving a narrower scrollWidth
+    // that clips the ThemeToggle when the wider font swaps in.
+    document.fonts.ready.then(measure);
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
   }, []);
