@@ -186,7 +186,7 @@ export default function Header() {
           onClick={toggle}
           aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
         >
-          {theme === 'dark' ? <><Sun size={18} /> Light</> : <><Moon size={18} /> Dark</>}
+          {theme === 'dark' ? <><Sun size={18} strokeWidth={2.5} /> Light</> : <><Moon size={18} strokeWidth={2.5} /> Dark</>}
         </button>
       </div>
     </header>
