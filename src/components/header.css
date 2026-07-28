@@ -367,16 +367,18 @@
 
   .mobile-sheet {
     border-radius: 0 0 var(--radius) var(--radius);
+    padding-top: calc(1.2em + var(--radius));
   }
 
   .mobile-sheet[data-open='true'] {
     display: flex;
   }
 
-  /* The sheet starts below the notch fillets, so bottom corners are rounded
-     while the top edge meets the page background. */
+  /* Notch fillets extend --radius below the notch and sit above the sheet
+     (they're inside .header-inner, z-index 5; the sheet is z-index 4).
+     padding-top makes room for them so they don't overlap menu items.
 
-  /* While the menu is open, the notch becomes the top of the same card as the
+     While the menu is open, the notch becomes the top of the same card as the
      sheet below it rather than a separate light-coloured bar sitting on top
      of it — same surface, same colour, one continuous shape.
 
@@ -392,6 +394,6 @@
   }
 
   .site-header[data-menu-open='true'] .mobile-sheet {
-    inset: calc(var(--header-h) + var(--radius)) 0 auto;
+    inset: var(--header-h) 0 auto;
   }
 }
