@@ -351,6 +351,7 @@
      background poking through the seam between the two. */
   .mobile-sheet {
     border-radius: 0 0 var(--radius) var(--radius);
+    overflow: hidden;
   }
 
   /* While the menu is open, the notch becomes the top of the same card as the
