@@ -155,17 +155,23 @@
   color: #f9f8f6;
   /* Collapses to a circle on scroll (or a click) — width is set inline from
      JS since `auto` can't be transitioned, and the links spilling past the
-     56px circle just get clipped rather than reflowing. */
+     circle just get clipped rather than reflowing. */
   overflow: hidden;
-  transition: width 0.4s var(--ease);
+  transition: width 0.4s var(--ease), height 0.4s var(--ease), padding 0.4s var(--ease);
+}
+
+/* Circle matches .logo-avatar's 46px so the two line up as a pair. */
+.nav-pill[data-collapsed='true'] {
+  height: 46px;
+  padding: 0;
 }
 
 .nav-handle {
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   color: inherit;
   transition: background-color 0.2s var(--ease);

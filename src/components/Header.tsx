@@ -133,7 +133,7 @@ export default function Header() {
           aria-label="Main"
           ref={pillRef}
           data-collapsed={collapsed}
-          style={{ width: collapsed ? 56 : (pillWidth ?? undefined) }}
+          style={{ width: collapsed ? 46 : (pillWidth ?? undefined) }}
         >
           {/* Only exists while collapsed — expanding is a peek, not a mode,
               so there's nothing to click to reverse it once it's open. */}
@@ -158,7 +158,7 @@ export default function Header() {
 
           <div className="nav-links" inert={collapsed || undefined}>
             {NAV.map((item) => (
-              <a key={item.href} href={item.href}>
+              <a key={item.href} href={item.href} onClick={onNavClick}>
                 {item.label}
               </a>
             ))}
@@ -173,7 +173,14 @@ export default function Header() {
 
       <div id="mobile-nav" ref={sheetRef} className="mobile-sheet" data-open={open}>
         {NAV.map((item) => (
-          <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
+          <a
+            key={item.href}
+            href={item.href}
+            onClick={(e) => {
+              onNavClick(e);
+              setOpen(false);
+            }}
+          >
             {item.label}
           </a>
         ))}

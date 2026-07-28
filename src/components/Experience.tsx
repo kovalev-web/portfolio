@@ -12,6 +12,7 @@ import './experience.css';
  */
 export default function Experience() {
   const [open, setOpen] = useState<number | null>(null);
+  const [hover, setHover] = useState<number | null>(null);
 
   return (
     <section id="experience" className="experience">
@@ -26,13 +27,19 @@ export default function Experience() {
           ))}
         </ul>
 
-        <div className="exp-list">
+        <div className="exp-list" data-dim={hover !== null} onMouseLeave={() => setHover(null)}>
           {experience.map((job, i) => {
             const isOpen = open === i;
             const panelId = `exp-panel-${i}`;
 
             return (
-              <div className="exp-item reveal" key={job.company + job.period} data-open={isOpen}>
+              <div
+                className="exp-item reveal"
+                key={job.company + job.period}
+                data-open={isOpen}
+                data-active={hover === i}
+                onMouseEnter={() => setHover(i)}
+              >
                 <h3 className="exp-heading">
                   <button
                     className="exp-trigger"

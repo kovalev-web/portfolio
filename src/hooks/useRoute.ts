@@ -37,10 +37,29 @@ export function onNavClick(e: React.MouseEvent<HTMLAnchorElement>) {
 
   const href = e.currentTarget.getAttribute('href');
   if (!href || !href.startsWith('/')) return;
-  // Anchors like `/#work` are the browser's job — it has to land on the page
-  // and find the target, which a pushState alone would not do.
-  if (href.includes('#')) return;
+
+  const hashIndex = href.indexOf('#');
+  const path = hashIndex === -1 ? href : href.slice(0, hashIndex);
+  const hash = hashIndex === -1 ? null : href.slice(hashIndex + 1);
+  const targetPath = path || '/';
+
+  // Same-page anchor (e.g. clicking "/#work" while already on "/") — that's
+  // the browser's job, it scrolls straight there with no route change.
+  // Cross-page anchor (that link from a case study) is a real path change:
+  // pushState first, then find the target once the new page has rendered —
+  // a plain anchor left the browser trying to scroll to an element that
+  // doesn't exist yet, which just landed on "/" with no scroll at all.
+  if (hash && targetPath === window.location.pathname) return;
 
   e.preventDefault();
-  navigate(href);
+  navigate(targetPath);
+
+  if (hash) {
+    // A macrotask, not requestAnimationFrame — this only needs to run after
+    // React has committed the new route, not after a specific paint, and
+    // rAF doesn't fire at all for a backgrounded/unfocused tab.
+    setTimeout(() => {
+      document.getElementById(hash)?.scrollIntoView();
+    }, 0);
+  }
 }

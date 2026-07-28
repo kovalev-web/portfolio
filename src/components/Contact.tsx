@@ -27,7 +27,7 @@ export default function Contact() {
                 <span aria-hidden="true">✦</span>
               </a>
               <p className="contact-mail">
-                Or reach out at <a href={`mailto:${profile.email}`}>{profile.email}</a>
+                <a href={`mailto:${profile.email}`}>{profile.email}</a>
               </p>
             </div>
           </div>
