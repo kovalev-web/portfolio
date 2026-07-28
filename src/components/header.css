@@ -313,7 +313,7 @@
   .notch {
     flex: 1;
     justify-content: space-between;
-    padding-right: 0;
+    padding-top: 0;
     border-radius: 0;
   }
 
