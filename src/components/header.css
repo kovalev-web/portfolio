@@ -210,6 +210,8 @@
 .nav-pill .theme-toggle {
   border: none;
   color: rgba(249, 248, 246, 0.75);
+  margin-left: auto;
+  margin-right: 4px;
 }
 
 .nav-pill .theme-toggle:hover {
