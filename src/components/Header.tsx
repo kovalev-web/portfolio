@@ -82,6 +82,8 @@ export default function Header() {
     };
   }, [open]);
 
+  const backdropRef = useRef<HTMLDivElement>(null);
+
   // Tapping outside the sheet closes it.
   useEffect(() => {
     if (!open) return;
@@ -89,20 +91,27 @@ export default function Header() {
     const onPointerDown = (e: PointerEvent) => {
       if (sheetRef.current?.contains(e.target as Node) || toggleRef.current?.contains(e.target as Node)) return;
       setOpen(false);
+      e.preventDefault();
     };
 
     document.addEventListener('pointerdown', onPointerDown);
     return () => document.removeEventListener('pointerdown', onPointerDown);
   }, [open]);
 
-  const onBackdropPointerDown = (e: React.PointerEvent) => {
-    e.preventDefault();
-    setOpen(false);
-  };
+  // Native handler on the backdrop element itself — prevents the event
+  // sequence (pointerup → click) from ever reaching page content behind.
+  useEffect(() => {
+    const el = backdropRef.current;
+    if (!el || !open) return;
 
-  const onBackdropClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-  };
+    const onDown = (e: PointerEvent) => {
+      e.preventDefault();
+      setOpen(false);
+    };
+
+    el.addEventListener('pointerdown', onDown);
+    return () => el.removeEventListener('pointerdown', onDown);
+  }, [open]);
 
   return (
     <header className="site-header" data-menu-open={open}>
@@ -173,7 +182,7 @@ export default function Header() {
 
       {/* Blurs the page behind the sheet. Not in sheetRef, so the existing
           outside-click handler already closes the menu when this is tapped. */}
-      <div className="mobile-sheet-backdrop" data-open={open} aria-hidden="true" onPointerDown={onBackdropPointerDown} onClick={onBackdropClick} />
+      <div ref={backdropRef} className="mobile-sheet-backdrop" data-open={open} aria-hidden="true" />
 
       <div id="mobile-nav" ref={sheetRef} className="mobile-sheet" data-open={open}>
         {NAV.map((item) => (
