@@ -369,7 +369,7 @@
   /* Header is an opaque full-width bar here, so the card starts below it
      rather than being half-covered. */
   .hero {
-    padding-top: calc(var(--header-h) + 10px);
+    padding-top: var(--header-h);
   }
 
   /* Copy on top, deck below. The overlapping trio survives the move now that
