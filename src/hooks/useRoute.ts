@@ -61,5 +61,7 @@ export function onNavClick(e: React.MouseEvent<HTMLAnchorElement>) {
     setTimeout(() => {
       document.getElementById(hash)?.scrollIntoView();
     }, 0);
+  } else {
+    window.scrollTo(0, 0);
   }
 }
