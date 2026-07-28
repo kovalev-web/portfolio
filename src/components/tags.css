@@ -1,0 +1,29 @@
+/* Even gaps, natural wrap — the pills shrink (see .tag-pill) to stay on one
+   line as the viewport narrows, and only wrap once they hit their floor
+   size and still don't fit. */
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  list-style: none;
+}
+
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  /* em, not a fixed unit — padding rides along with the font-size clamp
+     below instead of needing its own breakpoint. */
+  padding: 0.55em 1.1em;
+  font-family: var(--font);
+  /* Grows with the viewport rather than the gaps stretching — that's what
+     carries the row out to the full width on a wide screen. Bottoms out
+     around 1124px; narrower than that it wraps instead of shrinking further. */
+  font-size: clamp(0.62rem, 0.1rem + 1.05vw, 1.3rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  border-radius: 50px;
+  white-space: nowrap;
+}

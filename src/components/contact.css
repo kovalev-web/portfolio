@@ -18,6 +18,16 @@
   background: var(--hero-blue);
 }
 
+/* Sits behind the copy, same as the hero card — --hero-blue on .contact-card
+   stays as the fallback for the first frame and for no-WebGL. */
+.contact-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
 .contact-body {
   position: relative;
   z-index: 2;

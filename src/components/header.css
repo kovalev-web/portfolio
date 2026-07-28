@@ -44,6 +44,11 @@
   align-items: flex-start;
   justify-content: space-between;
   pointer-events: none;
+  /* Above the mobile menu's blur backdrop (z-index: 3) — the logo and the
+     Menu/Close toggle live here and are part of the menu chrome itself, not
+     page content, so they shouldn't blur along with everything else. */
+  position: relative;
+  z-index: 5;
 }
 
 .header-inner > * {
@@ -148,6 +153,35 @@
   backdrop-filter: blur(10px) saturate(200%);
   -webkit-backdrop-filter: blur(10px) saturate(200%);
   color: #f9f8f6;
+  /* Collapses to a circle on scroll (or a click) — width is set inline from
+     JS since `auto` can't be transitioned, and the links spilling past the
+     56px circle just get clipped rather than reflowing. */
+  overflow: hidden;
+  transition: width 0.4s var(--ease);
+}
+
+.nav-handle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: inherit;
+  transition: background-color 0.2s var(--ease);
+}
+
+.nav-handle:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+:root[data-theme='dark'] .nav-handle:hover {
+  background: rgba(20, 23, 31, 0.1);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
 }
 
 :root[data-theme='dark'] .nav-pill {
@@ -158,7 +192,7 @@
 .nav-pill a {
   padding: 0 0.8em;
   font-size: var(--fs-sm);
-  font-weight: 500;
+  font-weight: 600;
   transition: opacity 0.2s var(--ease);
 }
 
@@ -202,9 +236,31 @@
   border-radius: 20px;
 }
 
+/* Blurs and dims everything behind the open sheet — same blur strength as
+   the nav pill's glass, without the saturate boost (there's no colour to
+   lift here, just page content receding). */
+.mobile-sheet-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  background: rgba(10, 10, 11, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  /* Sits outside .header-inner like the sheet itself, so it needs its own
+     opt-in — otherwise it inherits pointer-events: none from .site-header
+     and taps on it would fall through instead of registering as "outside". */
+  pointer-events: auto;
+}
+
+.mobile-sheet-backdrop[data-open='true'] {
+  display: block;
+}
+
 .mobile-sheet {
   position: fixed;
   inset: var(--header-h) var(--page-pad) auto;
+  z-index: 4;
   display: none;
   flex-direction: column;
   gap: 0.2em;
@@ -280,5 +336,33 @@
 
   .mobile-sheet[data-open='true'] {
     display: flex;
+  }
+
+  /* Square top corners at this width only: the sheet sits flush against the
+     notch above it, and a rounded top-left corner here left a sliver of page
+     background poking through the seam between the two. */
+  .mobile-sheet {
+    border-radius: 0 0 var(--radius) var(--radius);
+  }
+
+  /* While the menu is open, the notch becomes the top of the same card as the
+     sheet below it rather than a separate light-coloured bar sitting on top
+     of it — same surface, same colour, one continuous shape.
+
+     Bleeds past .header-inner via a negative margin rather than zeroing
+     .header-inner's own padding: the padding is what keeps the logo and the
+     Menu/Close button aligned with the rest of the page, and changing it
+     directly resized that row every time the menu opened. Compensating with
+     equal and opposite padding keeps the logo/button exactly where they were
+     — only the background stretches out to the edges. */
+  .site-header[data-menu-open='true'] .notch {
+    background: var(--hero-blue);
+    color: var(--accent-ink);
+    margin-inline: calc(-1 * var(--page-pad));
+    padding-inline: var(--page-pad);
+  }
+
+  .site-header[data-menu-open='true'] .mobile-sheet {
+    inset: var(--header-h) 0 auto;
   }
 }

@@ -39,7 +39,6 @@ export const cases: CaseStudy[] = [
     description: "UX/UI case study: unifying scattered crypto and stock portfolios into one venture-investment platform with live broker data, wallets, and reporting.",
     cover: "/media/covers/trade-scope.webp",
     blocks: [
-      { type: 'meta', items: [{ label: "Role", value: "Product / UX-UI Design" }, { label: "Platform", value: "Web & Mobile" }, { label: "Focus", value: "Venture portfolio analytics" }] },
       { type: 'image', src: "/media/cases/trade-scope/img-2.webp", alt: "Trade Scope dashboard shown on a mobile phone", w: 1515, h: 920 },
       { type: 'break' },
       { type: 'lead', text: "A venture investor's portfolio rarely lives in one place. Crypto sits in Binance, positions sit with a broker, and the rest lives in a spreadsheet nobody trusts. Trade Scope pulls all of it into a single, calm interface — so tracking performance stops being a second job." },

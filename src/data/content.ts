@@ -23,6 +23,20 @@ export const profile = {
   ],
 };
 
+/** Industries/domains worked in — a tag row under the hero, LinkedIn-skills style. */
+export const focusAreas = [
+  'Fintech',
+  'Edtech',
+  'iGaming',
+  'AI projects',
+  'Admin panels',
+  'Affiliate marketing',
+  'Trading',
+  'CEX',
+  'SaaS',
+  'Web apps',
+];
+
 /* `stats` and `highlights` fed the old right-hand rail in the hero, which is
    gone. Kept here in case they come back somewhere else. */
 export const stats = [
@@ -93,19 +107,19 @@ export const visibleProjects = projects.filter((_, i) => !HIDDEN_FROM_WORK.has(c
  */
 export const heroProjects: { src: string; alt: string }[][] = [
   [
-    { src: '/media/project-1/1.png', alt: `${projects[0].title} — main view` },
-    { src: '/media/project-1/2.png', alt: `${projects[0].title} — detail` },
-    { src: '/media/project-1/3.png', alt: `${projects[0].title} — detail` },
+    { src: '/media/project-1/1.webp', alt: `${projects[0].title} — main view` },
+    { src: '/media/project-1/2.webp', alt: `${projects[0].title} — detail` },
+    { src: '/media/project-1/3.webp', alt: `${projects[0].title} — detail` },
   ],
   [
-    { src: '/media/project-2/1.png', alt: `${projects[1].title} — main view` },
-    { src: '/media/project-2/2.png', alt: `${projects[1].title} — detail` },
-    { src: '/media/project-2/3.png', alt: `${projects[1].title} — detail` },
+    { src: '/media/project-2/1.webp', alt: `${projects[1].title} — main view` },
+    { src: '/media/project-2/2.webp', alt: `${projects[1].title} — detail` },
+    { src: '/media/project-2/3.webp', alt: `${projects[1].title} — detail` },
   ],
   [
-    { src: '/media/project-3/1.png', alt: `${projects[2].title} — main view` },
-    { src: '/media/project-3/2.png', alt: `${projects[2].title} — detail` },
-    { src: '/media/project-3/3.png', alt: `${projects[2].title} — detail` },
+    { src: '/media/project-3/1.webp', alt: `${projects[2].title} — main view` },
+    { src: '/media/project-3/2.webp', alt: `${projects[2].title} — detail` },
+    { src: '/media/project-3/3.webp', alt: `${projects[2].title} — detail` },
   ],
 ];
 
@@ -150,10 +164,15 @@ export const experience: Job[] = [
     period: 'Jun 2025 – May 2026',
     initials: '01',
     logo: '/media/logos/logo-01tech.webp',
+    summary:
+      'Part of a back-office design team building admin interfaces for a large portfolio of internal projects, several of them mine, all built on a shared design system.',
     bullets: [
-      'Designed features end-to-end — discovery, user flows, Figma specs, and developer handoff',
-      'Contributed to and maintained the internal design system across 3 product surfaces',
-      'Partnered with PMs and engineers in sprint cycles; led design reviews and established documentation standards',
+      'Designed features end-to-end, covering discovery, user flows, Figma specs, and developer handoff.',
+      'Worked from a shared design system, requesting new components from the design-system team as project needs came up.',
+      'Proposed and refined project-specific tokens together with the design-system team rather than improvising one-off styles.',
+      'Ran full Scrum ceremonies, including sprint planning, daily standups, and design reviews, alongside PMs and engineers.',
+      'Took every design through a multi-stage sign-off: team lead, technical writers, business analysts, and the design-system team checking token and semantic compliance.',
+      'Kept specs and documentation handoff-ready across several concurrent admin-panel workstreams.',
     ],
   },
   {
@@ -162,9 +181,15 @@ export const experience: Job[] = [
     period: 'Jan 2025 – Jul 2025',
     initials: 'PS',
     logo: '/media/logos/logo-proscom.png',
+    summary:
+      'Worked closely with the lead designer across several projects of national significance, spanning edtech, fintech, and economics-focused products, within a department run under a dedicated manager.',
     bullets: [
-      'Designed product features for an education platform end-to-end — discovery, user flows, Figma specs, and developer handoff',
-      'Designed interfaces for an investment product — onboarding, dashboards, and key user flows',
+      'Designed product features for an education platform end-to-end, covering discovery, user flows, Figma specs, and developer handoff.',
+      'Designed interfaces for an investment product, including onboarding, dashboards, and key user flows.',
+      'Contributed to economics-focused projects that required careful handling of sensitive, high-stakes data and workflows.',
+      'Ran full Scrum cadence, including sprint planning and daily standups, within a department led by a dedicated manager.',
+      'Partnered closely with the lead designer to keep design direction consistent across several concurrent projects.',
+      'Produced numerous concept designs and visual explorations for client-facing presentations.',
     ],
   },
   {
@@ -174,13 +199,13 @@ export const experience: Job[] = [
     initials: 'IR',
     logo: '/media/logos/logo-irev.webp',
     summary:
-      'Worked on developing and maintaining internal design systems to improve user experience and streamline workflows.',
+      'Led design system work for a set of internal CRM platforms, working to make everyday workflows faster and more consistent for the teams using them.',
     bullets: [
-      'Created a unified design system for internal CRM platforms.',
-      'Analyzed user behavior to optimize workflows and product usability.',
-      'Standardized UI components for consistency across products.',
-      'Managed a team of designers, improving processes with Scrum methodologies.',
-      'Updated project documentation to simplify collaboration with developers.',
+      'Created a unified design system for internal CRM platforms, replacing scattered one-off styles with a shared component library.',
+      'Analyzed user behavior across those platforms to find friction points and reshape workflows around how people actually worked.',
+      'Standardized UI components so every product surface looked and behaved consistently, cutting down on screens rebuilt from scratch.',
+      'Managed a team of designers, introducing Scrum ceremonies, including sprint planning and reviews, to bring more structure to the design process.',
+      'Rewrote project documentation so handoff to developers needed fewer rounds of back-and-forth clarification.',
       'Prepared presentations to communicate design updates to stakeholders.',
     ],
   },

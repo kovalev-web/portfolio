@@ -1,13 +1,18 @@
 import { profile } from '../data/content';
+import GradientCanvas, { SURFACE_PALETTE } from '../webgl/GradientCanvas';
+import { FRAG } from '../webgl/gradient.glsl';
 import './contact.css';
 
 export default function Contact() {
   return (
     <section id="contact" className="contact-section">
       <div className="shell">
-        {/* Flat --hero-blue, no shader — the card is the same surface as the
-            hero, just without the gradient running on it. */}
+        {/* Same shader and palette as the hero card — one surface, not a
+            second unrelated gradient. --hero-blue stays as the flat
+            fallback under it. */}
         <div className="contact-card on-media">
+          <GradientCanvas palette={SURFACE_PALETTE} className="contact-canvas" speed={1.5} grain={0.012} frag={FRAG} />
+
           <div className="contact-body">
             <h2 className="contact-title reveal reveal-lg">
               Have a product

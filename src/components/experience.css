@@ -2,10 +2,25 @@
   padding-top: 9vw;
 }
 
+.experience .rail {
+  max-width: 1040px;
+}
+
 .experience .kicker {
   display: block;
-  text-align: center;
+  text-align: left;
+  margin-bottom: clamp(1rem, 3vw, 1.75rem);
+}
+
+.work-tags {
+  justify-content: flex-start;
   margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+/* Smaller ceiling than the shared .tag-pill default — this row reads as a
+   quiet aside under the heading, not a second headline-sized element. */
+.work-tags .tag-pill {
+  font-size: clamp(0.65rem, 0.2rem + 0.75vw, 0.95rem);
 }
 
 /* ---------- Row ---------- */
@@ -169,7 +184,6 @@
 }
 
 .exp-summary {
-  max-width: 68ch;
   margin-bottom: 0.9rem;
   padding-left: calc(46px + 1.1rem);
   font-size: 1rem;
@@ -177,7 +191,6 @@
 }
 
 .exp-bullets {
-  max-width: 68ch;
   padding-left: calc(46px + 1.1rem);
   padding-bottom: 1.8rem;
   list-style: none;

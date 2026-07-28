@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { profile } from '../data/content';
 import { useTheme } from '../hooks/useTheme';
 import { onNavClick } from '../hooks/useRoute';
@@ -18,6 +18,60 @@ const NAV = [
 export default function Header() {
   const [open, setOpen] = useState(false);
   const { theme, toggle } = useTheme();
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  // The desktop pill: full width normally, shrinks to a circle once the page
+  // has scrolled a bit. Clicking the circle expands it again, but that's a
+  // peek, not a pin — the next bit of scrolling closes it right back up.
+  // There's no button for the reverse; scrolling is the only way to collapse.
+  const pillRef = useRef<HTMLElement>(null);
+  const [pillWidth, setPillWidth] = useState<number | null>(null);
+  const [collapsed, setCollapsed] = useState(false);
+  const pastThresholdRef = useRef(false);
+  const expandScrollYRef = useRef<number | null>(null);
+
+  // scrollWidth still reports the pill's full content width even while it's
+  // visually clipped down to a circle, so this is safe to call in either
+  // state — nothing has to wait for an expanded frame to measure against.
+  useLayoutEffect(() => {
+    const measure = () => {
+      if (pillRef.current) setPillWidth(pillRef.current.scrollWidth);
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  // Collapses past a scroll threshold, expands back near the top — edge-
+  // triggered so it only fires on the crossing itself, not every scroll
+  // tick. A manual peek (see the handle's onClick) rides along until the
+  // page moves more than REPEEK_DELTA from where it was opened, then it's
+  // closed back up — a couple of scroll ticks, not a held-open state.
+  useEffect(() => {
+    const THRESHOLD = 120;
+    const REPEEK_DELTA = 60;
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      const past = y > THRESHOLD;
+
+      if (past !== pastThresholdRef.current) {
+        pastThresholdRef.current = past;
+        expandScrollYRef.current = null;
+        setCollapsed(past);
+        return;
+      }
+
+      if (expandScrollYRef.current !== null && Math.abs(y - expandScrollYRef.current) > REPEEK_DELTA) {
+        expandScrollYRef.current = null;
+        setCollapsed(true);
+      }
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // Lock scroll while the mobile sheet is open
   useEffect(() => {
@@ -27,8 +81,23 @@ export default function Header() {
     };
   }, [open]);
 
+  // Tapping outside the sheet closes it. The toggle button is excluded so its
+  // own click (which already flips `open`) doesn't get double-handled here.
+  useEffect(() => {
+    if (!open) return;
+
+    const onPointerDown = (e: PointerEvent) => {
+      const target = e.target as Node;
+      if (sheetRef.current?.contains(target) || toggleRef.current?.contains(target)) return;
+      setOpen(false);
+    };
+
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => document.removeEventListener('pointerdown', onPointerDown);
+  }, [open]);
+
   return (
-    <header className="site-header">
+    <header className="site-header" data-menu-open={open}>
       <div className="top-line" aria-hidden="true" />
       <div className="right-corner" aria-hidden="true" />
       <div className="shell header-inner">
@@ -49,6 +118,7 @@ export default function Header() {
           </a>
 
           <button
+            ref={toggleRef}
             className="menu-toggle"
             aria-expanded={open}
             aria-controls="mobile-nav"
@@ -58,17 +128,50 @@ export default function Header() {
           </button>
         </div>
 
-        <nav className="nav-pill" aria-label="Main">
-          {NAV.map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label}
-            </a>
-          ))}
-          <ThemeToggle />
+        <nav
+          className="nav-pill"
+          aria-label="Main"
+          ref={pillRef}
+          data-collapsed={collapsed}
+          style={{ width: collapsed ? 56 : (pillWidth ?? undefined) }}
+        >
+          {/* Only exists while collapsed — expanding is a peek, not a mode,
+              so there's nothing to click to reverse it once it's open. */}
+          {collapsed && (
+            <button
+              type="button"
+              className="nav-handle"
+              onClick={() => {
+                expandScrollYRef.current = window.scrollY;
+                setCollapsed(false);
+              }}
+              aria-expanded={false}
+              aria-label="Expand navigation"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="5" cy="12" r="2" fill="currentColor" />
+                <circle cx="12" cy="12" r="2" fill="currentColor" />
+                <circle cx="19" cy="12" r="2" fill="currentColor" />
+              </svg>
+            </button>
+          )}
+
+          <div className="nav-links" inert={collapsed || undefined}>
+            {NAV.map((item) => (
+              <a key={item.href} href={item.href}>
+                {item.label}
+              </a>
+            ))}
+            <ThemeToggle />
+          </div>
         </nav>
       </div>
 
-      <div id="mobile-nav" className="mobile-sheet" data-open={open}>
+      {/* Blurs the page behind the sheet. Not in sheetRef, so the existing
+          outside-click handler already closes the menu when this is tapped. */}
+      <div className="mobile-sheet-backdrop" data-open={open} aria-hidden="true" />
+
+      <div id="mobile-nav" ref={sheetRef} className="mobile-sheet" data-open={open}>
         {NAV.map((item) => (
           <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
             {item.label}

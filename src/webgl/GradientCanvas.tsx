@@ -10,7 +10,7 @@ export type Palette = [string, string, string, string];
  * rather than per-component so the contact card presents the same surface
  * instead of a second, unrelated gradient.
  */
-export const SURFACE_PALETTE: Palette = ['#12192a', '#1b2637', '#223043', '#29394f'];
+export const SURFACE_PALETTE: Palette = ['#1e2530', '#28313d', '#313b48', '#3a4553'];
 
 type Props = {
   palette: Palette;

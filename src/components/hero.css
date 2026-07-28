@@ -139,6 +139,24 @@
   box-shadow: -14px 0 44px rgba(0, 0, 0, 0.26), 0 0 0 1px var(--hero-blue);
 }
 
+/* Projects 1 and 2 (0-indexed: 0, 1) run dark shots — a black cast shadow
+   read as a second dark rectangle stacked behind the card. Tinted with the
+   brand blue instead so it reads as a shadow, not another screenshot. */
+.hero-media-card[data-project='0'][data-slot='0'],
+.hero-media-card[data-project='1'][data-slot='0'] {
+  box-shadow: -24px 0 64px color-mix(in srgb, var(--hero-blue) 19%, transparent);
+}
+
+.hero-media-card[data-project='0'][data-slot='1'],
+.hero-media-card[data-project='1'][data-slot='1'] {
+  box-shadow: -18px 0 52px color-mix(in srgb, var(--hero-blue) 17%, transparent), 0 0 0 1px var(--hero-blue);
+}
+
+.hero-media-card[data-project='0'][data-slot='2'],
+.hero-media-card[data-project='1'][data-slot='2'] {
+  box-shadow: -14px 0 44px color-mix(in srgb, var(--hero-blue) 14%, transparent), 0 0 0 1px var(--hero-blue);
+}
+
 /* Back cards are click targets — bring a card to front by clicking it
    instead of waiting for the rotation or hunting for the right dot. */
 .hero-media-card[data-slot='1'],

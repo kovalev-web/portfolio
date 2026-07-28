@@ -96,6 +96,7 @@ export default function Hero() {
                   className="hero-media-card"
                   key={i}
                   data-slot={slot}
+                  data-project={shot.project}
                   aria-hidden={slot === 'hidden' || slot === 'out-front'}
                   role={isBackCard ? 'button' : undefined}
                   tabIndex={isBackCard ? 0 : undefined}
