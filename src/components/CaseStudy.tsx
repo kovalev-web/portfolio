@@ -99,7 +99,7 @@ function Block({ block }: { block: CaseBlock }): ReactNode {
       );
 
     case 'break':
-      return <div className="case-break" aria-hidden="true" />;
+      return null;
   }
 }
 
