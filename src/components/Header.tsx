@@ -113,7 +113,7 @@ export default function Header() {
           SVG corners never disappear.
         */}
         <div className="notch">
-          <a className="logo" href="/" aria-label="Home" onClick={onNavClick}>
+          <a className="logo" href="/" aria-label="Home" onClick={(e) => { onNavClick(e); setOpen(false); }}>
             <img className="logo-avatar" src={profile.avatar} alt="" width="46" height="46" />
             <span className="logo-text">
               Dmitrii
