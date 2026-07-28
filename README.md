@@ -16,6 +16,38 @@ React 19 + TypeScript + Vite, обычный CSS с custom properties, сыро�
 
 Прод-бандл: **67 KB gzip JS + 4 KB gzip CSS**.
 
+## Деплой
+
+С 28.07.2026 сайт живёт на своём VPS, не на Vercel (Vercel ограничивал по
+деплоям). Домен `fraimye.com` через Cloudflare (DNS + proxy + SSL) смотрит на
+VPS `202.182.110.25`.
+
+```bash
+npm run build
+rsync -avz --delete dist/ root@202.182.110.25:/opt/fraimye/dist/
+```
+
+Больше ничего не нужно — статика, без pm2/рестартов. nginx на сервере отдаёт
+`/opt/fraimye/dist` напрямую (конфиг `/etc/nginx/sites-available/fraimye-com`).
+
+Инфраструктура:
+- **VPS**: `202.182.110.25` (root, hostname `vultr`), там же живут другие
+  проекты (`screela`, `pump-analyzer`, `s-shoter` и т.д. в `/opt/*`,
+  через pm2 + nginx reverse proxy). Наш сайт — единственный, кто отдаётся как
+  статика напрямую из `root`, без прокси на порт.
+- **DNS**: домен куплен на reg.ru, но зона DNS ведётся в Cloudflare (NS
+  делегированы на `jimmy.ns.cloudflare.com` / `tori.ns.cloudflare.com`) —
+  у reg.ru редактор DNS-записей был заблокирован просроченным хостинг-планом.
+  MX/SPF-записи (`mail`, `pop`, `smtp`, `ftp` → `31.31.198.2`) не трогали,
+  хотя почта на домене реально не настроена.
+- **SSL**: режим Cloudflare — **Flexible** (браузер↔Cloudflare шифруется,
+  Cloudflare↔VPS — обычный HTTP, у nginx на VPS нет своего сертификата и
+  порт 443 не открыт).
+- **Vercel**: домен временно снова прикреплён к старому Vercel-проекту как
+  фолбэк, пока DNS не долетит до всех резолверов/операторов — так вместо 404
+  у отставших показывается старая (рабочая, с одним мелким багом) версия.
+  Можно отвязать (Settings → Domains → Remove), когда DNS у всех обновится.
+
 ## Структура
 
 ```
