@@ -160,10 +160,6 @@
   width: 100%;
   height: auto;
   border-radius: 12px;
-  /* Shots are mostly light UI on a light page; a hairline keeps the edge from
-     dissolving into the background without adding a visible frame. */
-  outline: 1px solid var(--line);
-  outline-offset: -1px;
 }
 
 .case-shot-missing {
