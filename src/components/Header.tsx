@@ -1,3 +1,4 @@
+import { Ellipsis, Menu, Moon, Sun, X } from 'lucide-react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { profile } from '../data/content';
 import { useTheme } from '../hooks/useTheme';
@@ -124,7 +125,7 @@ export default function Header() {
             aria-controls="mobile-nav"
             onClick={() => setOpen((v) => !v)}
           >
-            {open ? 'Close' : 'Menu'}
+            {open ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
 
@@ -148,11 +149,7 @@ export default function Header() {
               aria-expanded={false}
               aria-label="Expand navigation"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="5" cy="12" r="2" fill="currentColor" />
-                <circle cx="12" cy="12" r="2" fill="currentColor" />
-                <circle cx="19" cy="12" r="2" fill="currentColor" />
-              </svg>
+              <Ellipsis size={18} />
             </button>
           )}
 
@@ -189,7 +186,7 @@ export default function Header() {
           onClick={toggle}
           aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
         >
-          {theme === 'dark' ? '☀︎ Light' : '☾ Dark'}
+          {theme === 'dark' ? <><Sun size={18} /> Light</> : <><Moon size={18} /> Dark</>}
         </button>
       </div>
     </header>
