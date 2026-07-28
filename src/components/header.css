@@ -368,6 +368,8 @@
   .mobile-sheet {
     border-radius: 0 0 var(--radius) var(--radius);
     padding-top: calc(1.2em + var(--radius));
+    background: #000;
+    color: #fff;
   }
 
   .mobile-sheet[data-open='true'] {
@@ -389,8 +391,16 @@
      equal and opposite padding keeps the logo/button exactly where they were
      — only the background stretches out to the edges. */
   .site-header[data-menu-open='true'] .notch {
-    background: var(--hero-blue);
-    color: var(--accent-ink);
+    background: #000;
+    color: #fff;
+  }
+
+  .site-header[data-menu-open='true'] .menu-toggle {
+    color: #fff;
+  }
+
+  .mobile-theme-toggle {
+    color: #fff;
   }
 
   .site-header[data-menu-open='true'] .mobile-sheet {
