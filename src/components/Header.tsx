@@ -91,15 +91,15 @@ export default function Header() {
     const onPointerDown = (e: PointerEvent) => {
       if (sheetRef.current?.contains(e.target as Node) || toggleRef.current?.contains(e.target as Node)) return;
       setOpen(false);
-      e.preventDefault();
     };
 
     document.addEventListener('pointerdown', onPointerDown);
     return () => document.removeEventListener('pointerdown', onPointerDown);
   }, [open]);
 
-  // Native handler on the backdrop element itself — prevents the event
-  // sequence (pointerup → click) from ever reaching page content behind.
+  // Native handlers on the backdrop element — preventDefault on pointerdown
+  // stops the browser from synthesising a click, and on touchstart kills the
+  // entire mouse-event chain on mobile before it starts.
   useEffect(() => {
     const el = backdropRef.current;
     if (!el || !open) return;
@@ -109,8 +109,16 @@ export default function Header() {
       setOpen(false);
     };
 
+    const onTouchStart = (e: TouchEvent) => {
+      e.preventDefault();
+    };
+
     el.addEventListener('pointerdown', onDown);
-    return () => el.removeEventListener('pointerdown', onDown);
+    el.addEventListener('touchstart', onTouchStart, { passive: false });
+    return () => {
+      el.removeEventListener('pointerdown', onDown);
+      el.removeEventListener('touchstart', onTouchStart);
+    };
   }, [open]);
 
   return (
