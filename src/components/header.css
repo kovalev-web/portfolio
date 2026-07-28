@@ -185,11 +185,6 @@
   background: rgba(20, 23, 31, 0.1);
 }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-}
-
 :root[data-theme='dark'] .nav-pill {
   background: rgba(249, 248, 246, 0.65);
   color: #14171f;

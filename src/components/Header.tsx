@@ -161,14 +161,12 @@ export default function Header() {
             </button>
           )}
 
-          <div className="nav-links" inert={collapsed || undefined}>
-            {NAV.map((item) => (
-              <a key={item.href} href={item.href} onClick={onNavClick}>
-                {item.label}
-              </a>
-            ))}
-            <ThemeToggle />
-          </div>
+          {NAV.map((item) => (
+            <a key={item.href} href={item.href} onClick={onNavClick}>
+              {item.label}
+            </a>
+          ))}
+          <ThemeToggle />
         </nav>
       </div>
 
