@@ -12,6 +12,7 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CaseStudy from './components/CaseStudy';
+import Cv from './components/Cv';
 import NotFound from './components/NotFound';
 import { ThemeProvider } from './hooks/useTheme';
 import { useReveal } from './hooks/useReveal';
@@ -50,7 +51,15 @@ export default function App() {
   return (
     <ThemeProvider>
       <Header />
-      {path === '/' ? <Home /> : study ? <CaseStudy study={study} /> : <NotFound />}
+      {path === '/' ? (
+        <Home />
+      ) : path === '/cv' ? (
+        <Cv />
+      ) : study ? (
+        <CaseStudy study={study} />
+      ) : (
+        <NotFound />
+      )}
       <Footer />
     </ThemeProvider>
   );

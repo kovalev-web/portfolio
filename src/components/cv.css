@@ -1,0 +1,88 @@
+/* Standalone password gate for the CV download — same tokens as the rest of
+   the site, same interaction as the old fraimye.com/cv page it replaces. */
+
+.cv-gate {
+  min-height: calc(100vh - var(--header-h));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem var(--page-pad) 3rem;
+}
+
+.cv-gate-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+.cv-gate-label {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.cv-gate-row {
+  display: flex;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.cv-gate-row:focus-within {
+  border-color: var(--ink-soft);
+}
+
+.cv-gate-row.error {
+  border-color: rgba(255, 80, 80, 0.6);
+  animation: cv-gate-shake 0.25s ease;
+}
+
+@keyframes cv-gate-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+.cv-gate-input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--font);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  padding: 0.75rem 1rem;
+  letter-spacing: 0.05em;
+}
+
+.cv-gate-input::placeholder {
+  color: var(--ink-soft);
+  opacity: 0.6;
+}
+
+.cv-gate-submit {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-left: 1px solid var(--line);
+  color: var(--ink-soft);
+  transition: color 0.15s;
+}
+
+.cv-gate-submit:hover {
+  color: var(--ink);
+}
