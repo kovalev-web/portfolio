@@ -36,7 +36,7 @@
   /* Section headings inside long-form copy — the one rung the scale was
      missing between `--fs-lg` and the display sizes. */
   --fs-h2: clamp(1.3rem, 1.15rem + 0.5vw, 1.6rem);
-  --fs-xl: clamp(2rem, 1rem + 4.5vw, 6rem);
+  --fs-xl: clamp(2rem, 1rem + 4.5vw, 5.375rem);
   --fs-display: clamp(2.35rem, 1.9rem + 2.2vw, 4rem);
   --fs-lead: clamp(1.05rem, 0.95rem + 0.5vw, 1.5rem);
   --fs-kicker: 0.8rem;
