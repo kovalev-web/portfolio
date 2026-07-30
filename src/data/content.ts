@@ -99,11 +99,10 @@ export const visibleProjects = projects.filter((_, i) => !HIDDEN_FROM_WORK.has(c
  * Grouping only drives the pagination dots (one per project). The rotation
  * itself runs over the flattened `heroDeck` below, one card at a time.
  *
- * Placeholder: every slot below points at the one shot we have. Swapping in
- * real screenshots is just replacing `src`/`alt` — nothing about the shuffle
+ * Swapping a shot is just replacing `src`/`alt` — nothing about the shuffle
  * changes. Every card is the same box with `object-fit: cover`, so shots don't
- * have to match the placeholder ratio exactly, but a similar portrait ratio
- * crops most kindly.
+ * have to match each other's ratio exactly, but a similar portrait ratio crops
+ * most kindly, and the crop runs from the top-left corner.
  */
 export const heroProjects: { src: string; alt: string }[][] = [
   [
