@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Work from './components/Work';
+import Nda from './components/Nda';
 // About — parked, not deleted. Restore the import and the <About /> below
 // when the section is wanted again.
 // import About from './components/About';
@@ -24,6 +25,7 @@ function Home() {
     <main>
       <Hero />
       <Work />
+      <Nda />
       {/* <About /> */}
       <Experience />
       {/* <Skills /> */}

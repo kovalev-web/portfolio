@@ -92,6 +92,17 @@ export const HIDDEN_FROM_WORK = new Set(['control-panel', 'organix']);
 export const visibleProjects = projects.filter((_, i) => !HIDDEN_FROM_WORK.has(cases[i].slug));
 
 /**
+ * Shipped work that can't get a case page at all — counted, not shown. Renders
+ * as the locked tiles under Selected work.
+ */
+export const ndaWork = [
+  { value: 3, label: 'Design systems' },
+  { value: 4, label: '01.tech products' },
+  { value: 8, label: 'IREV products' },
+  { value: 3, label: 'AI products' },
+];
+
+/**
  * Hero shot deck, grouped by project. Each inner array is one project's shots,
  * shown front-most first. Titles borrow from `projects` above just for the alt
  * text — the rotation itself doesn't otherwise depend on that list.

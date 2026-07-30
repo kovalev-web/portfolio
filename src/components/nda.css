@@ -1,0 +1,95 @@
+/* Reads as a footnote to Work, not a new section: tighter top gap than
+   Work's own 9vw-off-Hero, and the same rail width so the tiles line up
+   under the list above them. */
+.nda {
+  padding-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.nda .rail {
+  max-width: 1040px;
+}
+
+.nda-intro {
+  margin-top: 0.75rem;
+  margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* Dropping the old 46ch reading-measure cap already lets this fit on one line
+   at rail width (960px content vs. ~774px of text) — this just guarantees it.
+   Scoped above the point where .nda-grid still shows 4 columns: below that,
+   the rail itself is narrower than the sentence, and nowrap would push the
+   page into horizontal scroll instead of just wrapping. */
+@media (min-width: 861px) {
+  .nda-intro {
+    white-space: nowrap;
+  }
+}
+
+.nda-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  list-style: none;
+}
+
+.nda-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: clamp(1.1rem, 3vw, 1.25rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  /* Also `.reveal` — blur-in properties repeated so the shorthand keeps them */
+  transition: border-color var(--dur) var(--ease), opacity 0.8s var(--ease),
+    filter 1s var(--ease), transform 0.8s var(--ease);
+}
+
+/* Not a link — nothing to open — but still worth a flicker of life under the
+   cursor, the way every other bordered surface on the site has one. */
+.nda-item:hover {
+  border-color: var(--ink-soft);
+}
+
+.nda-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+}
+
+.nda-value {
+  font-size: var(--fs-display);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.nda-lock {
+  flex-shrink: 0;
+  color: var(--ink-soft);
+  transition: color var(--dur) var(--ease);
+}
+
+.nda-item:hover .nda-lock {
+  color: var(--ink);
+}
+
+.nda-label {
+  display: block;
+}
+
+@media (max-width: 860px) {
+  .nda-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .nda-grid {
+    grid-template-columns: 1fr;
+  }
+}
