@@ -41,8 +41,11 @@
       })();
     </script>
 
-    <!-- Umami analytics (self-hosted) -->
-    <script defer src="https://analytics.screela.com/script.js" data-website-id="5b2bc6a6-b035-49a3-a7f8-1201f8b37436"></script>
+    <!-- Umami analytics (self-hosted). `recorder.js` — not `script.js` — is
+         the tracker that also feeds Replays & Heatmaps; the site itself still
+         needs those toggled on in the Umami dashboard (Website → Settings →
+         Replays & Heatmaps), which lives outside this repo. -->
+    <script defer src="https://analytics.screela.com/recorder.js" data-website-id="5b2bc6a6-b035-49a3-a7f8-1201f8b37436"></script>
   </head>
   <body>
     <div id="root"></div>
