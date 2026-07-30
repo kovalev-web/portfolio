@@ -79,39 +79,50 @@ export default function Hero() {
         <div className="hero-card">
           <GradientCanvas palette={SURFACE_PALETTE} className="hero-canvas" speed={1.5} grain={0.012} frag={FRAG} />
 
-          {/* Hovering the deck pauses the rotation too — the back cards are
-              click targets now, and a card that drifts mid-aim defeats the
-              point. Focus pauses for the same reason: tabbing onto a back
-              card shouldn't have it slide away before Enter lands. */}
+          {/* Hovering the deck pauses the rotation too — the cards are click
+              targets, and a card that drifts mid-aim defeats the point. Focus
+              pauses for the same reason: tabbing onto a card shouldn't have it
+              slide away before Enter lands. */}
           <div className="hero-media" data-jump={jumped ? 'true' : undefined} {...hoverProps}>
             {heroDeck.map((shot, i) => {
               const slot = slotOf(i, index, prev, heroDeck.length);
-              // Only the two back cards are real click targets — the front
-              // card is already active, and 'hidden'/'out-front' cards are
-              // either covered or mid-exit, so a click there can't land on
-              // the thing the user meant.
-              const isBackCard = slot === '1' || slot === '2';
+              // All three standing cards are click targets. 'hidden' and
+              // 'out-front' ones are covered or mid-exit, so a click there
+              // can't land on the thing the user meant.
+              const standing = slot === '0' || slot === '1' || slot === '2';
+              const front = slot === '0';
+              // A back card brings itself forward. The front card is already
+              // there, so `go(i)` on it would do nothing at all — the switch
+              // it can make is the next card, which is the same single step
+              // the rotation takes.
+              const activate = () => go(front ? i + 1 : i);
               return (
                 <div
                   className="hero-media-card"
                   key={i}
                   data-slot={slot}
                   data-project={shot.project}
-                  aria-hidden={slot === 'hidden' || slot === 'out-front'}
-                  role={isBackCard ? 'button' : undefined}
-                  tabIndex={isBackCard ? 0 : undefined}
-                  onClick={isBackCard ? () => go(i) : undefined}
+                  aria-hidden={!standing}
+                  role={standing ? 'button' : undefined}
+                  tabIndex={standing ? 0 : undefined}
+                  onClick={standing ? activate : undefined}
                   onKeyDown={
-                    isBackCard
+                    standing
                       ? (e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
-                            go(i);
+                            activate();
                           }
                         }
                       : undefined
                   }
-                  aria-label={isBackCard ? `Bring ${shot.alt || 'this shot'} to the front` : undefined}
+                  aria-label={
+                    standing
+                      ? front
+                        ? 'Show the next shot'
+                        : `Bring ${shot.alt || 'this shot'} to the front`
+                      : undefined
+                  }
                 >
                   <Shot shot={shot} className="hero-shot" />
                 </div>
