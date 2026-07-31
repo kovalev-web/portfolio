@@ -171,7 +171,7 @@ export const experience: Job[] = [
   {
     company: '01.tech',
     role: 'Senior Product Designer',
-    period: 'Jun 2025 – May 2026',
+    period: 'Jul 2025 – May 2026',
     initials: '01',
     logo: '/media/logos/logo-01tech.webp',
     summary:
@@ -204,17 +204,17 @@ export const experience: Job[] = [
   },
   {
     company: 'IREV',
-    role: 'Lead Product Designer',
+    role: 'Senior Product Designer',
     period: 'Oct 2019 – Jun 2024',
     initials: 'IR',
     logo: '/media/logos/logo-irev.webp',
     summary:
-      'Led design system work for a set of internal CRM platforms, working to make everyday workflows faster and more consistent for the teams using them.',
+      'Drove design system work for a set of internal CRM platforms, working to make everyday workflows faster and more consistent for the teams using them.',
     bullets: [
       'Created a unified design system for internal CRM platforms, replacing scattered one-off styles with a shared component library.',
       'Analyzed user behavior across those platforms to find friction points and reshape workflows around how people actually worked.',
       'Standardized UI components so every product surface looked and behaved consistently, cutting down on screens rebuilt from scratch.',
-      'Managed a team of designers, introducing Scrum ceremonies, including sprint planning and reviews, to bring more structure to the design process.',
+      'Introduced Scrum ceremonies, including sprint planning and reviews, to bring more structure to the design process.',
       'Rewrote project documentation so handoff to developers needed fewer rounds of back-and-forth clarification.',
       'Prepared presentations to communicate design updates to stakeholders.',
     ],
@@ -231,20 +231,6 @@ export const experience: Job[] = [
       'Designed a CMS product for Facebook to streamline asset management for advertising creatives.',
       'Implemented features for creative assembly and moderation to enhance workflow efficiency.',
       'Improved user interfaces for company products, ensuring usability and consistency.',
-    ],
-  },
-  {
-    company: 'QIWI Ltd',
-    role: 'UX/UI Designer',
-    period: 'Feb 2017 – Apr 2017',
-    initials: 'QW',
-    logo: '/media/logos/logo-qiwi.webp',
-    summary:
-      'Project work. Experimental development of interface concepts. Implementation of successful solutions into the product\'s current interfaces.',
-    bullets: [
-      'Developed and tested interface concepts to improve usability and design.',
-      'Implemented successful solutions into existing product interfaces.',
-      'Designed application concepts for A/B testing to optimize online banking patterns.',
     ],
   },
   {
