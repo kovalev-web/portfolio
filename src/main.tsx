@@ -5,9 +5,13 @@ import { createRoot } from 'react-dom/client';
 // `transition` shorthand to survive).
 import './styles/base.css';
 import App from './App';
+import { initAnalytics } from './analytics';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
   </StrictMode>,
 );
+
+// After render, not before: the tracker is not on the path to first paint.
+initAnalytics();
