@@ -9,6 +9,11 @@
     <link rel="icon" type="image/png" href="/favicon-dark.png" media="(prefers-color-scheme: dark)" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
+    <!-- Everything between these markers is the homepage's own set of tags. The
+         `prerender-case-meta` plugin in vite.config.ts swaps the whole block
+         out when it writes the per-case HTML files, so a case study stops
+         inheriting the site-wide title, description and card. -->
+    <!-- page-meta:start -->
     <!-- Domain first, capability second: leading with "design systems" read as
          if that were the whole job. Keep this in step with `profile.headline`
          in src/data/content.ts. -->
@@ -35,6 +40,8 @@
       content="Dmitrii Kovalev, Sr. Product Designer — B2B, CRM, SaaS. Interface work from fintech and SaaS products."
     />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://www.fraimye.com/" />
+    <!-- page-meta:end -->
 
     <!--
       Display typeface: Mona Sans from Google Fonts.
@@ -63,6 +70,9 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- Replaced at build time with a text-only copy of the page for readers
+         that never run the bundle. Empty in dev, where there are none. -->
+    <!-- page-body:start --><!-- page-body:end -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
