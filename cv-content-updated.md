@@ -9,7 +9,7 @@ weerdmolls@gmail.com
 linkedin.com/in/kovalev-dmitry
 
 ## Summary
-Product designer with 9 years in B2B SaaS, CRM systems, and admin interfaces. Focused on fintech CRMs, admin panels, and internal tools, with an emphasis on design systems and clear user flows.
+Product designer with 9 years building B2B SaaS products: fintech CRMs, admin panels, internal tools. Specializes in design systems and turning messy internal workflows into interfaces people actually want to use.
 
 ## Experience
 
