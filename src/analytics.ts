@@ -34,7 +34,12 @@ export function initAnalytics() {
       // which is how this site's router navigates.
       defaults: '2026-05-30',
       person_profiles: 'identified_only',
-      disable_session_recording: true,
+      // Session replay is on. fixlist.dev disables the autostart and calls
+      // `startSessionRecording` per route because it must keep customer
+      // reports out of the recordings; this site has no such page, so the
+      // default autostart is what we want. The one input here is the CV
+      // password field, and `type="password"` is masked by the recorder
+      // unconditionally.
     });
   });
 }
