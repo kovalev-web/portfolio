@@ -1,13 +1,13 @@
 /**
  * Reads the old site's hand-written case-study pages and regenerates
- * `src/data/cases.ts`. Machine-transferred on purpose: the prose is the work
+ * `src/data/cases.imported.ts`. Machine-transferred on purpose: the prose is the work
  * product, and retyping seven pages of it is how sentences quietly change.
  *
  *   node tools/import-cases.mjs [path-to-old-site/projects]
  *
  * Kept because the old pages are still the origin of this copy — if one of them
  * is edited, this is how the change gets across without a diff by eye. It is a
- * one-way import; edits made in `cases.ts` will be overwritten.
+ * one-way import; edits made in `cases.imported.ts` will be overwritten.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -168,7 +168,7 @@ for (const c of cases) {
   if (noCaption) console.log(' '.repeat(15), `  (${noCaption} image(s) without caption)`);
 }
 
-// ---- emit cases.ts ----
+// ---- emit cases.imported.ts ----
 const q = (s) => JSON.stringify(s);
 
 const block = (b) => {
@@ -197,33 +197,12 @@ const ts = `/**
  * transferred verbatim rather
  * than retyped.
  *
- * Every page is a flat list of blocks. Adding a case means adding an entry
- * here; the renderer already knows all of these shapes.
+ * Hand-written cases do NOT belong here — put them in their own file and add
+ * them to the list in \`cases.ts\`, which is what the site actually reads.
  */
+import type { CaseStudy } from './case-types';
 
-export type CaseBlock =
-  | { type: 'meta'; items: { label: string; value: string }[] }
-  | { type: 'lead'; text: string }
-  | { type: 'text'; text: string }
-  | { type: 'eyebrow'; text: string }
-  | { type: 'heading'; text: string }
-  /** Each item is a run of spans so the lead-in can be bold. */
-  | { type: 'goals'; items: { text: string; bold?: boolean }[][] }
-  | { type: 'quote'; text: string }
-  | { type: 'image'; src: string; alt: string; w?: number; h?: number; caption?: string }
-  /** Extra air between chapters — the old pages leaned on these for rhythm. */
-  | { type: 'break' };
-
-export type CaseStudy = {
-  slug: string;
-  tag: string;
-  title: string;
-  description: string;
-  cover: string;
-  blocks: CaseBlock[];
-};
-
-export const cases: CaseStudy[] = [
+export const importedCases: CaseStudy[] = [
 ${cases
   .map(
     (c) => `  {
@@ -239,10 +218,7 @@ ${c.blocks.map((b) => `      ${block(b)},`).join('\n')}
   )
   .join('\n')}
 ];
-
-export const caseBySlug = (slug: string): CaseStudy | undefined =>
-  cases.find((c) => c.slug === slug);
 `;
 
-writeFileSync(resolve(HERE, '../src/data/cases.ts'), ts);
-console.log('\nwrote src/data/cases.ts');
+writeFileSync(resolve(HERE, '../src/data/cases.imported.ts'), ts);
+console.log('\nwrote src/data/cases.imported.ts');

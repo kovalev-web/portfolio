@@ -46,19 +46,26 @@
 }
 
 /* ---------- Meta strip ---------- */
+/* Same hairline-grid trick as .case-metrics below: the 1px gap on the --line
+   background draws every rule, so there is one border to reason about instead
+   of one per item colliding at the edges. */
 .case-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.875rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1px;
   margin-bottom: 1.875rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--line);
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
 }
 
 .case-meta-item {
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
+  padding: 1.25rem;
+  background: var(--surface);
 }
 
 .case-meta-value {
@@ -102,6 +109,17 @@
   margin-top: 0.625rem;
 }
 
+/* The one thesis-statement heading a case can open with — same size as the
+   site's other big single-line statements (Work, Skills, Contact), not a
+   second page title. Sits right under the h1, above the numbered sections. */
+.case-heading-lg {
+  margin-top: 0;
+  font-size: var(--fs-subtitle);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
 /* ---------- Numbered goals ---------- */
 .case-goals {
   list-style: none;
@@ -138,6 +156,138 @@
   color: var(--ink);
 }
 
+/* ---------- Decision options ---------- */
+/* The rejected alternatives are the argument, so they get the same weight as
+   the chosen one — only the verdict chip and the left rule separate them. */
+.case-options {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin-bottom: 1.875rem;
+}
+
+.case-option {
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.case-option[data-verdict='chosen'] {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+
+.case-option-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.625rem;
+}
+
+.case-option-key {
+  flex-shrink: 0;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+
+.case-option-label {
+  flex: 1;
+  font-size: var(--fs-lg);
+  font-weight: 550;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.case-option-verdict {
+  flex-shrink: 0;
+  padding: 0.25rem 0.625rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.case-option[data-verdict='chosen'] .case-option-verdict {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.case-option-text {
+  font-size: var(--fs-base);
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+/* ---------- Result metrics ---------- */
+.case-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1px;
+  margin: 0.625rem 0 1.875rem;
+  /* One hairline grid: the gap is the rule, drawn by the container behind it. */
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.case-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  background: var(--surface);
+}
+
+.case-metric-value {
+  font-size: var(--fs-h2);
+  font-weight: 550;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.case-metric-label {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+/* ---------- Argument cards ---------- */
+/* Same hairline-grid trick as .case-metrics: a short run of paragraphs that
+   build on each other but read fine in any order, side by side instead of
+   stacked. */
+.case-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1px;
+  margin-bottom: 1.875rem;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.case-card {
+  margin: 0;
+  padding: 1.25rem;
+  background: var(--surface);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 720px) {
+  .case-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------- Pull quote ---------- */
 .case-quote {
   margin: 0.625rem 0 1.875rem;
@@ -153,13 +303,13 @@
 
 /* ---------- Figures ---------- */
 .case-figure {
-  margin: 0 0 1.25rem;
+  margin: 0 0 3.4rem;
 }
 
 .case-shot {
   width: 100%;
   height: auto;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
 }
 
 .case-shot-missing {

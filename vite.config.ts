@@ -84,6 +84,26 @@ function caseBody(study: CaseStudy) {
             .join('')}</ul>`,
         );
         break;
+      case 'options':
+        out.push(
+          `<ul>${block.items
+            .map(
+              (o) =>
+                `<li><strong>${esc(o.label)}</strong> — ${esc(o.verdict)}. ${esc(o.text)}</li>`,
+            )
+            .join('')}</ul>`,
+        );
+        break;
+      case 'metrics':
+        out.push(
+          `<ul>${block.items
+            .map((m) => `<li>${esc(m.value)} — ${esc(m.label)}</li>`)
+            .join('')}</ul>`,
+        );
+        break;
+      case 'cards':
+        out.push(`<ul>${block.items.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`);
+        break;
       case 'quote':
         out.push(`<blockquote>${esc(block.text)}</blockquote>`);
         break;

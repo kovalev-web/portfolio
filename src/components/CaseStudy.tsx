@@ -65,7 +65,11 @@ function Block({ block }: { block: CaseBlock }): ReactNode {
       return <p className="kicker case-eyebrow reveal">{block.text}</p>;
 
     case 'heading':
-      return <h2 className="case-heading reveal">{block.text}</h2>;
+      return (
+        <h2 className={`case-heading reveal${block.size === 'lg' ? ' case-heading-lg' : ''}`}>
+          {block.text}
+        </h2>
+      );
 
     case 'goals':
       return (
@@ -81,6 +85,49 @@ function Block({ block }: { block: CaseBlock }): ReactNode {
             </li>
           ))}
         </ol>
+      );
+
+    case 'options':
+      return (
+        <ul className="case-options reveal">
+          {block.items.map((opt, i) => (
+            <li className="case-option" data-verdict={opt.verdict} key={i}>
+              <div className="case-option-head">
+                {/* Lettered rather than numbered: these are alternatives, not
+                    steps, and A/B/C is how the decision was actually written. */}
+                <span className="case-option-key">{String.fromCharCode(65 + i)}</span>
+                <h3 className="case-option-label">{opt.label}</h3>
+                <span className="case-option-verdict kicker">
+                  {opt.verdict === 'chosen' ? 'Chosen' : 'Rejected'}
+                </span>
+              </div>
+              <p className="case-option-text">{opt.text}</p>
+            </li>
+          ))}
+        </ul>
+      );
+
+    case 'metrics':
+      return (
+        <dl className="case-metrics reveal">
+          {block.items.map((item, i) => (
+            <div className="case-metric" key={i}>
+              <dt className="case-metric-value">{item.value}</dt>
+              <dd className="case-metric-label">{item.label}</dd>
+            </div>
+          ))}
+        </dl>
+      );
+
+    case 'cards':
+      return (
+        <div className="case-cards reveal">
+          {block.items.map((text, i) => (
+            <p className="case-card" key={i}>
+              {text}
+            </p>
+          ))}
+        </div>
       );
 
     case 'quote':

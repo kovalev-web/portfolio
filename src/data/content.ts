@@ -115,23 +115,26 @@ export const ndaWork = [
  * have to match each other's ratio exactly, but a similar portrait ratio crops
  * most kindly, and the crop runs from the top-left corner.
  */
-export const heroProjects: { src: string; alt: string }[][] = [
-  [
-    { src: '/media/project-1/1.webp', alt: `${projects[0].title} — main view` },
-    { src: '/media/project-1/2.webp', alt: `${projects[0].title} — detail` },
-    { src: '/media/project-1/3.webp', alt: `${projects[0].title} — detail` },
-  ],
-  [
-    { src: '/media/project-2/1.webp', alt: `${projects[1].title} — main view` },
-    { src: '/media/project-2/2.webp', alt: `${projects[1].title} — detail` },
-    { src: '/media/project-2/3.webp', alt: `${projects[1].title} — detail` },
-  ],
-  [
-    { src: '/media/project-3/1.webp', alt: `${projects[2].title} — main view` },
-    { src: '/media/project-3/2.webp', alt: `${projects[2].title} — detail` },
-    { src: '/media/project-3/3.webp', alt: `${projects[2].title} — detail` },
-  ],
-];
+/**
+ * Which case each `project-N` folder holds shots of. By slug, not by position
+ * in `projects`: the shots and the work list are two independent orders, and
+ * indexing into the list meant every new case at the top silently relabelled
+ * somebody else's screenshots.
+ */
+const heroShotOwners = ['trade-scope', 'brokerage-crm', 'control-panel'];
+
+const titleOf = (slug: string) => cases.find((c) => c.slug === slug)?.title ?? '';
+
+export const heroProjects: { src: string; alt: string }[][] = heroShotOwners.map(
+  (slug, project) => {
+    const title = titleOf(slug);
+    return [
+      { src: `/media/project-${project + 1}/1.webp`, alt: `${title} — main view` },
+      { src: `/media/project-${project + 1}/2.webp`, alt: `${title} — detail` },
+      { src: `/media/project-${project + 1}/3.webp`, alt: `${title} — detail` },
+    ];
+  },
+);
 
 /**
  * The deck the hero actually cycles: every shot of every project, flattened
