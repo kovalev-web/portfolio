@@ -24,9 +24,9 @@ export const fixlist: CaseStudy = {
     {
       type: 'image',
       src: `${SHOT}/img-1.webp`,
-      alt: 'The fixlist.dev landing page: the promise, and a URL field offering a free preview with no email and no card',
+      alt: 'The fixlist.dev landing page: the promise, a URL field offering a free preview with no email and no card, and the three-step how-it-works section',
       w: 1440,
-      h: 699,
+      h: 1215,
     },
     {
       type: 'image-row',
