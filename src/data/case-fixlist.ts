@@ -2,7 +2,8 @@
  * fixlist.dev — hand-written case, narrative product-storytelling voice.
  * Drafted in Russian, translated to English to match the rest of the site.
  *
- * Eight shots, img-1 through img-7 plus img-process, and that is the full set.
+ * Nine shots: img-1 through img-7, plus img-process-1 and img-process-2 (the
+ * waiting screen split in half, see the image-row block). That's the full set.
  * Sections 05 and 06 deliberately run on prose and the metrics tiles instead of
  * more screenshots: the raw audit reports live on fixlist.dev, and reproducing
  * them here as pictures would be a retelling, which is the one thing this case
@@ -96,11 +97,11 @@ export const fixlist: CaseStudy = {
     },
     {
       type: 'heading',
-      text: 'The rubric: 32 criteria in 8 groups',
+      text: 'The rubric: 30 criteria, one category at a time',
     },
     {
       type: 'text',
-      text: 'First impression, CTA, hierarchy, readability, trust, argumentation, mobile, forms. Each criterion is written so it can be scored independently of the others and so it rests on something physically visible in the screenshot.',
+      text: 'Trust, readability, call to action, hierarchy, first impression, mobile, SEO. Each criterion is written so it can be scored independently of the others and so it rests on something physically visible in the screenshot.',
     },
     {
       type: 'text',
@@ -143,7 +144,7 @@ export const fixlist: CaseStudy = {
         {
           label: 'Cut by depth, not by quality',
           verdict: 'chosen',
-          text: 'Free gets the same audit: the full score, the verdict, ratings across all eight groups, two findings in full and a marked-up first screen. Paid runs the same work across every screen and on a stronger model.',
+          text: 'Free gets the same audit: the full score, the verdict, and ratings across every category. Paid runs the same work across every screen and on a stronger model.',
         },
       ],
     },
@@ -154,11 +155,11 @@ export const fixlist: CaseStudy = {
     {
       type: 'image',
       src: `${SHOT}/img-4.webp`,
-      alt: 'The free report in full: score, verdict, group ratings, two findings and the cut to paid',
+      alt: 'The free report: score, verdict, category ratings, and performance metrics',
       w: 1440,
       h: 1000,
       caption:
-        'The free report in full, right down to the cut. The score and the verdict are never hidden. What is held back is the volume, not the quality.',
+        'The score and the verdict are never hidden. What is held back is the volume, not the quality.',
     },
     { type: 'break' },
 
