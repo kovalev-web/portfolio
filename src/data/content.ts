@@ -121,7 +121,7 @@ export const ndaWork = [
  * indexing into the list meant every new case at the top silently relabelled
  * somebody else's screenshots.
  */
-const heroShotOwners = ['trade-scope', 'brokerage-crm', 'control-panel'];
+const heroShotOwners = ['trade-scope', 'brokerage-crm', 'fixlist'];
 
 const titleOf = (slug: string) => cases.find((c) => c.slug === slug)?.title ?? '';
 

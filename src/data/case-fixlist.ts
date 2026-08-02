@@ -103,11 +103,11 @@ export const fixlist: CaseStudy = {
     {
       type: 'image',
       src: `${SHOT}/img-3.webp`,
-      alt: 'A single finding card next to its number on the marked-up screenshot',
+      alt: 'Two finding cards next to their numbers on the marked-up screenshot',
       w: 1440,
-      h: 603,
+      h: 1205,
       caption:
-        'One finding, one place on the page. The number on the card matches the number on the screenshot, so the report never asks you to take its word for where the problem is.',
+        'Every finding, one place on the page. The number on the card matches the number on the screenshot, so the report never asks you to take its word for where the problem is.',
     },
     { type: 'break' },
 
