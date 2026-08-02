@@ -122,10 +122,11 @@ function Block({ block }: { block: CaseBlock }): ReactNode {
     case 'cards':
       return (
         <div className="case-cards reveal">
-          {block.items.map((text, i) => (
-            <p className="case-card" key={i}>
-              {text}
-            </p>
+          {block.items.map((item, i) => (
+            <div className="case-card" key={i}>
+              <h3 className="case-card-title">{item.title}</h3>
+              <p className="case-card-text">{item.text}</p>
+            </div>
           ))}
         </div>
       );

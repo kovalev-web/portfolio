@@ -102,7 +102,11 @@ function caseBody(study: CaseStudy) {
         );
         break;
       case 'cards':
-        out.push(`<ul>${block.items.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`);
+        out.push(
+          `<ul>${block.items
+            .map((c) => `<li><strong>${esc(c.title)}</strong> ${esc(c.text)}</li>`)
+            .join('')}</ul>`,
+        );
         break;
       case 'quote':
         out.push(`<blockquote>${esc(block.text)}</blockquote>`);

@@ -30,8 +30,9 @@ export type CaseBlock =
   | { type: 'metrics'; items: { value: string; label: string }[] }
   /** A short argument as a row of cards instead of stacked paragraphs — for
    *  2-4 beats that build on each other but don't need to be read top to
-   *  bottom, one glance takes in all of them. */
-  | { type: 'cards'; items: string[] }
+   *  bottom, one glance takes in all of them. The titles should read as a
+   *  spine on their own, so the row is skimmable without the body copy. */
+  | { type: 'cards'; items: { title: string; text: string }[] }
   | { type: 'quote'; text: string }
   | { type: 'image'; src: string; alt: string; w?: number; h?: number; caption?: string }
   /** Extra air between chapters — the old pages leaned on these for rhythm. */

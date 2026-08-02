@@ -1,12 +1,12 @@
 /**
- * fixlist.dev — hand-written case. Local draft in Russian, narrative
- * product-storytelling voice — the rest of the site is English; this is not
- * a final decision on language, just how it's being reviewed right now.
+ * fixlist.dev — hand-written case, narrative product-storytelling voice.
+ * Drafted in Russian, translated to English to match the rest of the site.
  *
- * WIP: none of the screenshots exist yet except img-1 and img-2. Each
- * `image` block below carries the brief for the shot it is holding a place
- * for in a comment above it — the renderer draws a labelled box until the
- * file lands, so the page can be read and edited before the assets are made.
+ * Eight shots, img-1 through img-7 plus img-process, and that is the full set.
+ * Sections 05 and 06 deliberately run on prose and the metrics tiles instead of
+ * more screenshots: the raw audit reports live on fixlist.dev, and reproducing
+ * them here as pictures would be a retelling, which is the one thing this case
+ * argues against.
  */
 import type { CaseStudy } from './case-types';
 
@@ -14,324 +14,285 @@ const SHOT = '/media/cases/fixlist';
 
 export const fixlist: CaseStudy = {
   slug: 'fixlist',
-  tag: 'AI-продукт · Свой проект',
+  tag: 'AI Product · Self-initiated',
   title: 'fixlist.dev',
   description:
-    'Кейс продуктового дизайна о платном AI-аудите лендингов, построенном вокруг одной задачи: доказать, что он не просто болтает.',
+    'Product design case study on a paid AI audit for landing pages, built around a single problem: proving it is not just talking.',
   cover: '/media/covers/fixlist.svg',
   blocks: [
     {
       type: 'image',
       src: `${SHOT}/img-1.webp`,
-      alt: 'Лендинг fixlist.dev: обещание продукта и поле для бесплатного превью без email и карты',
+      alt: 'The fixlist.dev landing page: the promise, and a URL field offering a free preview with no email and no card',
       w: 1440,
-      h: 895,
+      h: 699,
+    },
+    {
+      type: 'image',
+      src: `${SHOT}/img-process.webp`,
+      alt: 'Waiting screen with three steps: loading the page in a real browser, capturing it screen by screen, grading it against the rubric',
+      w: 1440,
+      h: 565,
+      caption:
+        'Three lines on a waiting screen, and they hold the whole order of work: a real browser first, then capture screen by screen, and only at the end a verdict.',
     },
     { type: 'break' },
 
     {
       type: 'heading',
       size: 'lg',
-      text: 'AI-аудит лендингов. Почему доверие пользователей оказалось важнее идеального первого экрана',
+      text: 'An AI audit for landing pages. Why user trust mattered more than a perfect first screen',
     },
 
-    { type: 'eyebrow', text: '01 · Задача' },
-    { type: 'heading', text: 'Почему я должен тебе верить' },
+    { type: 'eyebrow', text: '01 · The problem' },
+    { type: 'heading', text: 'Why should I believe you' },
     {
       type: 'cards',
       items: [
-        'Сгенерировать аудит лендинга бесплатно умеет любой чат: вставляешь ссылку и получаешь страницу уверенных советов, не заплатив ни цента.',
-        'Продукт за $9 имеет право на существование только при одном условии: если пользователь поверит, что здесь не то же самое. Не красивее. Не подробнее. Другое по своей природе.',
-        'Поэтому настоящее техзадание было не про понятный отчёт, а про доверие: почему я должен тебе верить. Всё, что дальше, ответ на этот один вопрос.',
+        {
+          title: 'Any chat can do this',
+          text: 'Generate a landing page audit for free: paste a link and get back a page of confident advice without paying a cent.',
+        },
+        {
+          title: 'There is exactly one condition',
+          text: 'A $9 product exists only if the user believes this is not the same thing. Not prettier. Not longer. Different in kind.',
+        },
+        {
+          title: 'Hence the real brief',
+          text: 'It was never about a legible report, it was about trust: why should I believe you. Everything below answers that.',
+        },
       ],
     },
     { type: 'break' },
 
-    { type: 'eyebrow', text: '02 · Процесс' },
-    { type: 'heading', text: 'Порядок действий как единственное продуктовое отличие' },
+    { type: 'eyebrow', text: '02 · Process' },
+    { type: 'heading', text: 'Order of operations as the only real product difference' },
     {
       type: 'text',
-      text: 'Чат никогда не видит страницу. В лучшем случае он читает сырой HTML: без рендера, без настоящего контраста, без секций, что подгружаются лениво. Серый текст на белом от чёрного он не отличит, потому что цвета для него попросту не существует.',
+      text: 'A chat never sees the page. At best it reads raw HTML: no render, no real contrast, no lazily loaded sections. It cannot tell grey text on white from black, because colour simply does not exist for it.',
     },
     {
       type: 'text',
-      text: 'Отсюда обратный порядок работы: сначала собрать доказательства, и только потом судить.',
+      text: 'Hence the inverted order of work: gather the evidence first, judge second.',
     },
     {
       type: 'image',
-      src: `${SHOT}/img-2.svg`,
-      alt: 'Схема пайплайна: сбор доказательств слева, оценка и отчёт справа',
+      src: `${SHOT}/img-2.webp`,
+      alt: 'Pipeline diagram: evidence gathering on the left, grading and the report on the right',
       w: 1440,
-      h: 1236,
+      h: 1247,
       caption:
-        'Сначала доказательства: настоящий Chromium в 1440×900 проходит страницу экран за экраном, до двадцати срезов, вместе с DOM-дайджестом и метриками PageSpeed. И только потом модель выносит оценку, а каждая находка, которую она вернёт, привязана к номеру на одном из этих скриншотов.',
+        'Evidence first: a real Chromium at 1440×900 walks the page screen by screen, up to twenty slices, alongside a DOM digest and PageSpeed metrics. Only then does the model grade it, and every finding it returns is pinned to a number on one of those screenshots.',
     },
     {
       type: 'heading',
-      text: 'Рубрика: 32 критерия в 8 группах',
+      text: 'The rubric: 32 criteria in 8 groups',
     },
     {
       type: 'text',
-      text: 'Первое впечатление, CTA, иерархия, читаемость, доверие, аргументация, мобильная версия, формы. Каждый критерий сформулирован так, чтобы оцениваться независимо от остальных и опираться на то, что физически видно на скриншоте.',
+      text: 'First impression, CTA, hierarchy, readability, trust, argumentation, mobile, forms. Each criterion is written so it can be scored independently of the others and so it rests on something physically visible in the screenshot.',
     },
     {
       type: 'text',
-      text: 'Это не промпт, а формализованный чек-лист. Модель идёт по фиксированным пунктам вместо того, чтобы ассоциировать свободно, и в этом вся разница между аудитом и мнением. Рубрика стала главным активом продукта, её проектировали как дизайн-артефакт, а не как строчку в конфиге.',
+      text: 'This is not a prompt, it is a formalised checklist. The model walks fixed points instead of associating freely, and that is the whole difference between an audit and an opinion. The rubric became the core asset of the product, designed as a design artefact rather than a line in a config.',
     },
     {
       type: 'text',
-      text: 'Следствие для интерфейса простое: каждая находка садится номером на конкретное место страницы. Не просто слабый заголовок, а размеченный скриншот с указанием, какой именно.',
+      text: 'The consequence for the interface is simple: every finding lands as a number on a specific place on the page. Not just a weak headline, but a marked-up screenshot showing which one.',
     },
-    // TODO shot 1: one finding, large — the card next to its number sitting on
-    // the screenshot in the exact spot. Proves "conclusion ↔ evidence" at a glance.
     {
       type: 'image',
       src: `${SHOT}/img-3.webp`,
-      alt: 'Карточка одной находки рядом с её номером на размеченном скриншоте',
+      alt: 'A single finding card next to its number on the marked-up screenshot',
       w: 1440,
-      h: 900,
+      h: 603,
       caption:
-        'Одна находка, одно место на странице. Номер на карточке совпадает с номером на скриншоте, отчёту не нужно верить на слово, где именно проблема.',
+        'One finding, one place on the page. The number on the card matches the number on the screenshot, so the report never asks you to take its word for where the problem is.',
     },
     { type: 'break' },
 
-    { type: 'eyebrow', text: '03 · Развилка' },
-    { type: 'heading', text: 'Где резать бесплатную версию' },
+    { type: 'eyebrow', text: '03 · The fork' },
+    { type: 'heading', text: 'Where to cut the free tier' },
     {
       type: 'text',
-      text: 'Главное продуктовое решение всего проекта. Продукт продаёт доверие, поэтому граница между бесплатным и платным это вопрос не монетизации, а того, чем именно убеждать пользователя.',
+      text: 'The single biggest product decision in the project. The product sells trust, so the line between free and paid is not a monetisation question but a question of what exactly convinces the user.',
     },
     {
       type: 'options',
       items: [
         {
-          label: 'Показать всё, брать деньги за экспорт',
+          label: 'Show everything, charge for the export',
           verdict: 'rejected',
-          text: 'Ценность продукта в самом .md-файле, а не в упаковке вокруг него. За кнопку Скачать никто не платит.',
+          text: 'The value of the product is the .md file itself, not the wrapper around it. Nobody pays for a Download button.',
         },
         {
-          label: 'Показать проблемы без объяснений, детали заблюрить',
+          label: 'Show the problems without explanations, blur the detail',
           verdict: 'rejected',
-          text: 'Превью, которое дразнит, читается как разводка и ничего не доказывает из того единственного, что нужно доказать: глубину. Заблюренный текст сообщает, что у нас что-то есть. Нужно показать, как мы думаем.',
+          text: 'A preview that teases reads as a con and proves nothing of the one thing that needs proving: depth. Blurred text says we have something here. What is needed is to show how we think.',
         },
         {
-          label: 'Резать по глубине, а не по качеству',
+          label: 'Cut by depth, not by quality',
           verdict: 'chosen',
-          text: 'Бесплатно доступен тот же самый аудит: полный балл, вердикт, оценки по всем восьми группам, две находки целиком и размеченный первый экран. Платно та же работа идёт по каждому экрану и на более сильной модели.',
+          text: 'Free gets the same audit: the full score, the verdict, ratings across all eight groups, two findings in full and a marked-up first screen. Paid runs the same work across every screen and on a stronger model.',
         },
       ],
     },
     {
       type: 'text',
-      text: 'Размен такой: превью показывает точный стиль и глубину анализа ещё до оплаты. Часть людей уйдёт, забрав бесплатную пользу. Взамен никто не почувствует себя обманутым, а продукт предъявляет доказательство вместо обещания.',
+      text: 'The trade is this: the preview shows the exact style and depth of the analysis before payment. Some people will leave having taken the free value. In exchange nobody feels tricked, and the product presents evidence instead of a promise.',
     },
-    // TODO shot 2: the whole preview report — score, verdict, group ratings,
-    // two findings, and the cut line where paid begins.
     {
       type: 'image',
       src: `${SHOT}/img-4.webp`,
-      alt: 'Бесплатный отчёт целиком: балл, вердикт, оценки по группам, две находки и место разреза до платного',
+      alt: 'The free report in full: score, verdict, group ratings, two findings and the cut to paid',
       w: 1440,
-      h: 1600,
+      h: 1000,
       caption:
-        'Бесплатный отчёт целиком, до самого места разреза. Балл и вердикт не прячут никогда, прячут не качество, а объём.',
+        'The free report in full, right down to the cut. The score and the verdict are never hidden. What is held back is the volume, not the quality.',
     },
     { type: 'break' },
 
-    { type: 'eyebrow', text: '04 · Отчёт' },
-    { type: 'heading', text: 'Отчёт написан не для человека' },
+    { type: 'eyebrow', text: '04 · The report' },
+    { type: 'heading', text: 'The report is not written for a human' },
     {
       type: 'text',
-      text: 'У отчёта есть второй читатель, кодовый агент, и именно он формирует продукт сильнее, чем человек.',
+      text: 'The report has a second reader, a coding agent, and it shapes the product more than the human does.',
     },
     {
       type: 'text',
-      text: 'Целевой пользователь уже работает в Claude Code или Cursor. Ему не нужен список советов, который потом вручную переводить в задачи. Ему нужен файл, который можно отдать агенту целиком.',
+      text: 'The target user already works in Claude Code or Cursor. They do not need a list of advice to translate into tasks by hand. They need a file they can hand to an agent whole.',
     },
     {
       type: 'text',
-      text: 'Поэтому .md собирают по правилам, которые отличаются от отчёта для человека:',
+      text: 'So the .md is assembled by rules that differ from a report written for a human:',
     },
     {
       type: 'goals',
       items: [
         [
-          { text: 'Находки как задачи:', bold: true },
-          { text: ' каждая несёт критерий приёмки, а не рекомендацию.' },
+          { text: 'Findings as tasks:', bold: true },
+          { text: ' each one carries an acceptance criterion instead of a recommendation.' },
         ],
         [
-          { text: 'Скриншоты приложены:', bold: true },
-          { text: ' ссылками в полном разрешении, агент сам откроет доказательство.' },
+          { text: 'Screenshots attached:', bold: true },
+          { text: ' linked at full resolution, so the agent opens the evidence itself.' },
         ],
         [
-          { text: 'SEO-теги переписаны:', bold: true },
-          { text: ' готовы вставляться без правок.' },
+          { text: 'SEO tags rewritten:', bold: true },
+          { text: ' ready to paste with no editing pass in between.' },
         ],
         [
-          { text: 'Приоритеты расставлены явно:', bold: true },
-          { text: ' critical, major, minor, прямым текстом, а не порядком строк.' },
+          { text: 'Priorities set explicitly:', bold: true },
+          { text: ' critical, major, minor, stated in plain text rather than implied by order.' },
         ],
       ],
     },
     {
       type: 'text',
-      text: 'Это дизайн интерфейса для нечеловеческого читателя. Обычные критерии, читаемость, ритм, визуальная иерархия, здесь не работают. Вместо них однозначность формулировок и весь контекст в одном файле.',
+      text: 'This is interface design for a non-human reader. The usual criteria, readability, rhythm, visual hierarchy, do not apply here. In their place: unambiguous phrasing and the whole context inside a single file.',
     },
-    // TODO shot 3: the .md open in an editor. The one thing words cannot carry —
-    // the report looks like tickets, not like advice.
     {
       type: 'image',
       src: `${SHOT}/img-5.webp`,
-      alt: 'Сгенерированный .md-отчёт, открытый в редакторе кода',
+      alt: 'The generated .md report open in a code editor',
       w: 1440,
-      h: 960,
+      h: 1023,
       caption:
-        'Тот же аудит глазами агента: задачи с критериями приёмки, приоритеты и ссылки на скриншоты, из которых родилась каждая находка.',
+        'The same audit as the agent receives it: tasks with acceptance criteria, priorities and links to the screenshots each finding came from.',
     },
-    // TODO shot 4: the same .md being worked in Claude Code / Cursor — the file
-    // is not just produced, it is consumed.
     {
       type: 'image',
       src: `${SHOT}/img-6.webp`,
-      alt: 'Отчёт в работе у кодового агента внутри редактора',
+      alt: 'The report being worked through by a coding agent inside an editor',
       w: 1440,
-      h: 960,
+      h: 1585,
       caption:
-        'И в работе. Файл спроектирован так, чтобы его можно было отдать без человека-переводчика между отчётом и тикетами.',
+        'And in use. The file was designed to be handed over without a human translating between the report and the tickets.',
     },
     { type: 'break' },
 
-    { type: 'eyebrow', text: '05 · Грани' },
-    { type: 'heading', text: 'Цена решения без аккаунтов' },
+    { type: 'eyebrow', text: '05 · Edge cases' },
+    { type: 'heading', text: 'The cost of having no accounts' },
     {
       type: 'text',
-      text: 'Аккаунтов нет нигде, ни для аудита, ни для оплаты. Барьер входа исчезает полностью, и это правильный размен для продукта, который покупают через минуту после первого визита.',
+      text: 'There are no accounts anywhere, not for the audit and not for the payment. The entry barrier disappears completely, and that is the right trade for a product people buy a minute after arriving.',
     },
     {
       type: 'text',
-      text: 'Но убранная регистрация не убирает задачи, которые она решала. Их пришлось решать иначе, и именно здесь оказалась основная часть дизайн-работы.',
+      text: 'But removing registration does not remove the jobs registration was doing. They had to be solved another way, and that is where most of the design work turned out to be.',
     },
     {
       type: 'goals',
       items: [
         [
-          { text: 'Доказать, что отчёт твой.', bold: true },
+          { text: 'Proving the report is yours.', bold: true },
           {
-            text: ' Восстановление идёт по адресу, с которого пришла оплата. Платёжный провайдер его знает, продукт его не хранит.',
+            text: ' Recovery runs off the address the payment came from. The payment provider knows it, the product never stores it.',
           },
         ],
         [
-          { text: 'Не превратить восстановление в слежку.', bold: true },
+          { text: 'Not turning recovery into surveillance.', bold: true },
           {
-            text: ' Форма отвечает одинаково всегда, есть отчёты по этому адресу или нет, а ссылки уходят только письмом. Другой ответ выдал бы постороннему, какие страницы аудитил конкретный человек.',
+            text: ' The form answers identically every time, whether or not reports exist for that address, and links only ever leave by email. A different answer would tell a stranger which pages a specific person audited.',
           },
         ],
         [
-          { text: 'Что делать, если система сработала наполовину.', bold: true },
+          { text: 'What to do when the system half worked.', bold: true },
           {
-            text: ' Если оплата прошла, а глубокий разбор не долетел, доступ всё равно открывается, и отчёт прямо говорит, чего в нём не хватает. Молчаливо отданный половинчатый отчёт стоит дороже честного отказа. Если упал PageSpeed, перезапуск бесплатный: неполный отчёт не продают.',
+            text: ' If the payment went through but the deep pass did not land, access opens anyway and the report states plainly what is missing from it. A half report handed over silently costs more than an honest refusal. If PageSpeed failed, the re-run is free: an incomplete report is not sold.',
           },
         ],
         [
-          { text: 'Что делать с дырой в нумерации.', bold: true },
+          { text: 'What to do about a gap in the numbering.', bold: true },
           {
-            text: ' Когда модель не смогла привязать находку к месту, номера на карточках идут с пропуском: 1, 2, 3, 4, 6. Карточка объясняет почему. Необъяснённый пропуск читается как потеря данных.',
+            text: ' When the model could not pin a finding to a place, the card numbers skip: 1, 2, 3, 4, 6. The card says why. An unexplained gap reads as lost data.',
           },
         ],
         [
-          { text: 'Что делать со слишком длинной страницей.', bold: true },
+          { text: 'What to do with a page too long to capture.', bold: true },
           {
-            text: ' Съёмка обрывается на двадцатом экране, и покупателю сообщают, докуда дошли. Молчание выглядело бы так, будто аудит просто не заметил низ страницы.',
+            text: ' Capture stops at the twentieth screen and the buyer is told how far it got. Silence would look as though the audit simply missed the bottom of the page.',
           },
         ],
       ],
     },
-    // TODO shots 5–7, small grid: recovery form / report with failed PageSpeed
-    // and the free re-run offer / progress screen at "screen i of n".
-    // These are the states portfolios usually leave out.
     {
       type: 'image',
       src: `${SHOT}/img-7.webp`,
-      alt: 'Форма восстановления доступа',
+      alt: 'The access recovery form',
       w: 1440,
-      h: 900,
-      caption: 'Восстановление по адресу оплаты, один и тот же ответ для всех, кто спросит.',
-    },
-    {
-      type: 'image',
-      src: `${SHOT}/img-8.webp`,
-      alt: 'Отчёт с недостающими метриками PageSpeed и предложением бесплатной пересборки',
-      w: 1440,
-      h: 900,
-      caption: 'Отчёт, который знает, чего ему не хватает, и предлагает пересборку раньше, чем его об этом попросят.',
-    },
-    {
-      type: 'image',
-      src: `${SHOT}/img-9.webp`,
-      alt: 'Экран прогресса, сообщающий, какой по счёту экран снимается',
-      w: 1440,
-      h: 900,
-      caption: 'Прогресс, выраженный в единицах самой работы: экран i из n.',
+      h: 952,
+      caption:
+        'Recovery by payment address, the same answer for everyone who asks. Nothing on this screen reveals whether any reports exist for that address.',
     },
     {
       type: 'text',
-      text: 'Под всеми пятью решениями лежит один принцип: интерфейс обязан быть точным именно в момент, когда что-то пошло не так. Для платного продукта без аккаунтов это не полировка, это несущая конструкция.',
+      text: 'One principle runs under all five: the interface has to be precise at the exact moment something has gone wrong. For a paid product with no accounts that is not polish, it is the load-bearing part.',
     },
     { type: 'break' },
 
-    { type: 'eyebrow', text: '06 · Результат' },
-    { type: 'heading', text: 'Доказательство вместо обещания' },
+    { type: 'eyebrow', text: '06 · The result' },
+    { type: 'heading', text: 'Evidence instead of a promise' },
     {
       type: 'text',
-      text: 'Возврат к вопросу из первого раздела. Ответ на него не текстовый, а фактический.',
-    },
-    {
-      type: 'text',
-      text: 'Продукт применили к самому себе, публично, с плохим результатом. Первый прогон по собственной странице дал 64 балла. Аудит написал, что доверие практически отсутствует, что нет ни отзывов, ни логотипов, что для платного продукта это фатально, и что аргументация пропускает доказательства и сразу просит денег.',
+      text: 'The answer to the question from the first section turned out to be factual rather than textual: the product was run on itself, publicly, with a bad result. The first pass scored 64 and wrote that trust is practically absent, which for a paid product is fatal.',
     },
     {
       type: 'metrics',
       items: [
-        { value: '64 → 75', label: 'Собственный лендинг, три круга правок' },
-        { value: '28 → 58', label: 'Доверие' },
-        { value: '62 → 82', label: 'Читаемость' },
-        { value: '43 → 79', label: 'Чужая страница, исправленная агентом' },
+        { value: '64 → 75', label: 'Own landing page, three rounds of edits' },
+        { value: '28 → 58', label: 'Trust' },
+        { value: '62 → 82', label: 'Readability' },
+        { value: '43 → 79', label: "Someone else's page, fixed by an agent" },
       ],
     },
     {
       type: 'text',
-      text: 'Три круга правок по собственному отчёту: 64 → 67 → 70 → 75. Все четыре отчёта опубликованы сырыми, без редактуры, и открываются по прямой ссылке.',
+      text: 'All four passes sit on fixlist.dev raw and unedited. They are deliberately not rewritten into this case: a retold report is no longer evidence, it is a retelling.',
     },
     {
       type: 'text',
-      text: 'Повторный прогон не смягчился, и это оставили на странице. Пункт про отсутствие сторонних социальных доказательств остался критическим, а публикацию собственного аудита сам же аудит назвал изящным ходом, но не внешним подтверждением. Убрать эту строчку значило бы вести себя ровно так, против чего продукт и построен.',
-    },
-    {
-      type: 'text',
-      text: 'На чужой странице: 43 → 79, доверие +38, мобильная версия +55. Правки вносил кодовый агент без дополнительного контекста, только по .md из отчёта, что заодно проверяет раздел выше: отчёт оказался исполним без человека-переводчика.',
-    },
-    // TODO shot 8: the self-audit page, 64 → 75.
-    {
-      type: 'image',
-      src: `${SHOT}/img-10.webp`,
-      alt: 'Опубликованная страница самоаудита с движением балла от 64 к 75',
-      w: 1440,
-      h: 900,
-      caption: 'Каждый круг опубликован таким, каким вышел, включая тот, что дал 64.',
-    },
-    // TODO shot 9: the raw first-round report — the 64, and "trust practically
-    // absent". Mandatory: without it, the shot above reads as marketing.
-    {
-      type: 'image',
-      src: `${SHOT}/img-11.webp`,
-      alt: 'Сырой отчёт первого круга с баллом 64 и доверием, названным практически отсутствующим',
-      w: 1440,
-      h: 900,
-      caption: 'Первый круг без правок, тот самый, где собственный раздел доверия назвали фатальным.',
-    },
-    {
-      type: 'quote',
-      text: 'Не мы точные, а проверь сам: вот сырые отчёты.',
+      text: 'The re-run did not soften, and that was left on the page: the point about the absence of external social proof stayed critical. Removing it would have been exactly the behaviour the product is built against.',
     },
   ],
 };
