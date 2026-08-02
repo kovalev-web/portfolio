@@ -112,6 +112,7 @@ function caseBody(study: CaseStudy) {
         out.push(`<blockquote>${esc(block.text)}</blockquote>`);
         break;
       case 'image':
+      case 'image-row':
         // The caption is prose worth indexing; the file is not, and a reader
         // that cannot run JS should not be made to fetch a dozen of them.
         if (block.caption) out.push(`<p>${esc(block.caption)}</p>`);

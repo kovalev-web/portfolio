@@ -35,6 +35,14 @@ export type CaseBlock =
   | { type: 'cards'; items: { title: string; text: string }[] }
   | { type: 'quote'; text: string }
   | { type: 'image'; src: string; alt: string; w?: number; h?: number; caption?: string }
+  /** Two (or more) shots side by side under one shared caption — two halves
+   *  of the same moment, like a before/after or a screen split in two. Stacks
+   *  on mobile instead of squeezing. */
+  | {
+      type: 'image-row';
+      items: { src: string; alt: string; w?: number; h?: number }[];
+      caption?: string;
+    }
   /** Extra air between chapters — the old pages leaned on these for rhythm. */
   | { type: 'break' };
 

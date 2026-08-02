@@ -18,7 +18,7 @@ export const fixlist: CaseStudy = {
   title: 'fixlist.dev',
   description:
     'Product design case study on a paid AI audit for landing pages, built around a single problem: proving it is not just talking.',
-  cover: '/media/covers/fixlist.svg',
+  cover: '/media/covers/fixlist.webp',
   blocks: [
     {
       type: 'image',
@@ -28,11 +28,21 @@ export const fixlist: CaseStudy = {
       h: 699,
     },
     {
-      type: 'image',
-      src: `${SHOT}/img-process.webp`,
-      alt: 'Waiting screen with three steps: loading the page in a real browser, capturing it screen by screen, grading it against the rubric',
-      w: 1440,
-      h: 565,
+      type: 'image-row',
+      items: [
+        {
+          src: `${SHOT}/img-process-1.webp`,
+          alt: 'Waiting screen with three steps: loading the page in a real browser, capturing it screen by screen, grading it against the rubric',
+          w: 1416,
+          h: 1130,
+        },
+        {
+          src: `${SHOT}/img-process-2.webp`,
+          alt: 'The rubric scores once grading finishes: trust, readability, call to action, hierarchy, first impression, mobile, SEO',
+          w: 1416,
+          h: 1130,
+        },
+      ],
       caption:
         'Three lines on a waiting screen, and they hold the whole order of work: a real browser first, then capture screen by screen, and only at the end a verdict.',
     },

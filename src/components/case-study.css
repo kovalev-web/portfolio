@@ -333,6 +333,30 @@
   border-radius: var(--radius-sm);
 }
 
+/* fixlist's screenshots are dark UI throughout, which disappears into the
+   page background in dark mode with no border to mark the edge. A hairline
+   in the shared --line token fixes that without inventing a one-off color —
+   scoped to this case because the other cases' light shots don't need it. */
+.case-fixlist .case-shot {
+  border: 1px solid color-mix(in srgb, var(--line) 50%, transparent);
+}
+
+/* Two halves of one moment, side by side instead of stacked. Each column
+   keeps its own aspect ratio via .case-shot's inline style, so mismatched
+   source heights don't force one shot to stretch to match the other. */
+.case-image-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--gap, 0.625rem);
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .case-image-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 .case-shot-missing {
   display: grid;
   place-items: center;

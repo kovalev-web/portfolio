@@ -146,6 +146,18 @@ function Block({ block }: { block: CaseBlock }): ReactNode {
         </figure>
       );
 
+    case 'image-row':
+      return (
+        <figure className="case-figure reveal">
+          <div className="case-image-row">
+            {block.items.map((item, i) => (
+              <Shot key={i} src={item.src} alt={item.alt} w={item.w} h={item.h} />
+            ))}
+          </div>
+          {block.caption && <figcaption className="case-caption">{block.caption}</figcaption>}
+        </figure>
+      );
+
     case 'break':
       return null;
   }
@@ -174,7 +186,7 @@ export default function CaseStudy({ study }: { study: Case }) {
     .slice(0, 3);
 
   return (
-    <article className="case">
+    <article className={`case case-${study.slug}`}>
       <div className="rail">
         <a className="case-back kicker" href="/" onClick={onNavClick}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -190,7 +202,6 @@ export default function CaseStudy({ study }: { study: Case }) {
         </a>
 
         <header className="case-header">
-          <p className="kicker reveal">{study.tag}</p>
           <h1 className="case-title reveal reveal-lg">{study.title}</h1>
         </header>
 
