@@ -4,60 +4,68 @@
   padding-bottom: clamp(3rem, 8vw, 6rem);
 }
 
-/* The same three columns and gap as .ai-grid further down the page, and both
-   sit in .shell — so the folder lands exactly on the third AI card's left
-   edge instead of merely near it. Change one, change the other. */
+/* Text takes what's left, folder keeps its own width at the right page margin.
+   No longer the three columns .ai-grid uses — that existed to line the folder's
+   left edge up with the third AI card, and it now aligns to the page edge
+   instead. */
 .hero-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 20px;
   align-items: start;
 }
 
-.hero-title {
-  grid-column: 1 / 3;
-  font-size: var(--fs-hero);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  text-wrap: balance;
-  max-width: 698px;
+/* At 76px SemiBold the design's line breaks only happen on a measure between
+   961px and 1056px — narrower and "fintech," pulls up onto the first line,
+   wider and "reliable," drops onto the second. 1000 sits in the middle. */
+.hero-text {
+  max-width: 1000px;
 }
 
-.hero-title strong {
-  font-weight: 700;
-  /* Only bites in the dark theme, where the heading itself is greyed and this
-     pulls the emphasis back to full strength. A no-op in the light theme,
-     which inherits the same colour anyway. */
-  color: var(--ink);
+.hero-greeting {
+  font-size: var(--fs-company);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+/* The measure lives on .hero-text above. `pretty` rather than `balance`:
+   balance evens the line lengths out, and the design wants them filled. */
+.hero-title {
+  font-size: var(--fs-hero);
+  font-weight: 600;
+  /* Figma's 70 over 76, kept as a ratio rather than the 70px itself — the size
+     is fluid, and a pinned line-height is exactly the regression that had a
+     37px headline sitting on 76px leading on a phone. */
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  text-wrap: pretty;
 }
 
 /* Dark theme only. Light type on a dark ground optically gains weight — the
-   glyph edges bleed outwards rather than inwards — so full-strength ink reads
-   louder here than the same pairing does in the light theme. Backing the
-   heading off to --ink-soft compensates and leaves "9 years" (still 700, still
-   --ink) as the only thing at full strength. The weight stays at the inherited
-   regular: the grey is doing the work, and taking the weight down as well
-   thinned the strokes further than the size wants.
-   The light theme keeps plain regular black — none of this applies when the
-   ink is darker than the paper. */
+   glyph edges bleed outwards rather than inwards — so the SemiBold the design
+   is drawn at comes out heavier here than the same 600 does on white. One step
+   down the ramp compensates, at full-strength ink rather than the greyed-back
+   version this rule used to carry. The light theme keeps 600 on black — none
+   of this applies when the ink is darker than the paper. */
 :root[data-theme='dark'] .hero-title {
-  color: var(--ink-soft);
+  font-weight: 500;
+  color: var(--ink);
 }
 
-/* Third column, left edge, at the artwork's own 308×228. The export carries
-   its own progressive blur baked in, so nothing here rebuilds it — the page
-   only has to place the picture. */
+/* Flush with the page's right margin, on the same line as the theme toggle in
+   the header. Artwork keeps its own 308×228; the export carries its progressive
+   blur baked in, so nothing here rebuilds it — the page only places it. */
 .hero-folder {
   --folder-src: url('/media/hero-folder-white.webp');
-  grid-column: 3;
-  justify-self: start;
+  justify-self: end;
   width: 308px;
   height: 228px;
   /* Nudged off the grid's top edge by eye. Margin rather than transform: the
      .reveal blur-in animates transform on this same element and would drop the
      offset the moment it lands. Overridden in the stacked layout below. */
-  margin-top: -26px;
+  margin-top: 22px;
   /* Exports are 616×456 for retina; `contain` scales them back to the 308×228
      the layout wants. */
   background: var(--folder-src) center / contain no-repeat;
@@ -74,10 +82,7 @@
   }
 
   /* Stacks rather than hides: the folder carries copy of its own (the date
-     range, the domains, the NDA line) that appears nowhere else on the page.
-     Both explicit `grid-column`s have to be cleared here — a column 3 left
-     standing against a single-column track list would generate two implicit
-     columns rather than wrap. */
+     range, the domains, the NDA line) that appears nowhere else on the page. */
   .hero-grid {
     grid-template-columns: minmax(0, 1fr);
     /* Only the row gap matters in a single column — this is the space between
@@ -85,17 +90,12 @@
     row-gap: 30px;
   }
 
-  .hero-title,
-  .hero-folder {
-    grid-column: auto;
-  }
-
   /* Leads the section on a phone instead of trailing it: `order` reorders the
      grid item without touching the DOM, so the headline stays first in the
      source and keeps reading order and focus order intact. Half scale — the
      artwork is a 616×456 export, so 154×114 still has 4x the pixels it needs.
-     margin-top clears the desktop -26px nudge; the grid's row-gap above is
-     what separates it from the headline. */
+     margin-top clears the desktop nudge; the grid's row-gap above is what
+     separates it from the headline. */
   .hero-folder {
     order: -1;
     /* Flush with the page's left margin, same edge as the header logo — both
@@ -106,17 +106,4 @@
     margin-top: 0;
   }
 
-  /* `balance` evens the line lengths at the cost of leaving the measure
-     unfilled — worth it at desktop width, where the three-line composition was
-     designed around it, but on a phone it strands up to 176px of a 619px
-     column. `pretty` fills each line greedily instead and only steps in to stop
-     the headline ending on a one-word line, which plain greedy wrapping does
-     here between roughly 650 and 860px.
-
-     max-width goes with it: 698px only bites from ~798px up, where it throws
-     away another 22–62px of a column that is already narrow. */
-  .hero-title {
-    text-wrap: pretty;
-    max-width: none;
-  }
 }

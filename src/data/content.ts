@@ -14,7 +14,10 @@ export const profile = {
   location: 'SE Asia',
   email: 'weerdmolls@gmail.com',
   avatar: '/media/avatar.jpg',
-  headline: 'Product designer with 9 years in SaaS, B2B and admin interfaces',
+  /** Small line above the headline. */
+  greeting: 'Hey, I’m Dmitry!',
+  headline:
+    'Product designer in B2B, fintech, CRM, crypto. Friendly, reliable, and team-oriented',
   bio: "I'm a product designer with 9 years of practice, currently based in SE Asia. I work on the unglamorous end of software — fintech CRMs, admin panels, internal tools — where a design system and a clear flow are worth more than a hero animation.",
   socials: [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/kovalev-dmitry/' },
