@@ -92,16 +92,10 @@ function Block({ block }: { block: CaseBlock }): ReactNode {
         <ul className="case-options reveal">
           {block.items.map((opt, i) => (
             <li className="case-option" data-verdict={opt.verdict} key={i}>
-              <div className="case-option-head">
-                {/* Lettered rather than numbered: these are alternatives, not
-                    steps, and A/B/C is how the decision was actually written. */}
-                <span className="case-option-key">{String.fromCharCode(65 + i)}</span>
-                <h3 className="case-option-label">{opt.label}</h3>
-                <span className="case-option-verdict kicker">
-                  {opt.verdict === 'chosen' ? 'Chosen' : 'Rejected'}
-                </span>
-              </div>
-              <p className="case-option-text">{opt.text}</p>
+              <span className="case-option-verdict kicker">
+                {opt.verdict === 'chosen' ? 'Chosen' : 'Rejected'}
+              </span>
+              <h3 className="case-option-label">{opt.label}</h3>
             </li>
           ))}
         </ul>

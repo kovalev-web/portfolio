@@ -9,13 +9,31 @@
   padding-bottom: 3rem;
 }
 
-/* Narrower than the shared .rail (1160px): screenshots are stored around
-   1440px native width, and displaying them much wider than roughly half
-   that forces retina displays to upscale past the source resolution — soft
-   images. 1040px is a compromise between that ceiling and legibility — shots
-   land a bit past pixel-perfect, but nowhere near as soft as the full rail. */
+/* Narrower than the shared .rail (1160px): case screenshots are captured at
+   1180px and saved as 2x assets (2360px actual pixels), so 1180px display
+   width is a 1:1 match with retina (2x) displays — no upscaling, no wasted
+   resolution. Declare `w`/`h` in the case data as the 1180-wide display size,
+   not the 2x file's raw pixel dimensions. */
 .case .rail {
-  max-width: 1040px;
+  max-width: 1180px;
+}
+
+/* Text reads better narrower than the full-width screenshots: caps prose,
+   headings, and the structured blocks (meta, goals, options, metrics, cards,
+   quote) at 900px. Images and their captions are left out on purpose — they
+   still span the full 1180px rail. Both stay left-anchored to the rail edge,
+   so the narrower text column and the wider images line up on the left. */
+.case-meta,
+.case-lead,
+.case-text,
+.case-eyebrow,
+.case-heading,
+.case-goals,
+.case-options,
+.case-metrics,
+.case-cards,
+.case-quote {
+  max-width: 900px;
 }
 
 /* ---------- Header ---------- */
@@ -158,16 +176,27 @@
 
 /* ---------- Decision options ---------- */
 /* The rejected alternatives are the argument, so they get the same weight as
-   the chosen one — only the verdict chip and the left rule separate them. */
+   the chosen one — only the verdict chip and the border color separate them.
+   Side by side rather than stacked: title-only cards read fine in any order. */
 .case-options {
   list-style: none;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 0.625rem;
   margin-bottom: 1.875rem;
 }
 
+@media (max-width: 720px) {
+  .case-options {
+    grid-template-columns: 1fr;
+  }
+}
+
 .case-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.625rem;
   padding: 1.25rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
@@ -178,24 +207,7 @@
   border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
 }
 
-.case-option-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.75rem;
-  margin-bottom: 0.625rem;
-}
-
-.case-option-key {
-  flex-shrink: 0;
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--ink-soft);
-}
-
 .case-option-label {
-  flex: 1;
   font-size: var(--fs-lg);
   font-weight: 550;
   letter-spacing: -0.01em;
@@ -203,7 +215,6 @@
 }
 
 .case-option-verdict {
-  flex-shrink: 0;
   padding: 0.25rem 0.625rem;
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -215,12 +226,6 @@
   border-color: transparent;
   background: var(--accent);
   color: var(--accent-ink);
-}
-
-.case-option-text {
-  font-size: var(--fs-base);
-  line-height: 1.65;
-  color: var(--ink-soft);
 }
 
 /* ---------- Result metrics ---------- */
@@ -315,6 +320,23 @@
   line-height: 1.6;
 }
 
+/* Centers the 900px text column inside the wider 1180px rail. Placed after
+   every individual rule above on purpose: .case-heading, .case-metrics, and
+   .case-quote set `margin` as a shorthand (which includes left/right), so
+   this has to come later in the cascade to still win on inline margins. */
+.case-meta,
+.case-lead,
+.case-text,
+.case-eyebrow,
+.case-heading,
+.case-goals,
+.case-options,
+.case-metrics,
+.case-cards,
+.case-quote {
+  margin-inline: auto;
+}
+
 /* ---------- Figures ---------- */
 .case-figure {
   margin: 0 0 3.4rem;
@@ -333,25 +355,11 @@
   border-radius: var(--radius-sm);
 }
 
-/* fixlist's screenshots are dark UI throughout, which disappears into the
-   page background in dark mode with no border to mark the edge. A hairline
-   in the shared --line token fixes that without inventing a one-off color —
-   scoped to this case because the other cases' light shots don't need it. */
-.case-fixlist .case-shot {
-  border: 1px solid color-mix(in srgb, var(--line) 50%, transparent);
-}
-
 /* Tighter than the site-wide 1.7rem back-to-back gap (case-study.css above) —
    a fixlist-only call, not a general rule change, since 36 other image pairs
    across the imported cases rely on the wider spacing. */
 .case-fixlist .case-figure:has(+ .case-figure) {
   margin-bottom: 20px;
-}
-
-/* Matches the 20px gap above it — the two process shots and the gap that
-   follows them should all read as one consistent rhythm. */
-.case-fixlist .case-image-row {
-  gap: 20px;
 }
 
 /* Two halves of one moment, side by side instead of stacked. Each column

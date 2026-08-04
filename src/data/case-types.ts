@@ -24,7 +24,7 @@ export type CaseBlock =
    */
   | {
       type: 'options';
-      items: { label: string; verdict: 'rejected' | 'chosen'; text: string }[];
+      items: { label: string; verdict: 'rejected' | 'chosen' }[];
     }
   /** Result numbers as a row of tiles: the "before → after" of a case. */
   | { type: 'metrics'; items: { value: string; label: string }[] }

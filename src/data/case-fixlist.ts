@@ -25,25 +25,15 @@ export const fixlist: CaseStudy = {
       type: 'image',
       src: `${SHOT}/img-1.webp`,
       alt: 'The fixlist.dev landing page: the promise, a URL field offering a free preview with no email and no card, and the three-step how-it-works section',
-      w: 1440,
-      h: 1489,
+      w: 1180,
+      h: 1273,
     },
     {
-      type: 'image-row',
-      items: [
-        {
-          src: `${SHOT}/img-process-1.webp`,
-          alt: 'Waiting screen with three steps: loading the page in a real browser, capturing it screen by screen, grading it against the rubric',
-          w: 1416,
-          h: 1130,
-        },
-        {
-          src: `${SHOT}/img-process-2.webp`,
-          alt: 'The rubric scores once grading finishes: trust, readability, call to action, hierarchy, first impression, mobile, SEO',
-          w: 1416,
-          h: 1130,
-        },
-      ],
+      type: 'image',
+      src: `${SHOT}/img-process-1.webp`,
+      alt: 'Waiting screen with three steps: loading the page in a real browser, capturing it screen by screen, grading it against the rubric',
+      w: 1180,
+      h: 579,
       caption:
         'Three lines on a waiting screen, and they hold the whole order of work: a real browser first, then capture screen by screen, and only at the end a verdict.',
     },
@@ -80,18 +70,14 @@ export const fixlist: CaseStudy = {
     { type: 'heading', text: 'Order of operations as the only real product difference' },
     {
       type: 'text',
-      text: 'A chat never sees the page. At best it reads raw HTML: no render, no real contrast, no lazily loaded sections. It cannot tell grey text on white from black, because colour simply does not exist for it.',
-    },
-    {
-      type: 'text',
-      text: 'Hence the inverted order of work: gather the evidence first, judge second.',
+      text: 'A chat never sees the page. At best it reads raw HTML: no render, no real contrast, no lazily loaded sections. It cannot tell grey text on white from black, because colour simply does not exist for it. Hence the inverted order of work: gather the evidence first, judge second.',
     },
     {
       type: 'image',
       src: `${SHOT}/img-2.webp`,
       alt: 'Pipeline diagram: evidence gathering on the left, grading and the report on the right',
-      w: 1440,
-      h: 1247,
+      w: 1180,
+      h: 999,
       caption:
         'Evidence first: a real Chromium at 1440×900 walks the page screen by screen, up to twenty slices, alongside a DOM digest and PageSpeed metrics. Only then does the model grade it, and every finding it returns is pinned to a number on one of those screenshots.',
     },
@@ -115,10 +101,8 @@ export const fixlist: CaseStudy = {
       type: 'image',
       src: `${SHOT}/img-3.webp`,
       alt: 'Two finding cards next to their numbers on the marked-up screenshot',
-      w: 1440,
-      h: 1205,
-      caption:
-        'Every finding, one place on the page. The number on the card matches the number on the screenshot, so the report never asks you to take its word for where the problem is.',
+      w: 1180,
+      h: 988,
     },
     { type: 'break' },
 
@@ -126,40 +110,22 @@ export const fixlist: CaseStudy = {
     { type: 'heading', text: 'Where to cut the free tier' },
     {
       type: 'text',
-      text: 'The single biggest product decision in the project. The product sells trust, so the line between free and paid is not a monetisation question but a question of what exactly convinces the user.',
+      text: "The single biggest decision in the project: the line between free and paid isn't about monetisation, it's about what actually convinces the user. The trade-off: the preview shows the real depth before payment, so some people leave with the free value, but nobody feels tricked, and the product proves itself instead of promising.",
     },
     {
       type: 'options',
       items: [
-        {
-          label: 'Show everything, charge for the export',
-          verdict: 'rejected',
-          text: 'The value of the product is the .md file itself, not the wrapper around it. Nobody pays for a Download button.',
-        },
-        {
-          label: 'Show the problems without explanations, blur the detail',
-          verdict: 'rejected',
-          text: 'A preview that teases reads as a con and proves nothing of the one thing that needs proving: depth. Blurred text says we have something here. What is needed is to show how we think.',
-        },
-        {
-          label: 'Cut by depth, not by quality',
-          verdict: 'chosen',
-          text: 'Free gets the same audit: the full score, the verdict, and ratings across every category. Paid runs the same work across every screen and on a stronger model.',
-        },
+        { label: 'Show everything, charge for the export', verdict: 'rejected' },
+        { label: 'Show the problems without explanations, blur the detail', verdict: 'rejected' },
+        { label: 'Cut by depth, not by quality', verdict: 'chosen' },
       ],
-    },
-    {
-      type: 'text',
-      text: 'The trade is this: the preview shows the exact style and depth of the analysis before payment. Some people will leave having taken the free value. In exchange nobody feels tricked, and the product presents evidence instead of a promise.',
     },
     {
       type: 'image',
       src: `${SHOT}/img-4.webp`,
       alt: 'The free report: score, verdict, category ratings, and performance metrics',
-      w: 1440,
-      h: 1000,
-      caption:
-        'The score and the verdict are never hidden. What is held back is the volume, not the quality.',
+      w: 1180,
+      h: 843,
     },
     { type: 'break' },
 
@@ -167,15 +133,7 @@ export const fixlist: CaseStudy = {
     { type: 'heading', text: 'The report is not written for a human' },
     {
       type: 'text',
-      text: 'The report has a second reader, a coding agent, and it shapes the product more than the human does.',
-    },
-    {
-      type: 'text',
-      text: 'The target user already works in Claude Code or Cursor. They do not need a list of advice to translate into tasks by hand. They need a file they can hand to an agent whole.',
-    },
-    {
-      type: 'text',
-      text: 'So the .md is assembled by rules that differ from a report written for a human:',
+      text: 'The report has a second reader, a coding agent, and it shapes the product more than the human does. The target user already works in Claude Code or Cursor. They do not need a list of advice to translate into tasks by hand. They need a file they can hand to an agent whole. So the .md is assembled by rules that differ from a report written for a human:',
     },
     {
       type: 'goals',
@@ -208,8 +166,6 @@ export const fixlist: CaseStudy = {
       alt: 'The generated .md report open in a code editor',
       w: 1440,
       h: 1023,
-      caption:
-        'The same audit as the agent receives it: tasks with acceptance criteria, priorities and links to the screenshots each finding came from.',
     },
     {
       type: 'image',
@@ -226,11 +182,7 @@ export const fixlist: CaseStudy = {
     { type: 'heading', text: 'The cost of having no accounts' },
     {
       type: 'text',
-      text: 'There are no accounts anywhere, not for the audit and not for the payment. The entry barrier disappears completely, and that is the right trade for a product people buy a minute after arriving.',
-    },
-    {
-      type: 'text',
-      text: 'But removing registration does not remove the jobs registration was doing. They had to be solved another way, and that is where most of the design work turned out to be.',
+      text: 'There are no accounts anywhere, not for the audit and not for the payment. The entry barrier disappears completely, and that is the right trade for a product people buy a minute after arriving. But removing registration does not remove the jobs registration was doing. They had to be solved another way, and that is where most of the design work turned out to be.',
     },
     {
       type: 'goals',
@@ -271,10 +223,8 @@ export const fixlist: CaseStudy = {
       type: 'image',
       src: `${SHOT}/img-7.webp`,
       alt: 'The access recovery form',
-      w: 1440,
-      h: 952,
-      caption:
-        'Recovery by payment address, the same answer for everyone who asks. Nothing on this screen reveals whether any reports exist for that address.',
+      w: 1180,
+      h: 898,
     },
     {
       type: 'text',
@@ -299,11 +249,7 @@ export const fixlist: CaseStudy = {
     },
     {
       type: 'text',
-      text: 'All four passes sit on fixlist.dev raw and unedited. They are deliberately not rewritten into this case: a retold report is no longer evidence, it is a retelling.',
-    },
-    {
-      type: 'text',
-      text: 'The re-run did not soften, and that was left on the page: the point about the absence of external social proof stayed critical. Removing it would have been exactly the behaviour the product is built against.',
+      text: 'All four passes sit on fixlist.dev raw and unedited. They are deliberately not rewritten into this case: a retold report is no longer evidence, it is a retelling. The re-run did not soften, and that was left on the page: the point about the absence of external social proof stayed critical. Removing it would have been exactly the behaviour the product is built against.',
     },
   ],
 };
