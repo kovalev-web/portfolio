@@ -46,8 +46,10 @@
   transition: color var(--dur) var(--ease);
 }
 
-.case-back:hover {
-  color: var(--ink);
+@media (hover: hover) {
+  .case-back:hover {
+    color: var(--ink);
+  }
 }
 
 .case-header {
@@ -419,8 +421,10 @@
   transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
 }
 
-.case-next a:hover {
-  transform: translateX(0.5rem);
+@media (hover: hover) {
+  .case-next a:hover {
+    transform: translateX(0.5rem);
+  }
 }
 
 .case-next-kicker {

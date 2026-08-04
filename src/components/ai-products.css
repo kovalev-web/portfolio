@@ -34,10 +34,12 @@
     color 0.35s var(--ease);
 }
 
-.ai-arrow:hover {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--bg);
+@media (hover: hover) {
+  .ai-arrow:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
 }
 
 .ai-grid {

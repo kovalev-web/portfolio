@@ -83,6 +83,8 @@
   transition: color 0.15s;
 }
 
-.cv-gate-submit:hover {
-  color: var(--ink);
+@media (hover: hover) {
+  .cv-gate-submit:hover {
+    color: var(--ink);
+  }
 }

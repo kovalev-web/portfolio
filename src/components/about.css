@@ -23,8 +23,10 @@
   transition: transform 0.8s var(--ease);
 }
 
-.about-media:hover .about-media-fill {
-  transform: scale(1.05);
+@media (hover: hover) {
+  .about-media:hover .about-media-fill {
+    transform: scale(1.05);
+  }
 }
 
 .about-text {

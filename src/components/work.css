@@ -55,8 +55,10 @@
     pointer;
 }
 
-.work-row:hover {
-  border-bottom-color: var(--ink);
+@media (hover: hover) {
+  .work-row:hover {
+    border-bottom-color: var(--ink);
+  }
 }
 
 .work-text {
@@ -80,8 +82,10 @@
   transition: color 0.35s var(--ease);
 }
 
-.work-row:hover .work-kicker {
-  color: var(--ink);
+@media (hover: hover) {
+  .work-row:hover .work-kicker {
+    color: var(--ink);
+  }
 }
 
 .work-title {
@@ -107,10 +111,12 @@
     color 0.35s var(--ease);
 }
 
-.work-row:hover .work-arrow {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--bg);
+@media (hover: hover) {
+  .work-row:hover .work-arrow {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
 }
 
 /* ---------- Cursor preview ---------- */

@@ -11,8 +11,10 @@
     border-color 0.3s var(--ease);
 }
 
-.theme-toggle:hover {
-  transform: rotate(35deg);
-  color: var(--ink);
-  border-color: var(--ink);
+@media (hover: hover) {
+  .theme-toggle:hover {
+    transform: rotate(35deg);
+    color: var(--ink);
+    border-color: var(--ink);
+  }
 }

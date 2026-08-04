@@ -69,8 +69,10 @@
   transition: opacity 0.2s var(--ease);
 }
 
-.nav-pill a:hover {
-  opacity: 0.6;
+@media (hover: hover) {
+  .nav-pill a:hover {
+    opacity: 0.6;
+  }
 }
 
 /* Standalone squircle — black on the light page, flips to white once the
@@ -86,11 +88,13 @@
     color 0.3s var(--ease);
 }
 
-.nav-pill .theme-toggle:hover {
-  transform: rotate(45deg);
-  color: #f9f8f6;
-  border-color: transparent;
-  background: #000000;
+@media (hover: hover) {
+  .nav-pill .theme-toggle:hover {
+    transform: rotate(45deg);
+    color: #f9f8f6;
+    border-color: transparent;
+    background: #000000;
+  }
 }
 
 :root[data-theme='dark'] .nav-pill .theme-toggle {
@@ -98,9 +102,11 @@
   color: #14171f;
 }
 
-:root[data-theme='dark'] .nav-pill .theme-toggle:hover {
-  color: #14171f;
-  background: #f9f8f6;
+@media (hover: hover) {
+  :root[data-theme='dark'] .nav-pill .theme-toggle:hover {
+    color: #14171f;
+    background: #f9f8f6;
+  }
 }
 
 /* ---------- Mobile ---------- */
@@ -161,8 +167,10 @@
   transition: opacity 0.2s var(--ease);
 }
 
-.mobile-theme-toggle:hover {
-  opacity: 0.6;
+@media (hover: hover) {
+  .mobile-theme-toggle:hover {
+    opacity: 0.6;
+  }
 }
 
 @media (max-width: 860px) {

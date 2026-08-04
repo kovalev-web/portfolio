@@ -242,9 +242,11 @@ canvas {
   transition-delay: var(--d, 0ms);
 }
 
-.star-button:hover {
-  background: var(--ink);
-  color: var(--bg);
+@media (hover: hover) {
+  .star-button:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
 }
 
 .star-button span {
@@ -273,9 +275,11 @@ canvas {
   border-color: var(--accent-ink);
 }
 
-.on-media .star-button:hover {
-  background: var(--accent-ink);
-  color: #0a0a0b;
+@media (hover: hover) {
+  .on-media .star-button:hover {
+    background: var(--accent-ink);
+    color: #0a0a0b;
+  }
 }
 
 @media (max-width: 720px) {

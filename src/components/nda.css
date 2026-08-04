@@ -50,8 +50,10 @@
 
 /* Not a link — nothing to open — but still worth a flicker of life under the
    cursor, the way every other bordered surface on the site has one. */
-.nda-item:hover {
-  border-color: var(--ink-soft);
+@media (hover: hover) {
+  .nda-item:hover {
+    border-color: var(--ink-soft);
+  }
 }
 
 .nda-value-row {
@@ -74,8 +76,10 @@
   transition: color var(--dur) var(--ease);
 }
 
-.nda-item:hover .nda-lock {
-  color: var(--ink);
+@media (hover: hover) {
+  .nda-item:hover .nda-lock {
+    color: var(--ink);
+  }
 }
 
 .nda-label {

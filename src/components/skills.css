@@ -25,19 +25,25 @@
 }
 
 /* Pointer users get the same reveal on hover, wherever the row sits */
-.skill-row:hover .skill-media {
-  width: 1.15em;
+@media (hover: hover) {
+  .skill-row:hover .skill-media {
+    width: 1.15em;
+  }
 }
 
-.skill-row:hover .skill-media-fill {
-  transform: scale(1);
-  opacity: 1;
+@media (hover: hover) {
+  .skill-row:hover .skill-media-fill {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Dim the rest of the list so the hovered row carries the eye.
    Scoped to .is-visible so it can't fight the blur-in mid-reveal. */
-.skill-rows:hover .skill-row.is-visible:not(:hover) {
-  opacity: 0.3;
+@media (hover: hover) {
+  .skill-rows:hover .skill-row.is-visible:not(:hover) {
+    opacity: 0.3;
+  }
 }
 
 /* Collapsed by default; IntersectionObserver adds .is-open */

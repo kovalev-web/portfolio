@@ -29,8 +29,10 @@
   transition: border-color 0.25s var(--ease);
 }
 
-.footer-links a:hover {
-  border-color: currentColor;
+@media (hover: hover) {
+  .footer-links a:hover {
+    border-color: currentColor;
+  }
 }
 
 .footer-right {

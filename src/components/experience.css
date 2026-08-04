@@ -62,8 +62,10 @@
   border-bottom: none;
 }
 
-.exp-item:hover {
-  border-bottom-color: var(--ink);
+@media (hover: hover) {
+  .exp-item:hover {
+    border-bottom-color: var(--ink);
+  }
 }
 
 .exp-item[data-open='true'] {
@@ -153,9 +155,11 @@
   transition: color 0.35s var(--ease);
 }
 
-.exp-item:hover .exp-role,
-.exp-item:hover .exp-period {
-  color: var(--ink);
+@media (hover: hover) {
+  .exp-item:hover .exp-role,
+  .exp-item:hover .exp-period {
+    color: var(--ink);
+  }
 }
 
 /* ---------- Plus / minus ---------- */
@@ -200,8 +204,10 @@
   transform: translate(-50%, -50%) rotate(0deg);
 }
 
-.exp-trigger:hover .exp-toggle {
-  border-color: var(--ink);
+@media (hover: hover) {
+  .exp-trigger:hover .exp-toggle {
+    border-color: var(--ink);
+  }
 }
 
 /* ---------- Panel ---------- */
