@@ -87,10 +87,7 @@ function caseBody(study: CaseStudy) {
       case 'options':
         out.push(
           `<ul>${block.items
-            .map(
-              (o) =>
-                `<li><strong>${esc(o.label)}</strong> — ${esc(o.verdict)}. ${esc(o.text)}</li>`,
-            )
+            .map((o) => `<li><strong>${esc(o.label)}</strong> — ${esc(o.verdict)}</li>`)
             .join('')}</ul>`,
         );
         break;
