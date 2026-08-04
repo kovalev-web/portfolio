@@ -28,21 +28,13 @@ export default function Work() {
       <div className="rail">
         <p className="kicker reveal">Commercial work</p>
 
-        <div
-          className="work-list"
-          data-dim={hover !== null}
-          onMouseMove={track}
-          onMouseLeave={() => setHover(null)}
-        >
+        <div className="work-list" onMouseMove={track} onMouseLeave={() => setHover(null)}>
           {projects.map((p, i) => (
             <a
               key={p.title}
               className="work-row reveal"
               href={p.href}
               onClick={onNavClick}
-              // Dimming keys off this rather than `:hover`, so crossing the
-              // ~22px margin between rows doesn't briefly fade the whole list.
-              data-active={hover === i}
               // Reads the position off the enter event too, not just mousemove:
               // when a row scrolls under a still pointer this is the only event
               // that fires, and it already carries the coordinates.

@@ -83,7 +83,6 @@ function scrollRowUnderHeader(el: HTMLElement, duration: number) {
  */
 export default function Experience() {
   const [open, setOpen] = useState<number | null>(null);
-  const [hover, setHover] = useState<number | null>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Pulls the row's heading up to just under the fixed header once it opens,
@@ -105,7 +104,7 @@ export default function Experience() {
       <div className="rail">
         <p className="kicker reveal">Work experience</p>
 
-        <div className="exp-list" data-dim={hover !== null} onMouseLeave={() => setHover(null)}>
+        <div className="exp-list">
           {experience.map((job, i) => {
             const isOpen = open === i;
             const panelId = `exp-panel-${i}`;
@@ -118,8 +117,6 @@ export default function Experience() {
                   itemRefs.current[i] = el;
                 }}
                 data-open={isOpen}
-                data-active={hover === i}
-                onMouseEnter={() => setHover(i)}
               >
                 <h3 className="exp-heading">
                   <button

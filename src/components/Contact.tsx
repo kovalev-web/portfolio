@@ -5,7 +5,7 @@ export default function Contact() {
   return (
     <section id="contact" className="contact-section">
       <div className="shell">
-        <div className="contact-card on-media">
+        <div className="contact-card">
           <div className="contact-body">
             <h2 className="contact-title reveal reveal-lg">
               Have a product

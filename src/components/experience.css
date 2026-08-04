@@ -1,5 +1,5 @@
 .experience {
-  padding-top: 6vw;
+  padding-top: 8vw;
 }
 
 .experience .rail {
@@ -51,8 +51,8 @@
 .exp-item {
   border-bottom: 1.5px solid var(--line);
   /* Also `.reveal` — blur-in properties repeated so the shorthand keeps them */
-  transition: padding-left 0.35s var(--ease), border-bottom-color 0.35s var(--ease),
-    opacity 0.5s var(--ease), filter 1s var(--ease), transform 0.8s var(--ease);
+  transition: border-bottom-color 0.35s var(--ease), opacity 0.5s var(--ease),
+    filter 1s var(--ease), transform 0.8s var(--ease);
 }
 
 /* The last row's rule sat right against the gap to the next section, which
@@ -63,7 +63,6 @@
 }
 
 .exp-item:hover {
-  padding-left: 0.5em;
   border-bottom-color: var(--ink);
 }
 
@@ -83,18 +82,6 @@
   width: 100%;
   padding: 1.4rem 0;
   text-align: left;
-}
-
-.exp-list[data-dim='true'] .exp-item:not([data-active='true']) {
-  opacity: 0.35;
-}
-
-.exp-item .exp-company {
-  transition: letter-spacing 0.35s var(--ease);
-}
-
-.exp-item:hover .exp-company {
-  letter-spacing: -0.035em;
 }
 
 /* ---------- Logo ---------- */
@@ -147,10 +134,28 @@
   flex-shrink: 0;
   font-family: var(--font);
   font-weight: 400;
-  font-size: 20px;
-  line-height: 34px;
+  /* Was a fixed 20px/34px — the same regression --fs-company and --fs-role
+     were already fixed for, just missed here: a full-size date sitting next to
+     company text that has shrunk on a phone. The token's ceiling is 1.25rem,
+     exactly the 20px this used to be, so the desktop end is unchanged and only
+     the small end moves. Unitless line-height keeps the 34/20 = 1.7 ratio
+     instead of pinning 34px under a 15px date. */
+  font-size: var(--fs-company);
+  line-height: 1.7;
   letter-spacing: -0.04em;
   color: #666666;
+}
+
+/* Hovering brings the whole row up to full strength, not just the company
+   name — the muted role and date read as switched off next to it otherwise. */
+.exp-role,
+.exp-period {
+  transition: color 0.35s var(--ease);
+}
+
+.exp-item:hover .exp-role,
+.exp-item:hover .exp-period {
+  color: var(--ink);
 }
 
 /* ---------- Plus / minus ---------- */
@@ -290,16 +295,6 @@
 
   .exp-summary,
   .exp-bullets {
-    padding-left: 0;
-  }
-}
-
-@media (hover: none) {
-  .exp-list[data-dim='true'] .exp-item:not([data-active='true']) {
-    opacity: 1;
-  }
-
-  .exp-item:hover {
     padding-left: 0;
   }
 }
