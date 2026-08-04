@@ -33,14 +33,15 @@
 }
 
 /* Dark theme only. Light type on a dark ground optically gains weight — the
-   glyph edges bleed outwards rather than inwards — so the same 400/full-black
-   pairing that reads as plain regular in the light theme comes out heavier and
-   louder here. Backing off to 300 and to --ink-soft compensates, and leaves
-   "9 years" (still 700, still --ink) as the only thing at full strength.
-   The light theme deliberately keeps plain regular black — none of this
-   applies when the ink is darker than the paper. */
+   glyph edges bleed outwards rather than inwards — so full-strength ink reads
+   louder here than the same pairing does in the light theme. Backing the
+   heading off to --ink-soft compensates and leaves "9 years" (still 700, still
+   --ink) as the only thing at full strength. The weight stays at the inherited
+   regular: the grey is doing the work, and taking the weight down as well
+   thinned the strokes further than the size wants.
+   The light theme keeps plain regular black — none of this applies when the
+   ink is darker than the paper. */
 :root[data-theme='dark'] .hero-title {
-  font-weight: 300;
   color: var(--ink-soft);
 }
 
