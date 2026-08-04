@@ -30,8 +30,9 @@
 
 .exp-item {
   min-width: 0;
-  /* scrollIntoView aligns to this instead of the viewport's true top, so an
-     opened row lands just under the fixed glass header, not behind it. */
+  /* Keeps browser-driven scrolls (focus navigation, find-in-page) clear of the
+     fixed glass header. Opening a row is handled in Experience.tsx instead, but
+     to the same offset — keep the two in step. */
   scroll-margin-top: calc(var(--header-h) + 12px);
 }
 

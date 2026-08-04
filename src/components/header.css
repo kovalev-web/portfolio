@@ -9,6 +9,12 @@
   background: color-mix(in srgb, var(--bg) 70%, transparent);
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
+  /* Keeps this on its own compositor layer. Without it, a fixed element
+     with backdrop-filter can visually detach and get left behind at its
+     pre-scroll position during a fast programmatic scroll (e.g. the
+     Experience accordion's per-frame scrolling) — the DOM/layout stay
+     correct, only the paint goes stale until an unrelated repaint clears it. */
+  will-change: transform;
 }
 
 .header-inner {
