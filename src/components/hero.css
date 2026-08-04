@@ -35,10 +35,11 @@
 .hero-title {
   font-size: var(--fs-hero);
   font-weight: 600;
-  /* Figma's 70 over 76, kept as a ratio rather than the 70px itself — the size
-     is fluid, and a pinned line-height is exactly the regression that had a
-     37px headline sitting on 76px leading on a phone. */
-  line-height: 0.92;
+  /* Looser than Figma's 70-over-76 (0.92): at the small end of the fluid size
+     that leading closed the lines up too far. Unitless so it tracks the size
+     instead of pinning px, which is the regression that once had a 37px
+     headline sitting on 76px of leading on a phone. */
+  line-height: 1;
   letter-spacing: -0.05em;
   text-wrap: pretty;
 }

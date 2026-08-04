@@ -43,10 +43,12 @@
   /* Fluid, but keeps the same 4.375rem ceiling the desktop design was built
      around — the fixed value it replaced didn't scale down at all and blew
      up to 500px+ of h1 on a phone screen. */
-  /* 4vw rather than 3.5 so the 4.75rem ceiling is actually reached by ~1300px
-     — at 3.5vw a 1440 viewport lands on 74.4px and never hits the 76px the
-     design is drawn at. */
-  --fs-hero: clamp(2rem, 1.5rem + 4vw, 4.75rem);
+  /* The 4vw slope is what gets the 4.75rem ceiling reached on a desktop at
+     all — at 3.5vw a 1440 viewport lands on 74.4px and never hits the 76px the
+     design is drawn at. The 1.8rem base lifts the small end, where 1.5rem read
+     as too timid on a phone; the ceiling is unchanged, it just arrives at
+     ~1180px instead of ~1300px. */
+  --fs-hero: clamp(2rem, 1.8rem + 4vw, 4.75rem);
   --fs-section: clamp(1.5rem, 1.1rem + 2vw, 2.375rem);
   /* Same fixed-size regression as --fs-hero/--fs-section — kept the desktop
      ceiling, added a floor so company/role text doesn't stay full-size next
