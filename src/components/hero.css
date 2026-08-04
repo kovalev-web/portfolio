@@ -26,15 +26,22 @@
 
 .hero-title strong {
   font-weight: 700;
+  /* Only bites in the dark theme, where the heading itself is greyed and this
+     pulls the emphasis back to full strength. A no-op in the light theme,
+     which inherits the same colour anyway. */
+  color: var(--ink);
 }
 
-/* Light type on a dark ground optically gains weight — the glyph edges bleed
-   outwards rather than inwards — so the same 400 that reads as regular in the
-   light theme reads a notch heavier here. Dropping to 300 compensates. The
-   emphasis stays at 700, which widens the contrast between the two rather than
-   flattening it. */
+/* Dark theme only. Light type on a dark ground optically gains weight — the
+   glyph edges bleed outwards rather than inwards — so the same 400/full-black
+   pairing that reads as plain regular in the light theme comes out heavier and
+   louder here. Backing off to 300 and to --ink-soft compensates, and leaves
+   "9 years" (still 700, still --ink) as the only thing at full strength.
+   The light theme deliberately keeps plain regular black — none of this
+   applies when the ink is darker than the paper. */
 :root[data-theme='dark'] .hero-title {
   font-weight: 300;
+  color: var(--ink-soft);
 }
 
 /* Third column, left edge, at the artwork's own 308×228. The export carries
