@@ -30,6 +30,9 @@
 
 .exp-item {
   min-width: 0;
+  /* scrollIntoView aligns to this instead of the viewport's true top, so an
+     opened row lands just under the fixed glass header, not behind it. */
+  scroll-margin-top: calc(var(--header-h) + 12px);
 }
 
 .work-tags {
@@ -244,14 +247,24 @@
 @media (max-width: 720px) {
   .exp-trigger {
     flex-wrap: wrap;
-    gap: 0.8rem;
-    padding: 1.1rem 0;
+    column-gap: 0.8rem;
+    row-gap: 0.3rem;
+    padding: 0.65rem 0;
+  }
+
+  .exp-logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .exp-text {
+    gap: 2px;
   }
 
   .exp-period {
     order: 3;
     width: 100%;
-    padding-left: calc(48px + 0.8rem);
+    padding-left: calc(36px + 0.8rem);
   }
 
   .exp-summary,

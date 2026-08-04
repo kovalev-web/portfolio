@@ -20,6 +20,13 @@
 @media (max-width: 860px) {
   .hero {
     padding-top: calc(var(--header-h) + 24px);
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
+  }
+
+  /* Same weight throughout on mobile — the bold "9 years" emphasis is a
+     desktop-only flourish, not needed at this size. */
+  .hero-title,
+  .hero-title strong {
+    font-weight: 500;
   }
 }

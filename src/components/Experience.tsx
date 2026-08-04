@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { experience } from '../data/content';
 import './tags.css';
 import './experience.css';
@@ -13,6 +13,24 @@ import './experience.css';
 export default function Experience() {
   const [open, setOpen] = useState<number | null>(null);
   const [hover, setHover] = useState<number | null>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Scrolls the row's heading to just under the fixed header once it opens,
+  // rather than wherever the click happened to land it — on a phone, opening
+  // a row near the bottom of the viewport otherwise expands the panel
+  // straight off the bottom edge, out of view.
+  //
+  // Switching straight from one open row to another animates two panels at
+  // once (the old one collapsing, the new one expanding) — scrolling before
+  // either settles targets a position that's still moving, so this waits out
+  // the 0.45s panel transition (see .exp-panel) before scrolling at all.
+  useEffect(() => {
+    if (open === null) return;
+    const id = window.setTimeout(() => {
+      itemRefs.current[open]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 460);
+    return () => window.clearTimeout(id);
+  }, [open]);
 
   return (
     <section id="experience" className="experience">
@@ -28,6 +46,9 @@ export default function Experience() {
               <div
                 className="exp-item reveal"
                 key={job.company + job.period}
+                ref={(el) => {
+                  itemRefs.current[i] = el;
+                }}
                 data-open={isOpen}
                 data-active={hover === i}
                 onMouseEnter={() => setHover(i)}

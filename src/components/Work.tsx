@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ArrowRight } from 'lucide-react';
 import { visibleProjects as projects } from '../data/content';
 import { onNavClick } from '../hooks/useRoute';
 import './work.css';
@@ -50,8 +51,13 @@ export default function Work() {
                 track(e);
               }}
             >
-              <span className="work-kicker">{p.kicker}</span>
-              <span className="work-title">{p.title}</span>
+              <span className="work-text">
+                <span className="work-kicker">{p.kicker}</span>
+                <span className="work-title">{p.title}</span>
+              </span>
+              <span className="work-arrow" aria-hidden="true">
+                <ArrowRight size={18} strokeWidth={1.75} />
+              </span>
             </a>
           ))}
 

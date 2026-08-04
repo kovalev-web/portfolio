@@ -82,13 +82,26 @@
 }
 
 @media (max-width: 860px) {
+  /* Fixed height was sized for the desktop one-line layout — content stacks
+     taller than that once the links go one-per-line below. */
+  .contact-card {
+    height: auto;
+  }
+
   .contact-body {
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
+    gap: 2rem;
   }
 
   .contact-footer {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .contact-links {
+    flex-direction: column;
+    gap: 0.6rem;
   }
 }
