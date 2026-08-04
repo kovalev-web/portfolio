@@ -7,7 +7,7 @@
 .hero-title {
   font-size: var(--fs-hero);
   font-weight: 400;
-  line-height: 76px;
+  line-height: 1.1;
   letter-spacing: -0.04em;
   text-wrap: balance;
   max-width: 698px;
