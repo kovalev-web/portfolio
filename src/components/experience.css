@@ -54,6 +54,13 @@
     opacity 0.5s var(--ease), filter 1s var(--ease), transform 0.8s var(--ease);
 }
 
+/* The last row's rule sat right against the gap to the next section, which
+   reads as the gap being glued shut — the AI Products section below ends on
+   a plain image edge instead, with no such line to crowd its own gap. */
+.exp-item:last-child {
+  border-bottom: none;
+}
+
 .exp-item:hover {
   padding-left: 0.5em;
   border-bottom-color: var(--ink);
