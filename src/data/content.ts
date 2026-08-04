@@ -14,7 +14,7 @@ export const profile = {
   location: 'SE Asia',
   email: 'weerdmolls@gmail.com',
   avatar: '/media/avatar.jpg',
-  headline: 'Product designer with 9 years in SaaS, CRM systems, and admin interfaces',
+  headline: 'Product designer with 9 years in SaaS, B2B and admin interfaces',
   bio: "I'm a product designer with 9 years of practice, currently based in SE Asia. I work on the unglamorous end of software — fintech CRMs, admin panels, internal tools — where a design system and a clear flow are worth more than a hero animation.",
   socials: [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/kovalev-dmitry/' },
@@ -87,7 +87,7 @@ export const projects = cases.map((c) => ({
 }));
 
 /** Hidden from the Work list for now — the case pages themselves still exist. */
-export const HIDDEN_FROM_WORK = new Set(['control-panel', 'organix']);
+export const HIDDEN_FROM_WORK = new Set(['control-panel', 'organix', 'fixlist']);
 
 export const visibleProjects = projects.filter((_, i) => !HIDDEN_FROM_WORK.has(cases[i].slug));
 
@@ -101,53 +101,6 @@ export const ndaWork = [
   { value: 8, label: 'IREV products' },
   { value: 3, label: 'AI products' },
 ];
-
-/**
- * Hero shot deck, grouped by project. Each inner array is one project's shots,
- * shown front-most first. Titles borrow from `projects` above just for the alt
- * text — the rotation itself doesn't otherwise depend on that list.
- *
- * Grouping only drives the pagination dots (one per project). The rotation
- * itself runs over the flattened `heroDeck` below, one card at a time.
- *
- * Swapping a shot is just replacing `src`/`alt` — nothing about the shuffle
- * changes. Every card is the same box with `object-fit: cover`, so shots don't
- * have to match each other's ratio exactly, but a similar portrait ratio crops
- * most kindly, and the crop runs from the top-left corner.
- */
-/**
- * Which case each `project-N` folder holds shots of. By slug, not by position
- * in `projects`: the shots and the work list are two independent orders, and
- * indexing into the list meant every new case at the top silently relabelled
- * somebody else's screenshots.
- */
-const heroShotOwners = ['trade-scope', 'brokerage-crm', 'fixlist'];
-
-const titleOf = (slug: string) => cases.find((c) => c.slug === slug)?.title ?? '';
-
-export const heroProjects: { src: string; alt: string }[][] = heroShotOwners.map(
-  (slug, project) => {
-    const title = titleOf(slug);
-    return [
-      { src: `/media/project-${project + 1}/1.webp`, alt: `${title} — main view` },
-      { src: `/media/project-${project + 1}/2.webp`, alt: `${title} — detail` },
-      { src: `/media/project-${project + 1}/3.webp`, alt: `${title} — detail` },
-    ];
-  },
-);
-
-/**
- * The deck the hero actually cycles: every shot of every project, flattened
- * into one ring. `project` is carried along so the dots can highlight whichever
- * project owns the card currently at the front.
- */
-export const heroDeck: { src: string; alt: string; project: number }[] =
-  heroProjects.flatMap((shots, project) => shots.map((shot) => ({ ...shot, project })));
-
-/** Deck index of each project's first shot — where a dot click jumps to. */
-export const heroProjectStarts: number[] = heroProjects.map((_, project) =>
-  heroDeck.findIndex((shot) => shot.project === project),
-);
 
 /** Big type rows in the skills band. `media` expands inline on scroll-in. */
 export const skills = [

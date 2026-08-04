@@ -25,7 +25,7 @@ export default function Work() {
   return (
     <section id="work" className="work">
       <div className="rail">
-        <p className="kicker reveal">Selected work</p>
+        <p className="kicker reveal">Commercial work</p>
 
         <div
           className="work-list"

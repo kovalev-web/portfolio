@@ -1,19 +1,32 @@
 .work {
-  padding-top: 9vw;
+  padding-top: 6vw;
 }
 
 .work .rail {
-  max-width: 1040px;
+  max-width: var(--page-max);
+  display: grid;
+  grid-template-columns: minmax(0, 433px) minmax(0, 887px);
+  gap: 20px;
 }
 
 .work .kicker {
   display: block;
   text-align: left;
-  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  margin-top: 0.5em;
+  max-width: 433px;
+  min-width: 0;
+  font-size: var(--fs-section);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  text-transform: none;
+  color: var(--ink);
 }
 
 .work-list {
   position: relative;
+  max-width: 887px;
+  min-width: 0;
 }
 
 .work-row {
@@ -21,8 +34,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-bottom: 0.5em;
-  margin-bottom: 1.4em;
+  min-width: 0;
+  padding: 1.4rem 0;
   border-bottom: 1.5px solid var(--line);
   /* Rows are also `.reveal`, and `transition` is a shorthand — the blur-in
      properties have to be repeated here or they get dropped. */
@@ -61,17 +74,19 @@
 
 .work-kicker {
   font-family: var(--font);
-  font-size: var(--fs-xs);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: var(--fs-company);
+  font-weight: 500;
+  line-height: 1.25rem;
+  letter-spacing: -0.02em;
+  text-transform: none;
   color: var(--ink-soft);
   margin-bottom: 0.4em;
 }
 
 .work-title {
-  font-size: var(--fs-xl);
-  font-weight: 400;
-  line-height: 1;
+  font-size: var(--fs-role);
+  font-weight: 500;
+  line-height: 1.25rem;
   letter-spacing: -0.02em;
 }
 
@@ -127,5 +142,19 @@
 
   .work-row {
     cursor: pointer;
+  }
+}
+
+@media (max-width: 980px) {
+  .work .rail {
+    grid-template-columns: 1fr;
+  }
+
+  .work .kicker {
+    max-width: none;
+  }
+
+  .work-list {
+    max-width: none;
   }
 }

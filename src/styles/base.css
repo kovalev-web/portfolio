@@ -14,16 +14,12 @@
   /* Animate --bg on every element that uses it (fixes corner-fillet blink) */
   transition: --bg var(--dur) var(--ease);
   /* Layout */
-  --page-max: 1800px;
-  --page-pad: 40px;
+  --page-max: 1440px;
+  --page-pad: 50px;
   --gap: 10px;
   --radius: 30px;
   --radius-sm: 20px;
-  --header-h: 104px;
-  /* Distance from the viewport top to the hero card's top edge. The header
-     notch is page-coloured, so the strip above it is invisible — but the
-     notch's right-hand fillet has to line up with this. */
-  --hero-top: 30px;
+  --header-h: 100px;
 
   /* Type */
   --font: 'Mona Sans', 'Inter', -apple-system, system-ui, sans-serif;
@@ -44,6 +40,13 @@
   --fs-subtitle: clamp(1.75rem, 1.5rem + 1.2vw, 2.4rem);
   --fs-xl: clamp(2rem, 1rem + 4.5vw, 5.375rem);
   --fs-display: clamp(2.35rem, 1.9rem + 2.2vw, 4rem);
+  /* Fluid, but keeps the same 4.375rem ceiling the desktop design was built
+     around — the fixed value it replaced didn't scale down at all and blew
+     up to 500px+ of h1 on a phone screen. */
+  --fs-hero: clamp(2rem, 1.5rem + 3.5vw, 4.375rem);
+  --fs-section: clamp(1.5rem, 1.1rem + 2vw, 2.375rem);
+  --fs-company: 1.25rem;
+  --fs-role: 1.375rem;
   --fs-lead: clamp(1.05rem, 0.95rem + 0.5vw, 1.5rem);
   --fs-kicker: 0.8rem;
   /* Parked — was used by the disabled Skills section */
@@ -61,7 +64,7 @@
 /* Light theme (default) */
 :root,
 :root[data-theme='light'] {
-  --bg: #f2f1ee;
+  --bg: #f0f0f0;
   --surface: #f9f8f6;
   --ink: #0a0a0b;
   --ink-soft: rgba(10, 10, 11, 0.55);
@@ -80,7 +83,7 @@
   --surface: #131315;
   --ink: #f9f8f6;
   --ink-soft: rgba(249, 248, 246, 0.55);
-  --line: rgba(249, 248, 246, 0.22);
+  --line: rgba(249, 248, 246, 0.11);
   --glass: rgba(20, 20, 22, 0.5);
   --glass-line: rgba(249, 248, 246, 0.14);
   --shadow: 0 3px 20px -5px rgba(0, 0, 0, 0.5);

@@ -161,18 +161,21 @@ export const fixlist: CaseStudy = {
       text: 'This is interface design for a non-human reader. The usual criteria, readability, rhythm, visual hierarchy, do not apply here. In their place: unambiguous phrasing and the whole context inside a single file.',
     },
     {
-      type: 'image',
-      src: `${SHOT}/img-5.webp`,
-      alt: 'The generated .md report open in a code editor',
-      w: 1440,
-      h: 1023,
-    },
-    {
-      type: 'image',
-      src: `${SHOT}/img-6.webp`,
-      alt: 'The report being worked through by a coding agent inside an editor',
-      w: 1440,
-      h: 1585,
+      type: 'image-row',
+      items: [
+        {
+          src: `${SHOT}/img-5.webp`,
+          alt: 'The generated .md report open in a code editor',
+          w: 1440,
+          h: 1023,
+        },
+        {
+          src: `${SHOT}/img-6.webp`,
+          alt: 'The report being worked through by a coding agent inside an editor',
+          w: 1440,
+          h: 1585,
+        },
+      ],
       caption:
         'And in use. The file was designed to be handed over without a human translating between the report and the tickets.',
     },

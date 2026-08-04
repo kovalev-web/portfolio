@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { experience, focusAreas } from '../data/content';
+import { experience } from '../data/content';
 import './tags.css';
 import './experience.css';
 
@@ -18,14 +18,6 @@ export default function Experience() {
     <section id="experience" className="experience">
       <div className="rail">
         <p className="kicker reveal">Work experience</p>
-
-        <ul className="tags-list work-tags reveal">
-          {focusAreas.map((tag) => (
-            <li className="tag-pill" key={tag}>
-              {tag}
-            </li>
-          ))}
-        </ul>
 
         <div className="exp-list" data-dim={hover !== null} onMouseLeave={() => setHover(null)}>
           {experience.map((job, i) => {

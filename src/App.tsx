@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Work from './components/Work';
-import Nda from './components/Nda';
+import AIProducts from './components/AIProducts';
 // About — parked, not deleted. Restore the import and the <About /> below
 // when the section is wanted again.
 // import About from './components/About';
@@ -24,10 +24,10 @@ function Home() {
   return (
     <main>
       <Hero />
-      <Work />
-      <Nda />
-      {/* <About /> */}
       <Experience />
+      <AIProducts />
+      <Work />
+      {/* <About /> */}
       {/* <Skills /> */}
       <Contact />
     </main>
@@ -62,7 +62,9 @@ export default function App() {
       ) : (
         <NotFound />
       )}
-      <Footer />
+      {/* Home's Contact card already ends with this same social/copyright
+          row, so the sitewide footer would just repeat it right underneath. */}
+      {path !== '/' && <Footer />}
     </ThemeProvider>
   );
 }

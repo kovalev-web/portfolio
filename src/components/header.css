@@ -1,213 +1,82 @@
+/* Plain full-width bar — solid background, logo left, nav pill right, all
+   in one row. No carved corners, no floating glass, no scroll behaviour. */
 .site-header {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 99;
-  pointer-events: none;
-}
-
-/* Fixed bar at the very top — sits behind the notch. The ::after fillet is
-   flush against its bottom edge so the transparent cutout always reads as a
-   solid page-background colour, never revealing scrolled content beneath. */
-.top-line {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: var(--hero-top);
+  height: var(--header-h);
   background: var(--bg);
-  pointer-events: none;
-}
-
-/* Right-side corner fillet — sits at the hero-card's top-right position so
-   the rounded corner always reads as round when the card scrolls. */
-.right-corner {
-  position: fixed;
-  top: var(--hero-top);
-  /* Follows the hero card's right edge, not the viewport's. Past --page-max
-     the shell stops growing and centres itself, so the card's edge sits an
-     extra half-gutter inwards — without that term the fillet drifts off the
-     corner by exactly that much. */
-  right: calc(max(0px, (100% - var(--page-max)) / 2) + var(--page-pad));
-  width: 38px;
-  height: 38px;
-  background: radial-gradient(
-    circle 38px at 0% 100%,
-    transparent 38px,
-    var(--bg) 38.5px
-  );
-  pointer-events: none;
-  z-index: 1;
 }
 
 .header-inner {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  pointer-events: none;
-  /* Above the mobile menu's blur backdrop (z-index: 3) — the logo and the
-     Menu/Close toggle live here and are part of the menu chrome itself, not
-     page content, so they shouldn't blur along with everything else. */
-  position: relative;
-  z-index: 5;
-}
-
-.header-inner > * {
-  pointer-events: auto;
-}
-
-/* ---------- Logo notch ---------- */
-/* A block of page background that reads as a bite taken out of the hero
-   card, with the two pseudo-elements carving the concave corners. Always
-   visible — same as the reference whose SVG corners never disappear.
-
-   NB: no border on this element, ever. `box-sizing: border-box` makes the
-   padding box the reference for `top: 100%` / `left: 100%` below, so even a
-   1px transparent border knocks both fillets out of alignment and leaves
-   visible hairlines along the card edge. */
-.notch {
-  position: relative;
-  z-index: 2;
+  height: 100%;
   display: flex;
   align-items: center;
-  height: var(--header-h);
-  padding: 28px 20px 0 0;
-  background: var(--bg);
-  border-radius: 0 0 var(--radius) 0;
+  justify-content: space-between;
 }
 
-.notch::before,
-.notch::after {
-  content: '';
-  position: absolute;
-  background: radial-gradient(
-    circle var(--radius) at 100% 100%,
-    transparent var(--radius),
-    var(--bg) calc(var(--radius) + 0.5px)
-  );
+.notch {
+  display: flex;
+  align-items: center;
 }
-
-  /* Fillet below the notch's left edge. Each is 1px larger on the side facing
-     the notch and offset back by the same 1px, so the gradient's antialiased
-     edge overlaps the solid fill instead of leaving a seam. The circle stays
-     pinned to the box's bottom-right corner, so the arc itself is unchanged. */
-  .notch::before {
-    left: 0;
-    top: calc(100% - 1px);
-    width: var(--radius);
-    height: calc(var(--radius) + 1px);
-  }
-
-  /* Fillet at the notch's right edge, creating the "bitten" shape */
-  .notch::after {
-    left: calc(100% - 1px);
-    top: var(--hero-top);
-    width: calc(var(--radius) + 1px);
-    height: var(--radius);
-    background: radial-gradient(
-      circle var(--radius) at 100% 100%,
-      transparent var(--radius),
-      var(--bg) calc(var(--radius) + 0.5px)
-    );
-  }
 
 .logo {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding-left: 12px;
 }
 
 .logo-avatar {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
   object-fit: cover;
   object-position: center top;
   background: var(--surface);
 }
 
 .logo-text {
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.015em;
+  font-size: var(--fs-base);
+  font-weight: 500;
+  line-height: 1.125;
+  letter-spacing: -0.03em;
 }
 
 /* ---------- Nav pill ---------- */
-/* Glass so it stays legible over the hero card and over any section that
-   scrolls beneath it. */
 .nav-pill {
-  margin-top: 42px;
   display: flex;
   align-items: center;
+  gap: 20px;
   flex-shrink: 0;
-  height: 56px;
-  padding: 0 12px;
-  margin-right: 12px;
-  border-radius: 50px;
-  /* Fixed dark glass in light theme, not derived from --glass — the pill is
-     fixed over the whole page, so it needs to read the same over the light
-     page background as it does over the hero card. Inverted to light glass
-     in dark theme below, so the pill still contrasts with its surroundings. */
-  background: rgba(19, 26, 40, 0.55);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(10px) saturate(200%);
-  -webkit-backdrop-filter: blur(10px) saturate(200%);
+  height: 60px;
+  padding: 21px 25px;
+  border-radius: 18px;
+  background: #000000;
   color: #f9f8f6;
-  /* Collapses to a circle on scroll (or a click) — width is set inline from
-     JS since `auto` can't be transitioned, and the links spilling past the
-     circle just get clipped rather than reflowing. */
-  overflow: hidden;
-  transition: width 0.4s var(--ease), height 0.4s var(--ease), padding 0.4s var(--ease);
-}
-
-/* Circle matches .logo-avatar's 46px so the two line up as a pair. */
-.nav-pill[data-collapsed='true'] {
-  height: 46px;
-  padding: 0;
-}
-
-.nav-handle {
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  color: inherit;
-  transition: background-color 0.2s var(--ease);
-}
-
-.nav-handle:hover {
-  background: rgba(255, 255, 255, 0.12);
-}
-
-:root[data-theme='dark'] .nav-handle:hover {
-  background: rgba(20, 23, 31, 0.1);
 }
 
 :root[data-theme='dark'] .nav-pill {
-  background: rgba(249, 248, 246, 0.65);
+  background: #f9f8f6;
   color: #14171f;
 }
 
 .nav-pill a {
-  padding: 0 0.8em;
-  font-size: var(--fs-sm);
-  font-weight: 600;
+  font-size: var(--fs-base);
+  font-weight: 400;
+  line-height: 1.125;
+  letter-spacing: -0.03em;
   transition: opacity 0.2s var(--ease);
 }
 
-/* The pill's own background flips with the theme (dark glass in light theme,
-   light glass in dark theme), so its theme toggle needs fixed colours too —
-   var(--ink-soft)/var(--line) would be near-invisible here. Scoped to the
-   pill: the same ThemeToggle in the footer sits on the page's own
-   (theme-driven) background and keeps the default. */
+/* The pill's own background flips with the theme, so its theme toggle needs
+   fixed colours too — var(--ink-soft)/var(--line) would be near-invisible
+   here. Scoped to the pill: the same ThemeToggle in the footer sits on the
+   page's own (theme-driven) background and keeps the default. */
 .nav-pill .theme-toggle {
   border: none;
-  color: rgba(249, 248, 246, 0.75);
-  margin-left: 8px;
-  margin-right: 4px;
+  width: 18px;
+  height: 18px;
+  color: #f9f8f6;
 }
 
 .nav-pill .theme-toggle:hover {
@@ -216,7 +85,7 @@
 }
 
 :root[data-theme='dark'] .nav-pill .theme-toggle {
-  color: rgba(20, 23, 31, 0.65);
+  color: #14171f;
 }
 
 :root[data-theme='dark'] .nav-pill .theme-toggle:hover {
@@ -234,8 +103,6 @@
   justify-content: center;
   height: 40px;
   width: 40px;
-  margin-left: 14px;
-  margin-top: 6px;
   border: none;
   border-radius: 50%;
 }
@@ -266,15 +133,11 @@
   flex-direction: column;
   gap: 0.2em;
   padding: 1.2em;
-  /* Same fixed dark-blue surface as the hero card, not the purple --accent. */
-  background: var(--hero-blue);
-  color: var(--accent-ink);
-  border-radius: var(--radius) 0 var(--radius) var(--radius);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  /* Sits outside .header-inner, so it never picked up the `> *` override
-     below and inherited pointer-events: none from .site-header — every tap
-     on a link or the theme toggle was silently swallowed. */
-  pointer-events: auto;
+  /* Same surface as the page itself — only ever shown below the 860px
+     breakpoint, so there's no separate desktop appearance to keep in sync. */
+  background: var(--bg);
+  color: var(--ink);
+  border-radius: 0 0 var(--radius) var(--radius);
 }
 
 .mobile-sheet a {
@@ -287,7 +150,7 @@
   padding: 0.35em 0;
   font-size: 1.8rem;
   text-align: left;
-  color: var(--accent-ink);
+  color: var(--ink);
   transition: opacity 0.2s var(--ease);
 }
 
@@ -300,47 +163,12 @@
     --header-h: 72px;
   }
 
-  /* Full-width solid bar instead of a carved notch: at this width the card
-     is the full column, so there is nothing to carve into. Keeping the page
-     background opaque is what stops the logo from colliding with whatever
-     heading scrolls underneath it — the hero gets matching top padding so
-     the bar never covers the card. */
+  /* .nav-pill disappears below, leaving .notch as header-inner's only child
+     — its parent's space-between then has nothing left to distribute, so
+     the logo and the menu button need their own space-between here instead. */
   .notch {
-    flex: 1;
+    width: 100%;
     justify-content: space-between;
-    margin-inline: calc(-1 * var(--page-pad));
-    padding-inline: var(--page-pad);
-    padding-top: 0;
-    border-radius: 0;
-  }
-
-  .right-corner {
-    display: none;
-  }
-
-  .notch::before {
-    left: 16px;
-    top: calc(100% - 1px);
-    width: var(--radius);
-    height: calc(var(--radius) + 1px);
-    background: radial-gradient(
-      circle var(--radius) at 100% 100%,
-      transparent var(--radius),
-      var(--bg) calc(var(--radius) + 0.5px)
-    );
-  }
-
-  .notch::after {
-    left: auto;
-    right: 16px;
-    top: calc(100% - 1px);
-    width: var(--radius);
-    height: calc(var(--radius) + 1px);
-    background: radial-gradient(
-      circle var(--radius) at 0% 100%,
-      transparent var(--radius),
-      var(--bg) calc(var(--radius) + 0.5px)
-    );
   }
 
   .logo-avatar {
@@ -360,42 +188,8 @@
     display: block;
   }
 
-  .mobile-sheet {
-    border-radius: 0 0 var(--radius) var(--radius);
-    padding-top: calc(1.2em + var(--radius));
-    background: var(--bg);
-    color: var(--ink);
-  }
-
   .mobile-sheet[data-open='true'] {
     display: flex;
-  }
-
-  /* Notch fillets extend --radius below the notch and sit above the sheet
-     (they're inside .header-inner, z-index 5; the sheet is z-index 4).
-     padding-top makes room for them so they don't overlap menu items.
-
-     While the menu is open, the notch becomes the top of the same card as the
-     sheet below it rather than a separate light-coloured bar sitting on top
-     of it — same surface, same colour, one continuous shape.
-
-     Bleeds past .header-inner via a negative margin rather than zeroing
-     .header-inner's own padding: the padding is what keeps the logo and the
-     Menu/Close button aligned with the rest of the page, and changing it
-     directly resized that row every time the menu opened. Compensating with
-     equal and opposite padding keeps the logo/button exactly where they were
-      — only the background stretches out to the edges. */
-  .site-header[data-menu-open='true'] .notch {
-    background: var(--bg);
-    color: var(--ink);
-  }
-
-  .site-header[data-menu-open='true'] .menu-toggle {
-    color: var(--ink);
-  }
-
-  .mobile-theme-toggle {
-    color: var(--ink);
   }
 
   .site-header[data-menu-open='true'] .mobile-sheet {

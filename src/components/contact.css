@@ -1,5 +1,6 @@
 .contact-section {
   padding-top: clamp(3rem, 6vw, 5rem);
+  padding-bottom: 50px;
 }
 
 .contact-card {
@@ -7,25 +8,19 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 640px;
-  padding: clamp(1.6rem, 5vw, 5rem);
+  height: 292px;
+  padding: clamp(1.6rem, 5vw, 30px);
   border-radius: var(--radius);
   overflow: hidden;
-  /* Matches the hero card: --hero-blue is a fixed dark surface regardless of
-     site theme, so the copy colour has to be fixed too — var(--ink) flips
-     with the theme and goes dark-on-dark in light mode. */
+  /* Inverts with the theme, so the copy colour is fixed per-theme too —
+     var(--ink) itself would go dark-on-dark in light mode. */
   color: var(--accent-ink);
-  background: var(--hero-blue);
+  background: #0a0a0b;
 }
 
-/* Sits behind the copy, same as the hero card — --hero-blue on .contact-card
-   stays as the fallback for the first frame and for no-WebGL. */
-.contact-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+:root[data-theme='dark'] .contact-card {
+  background: #f9f8f6;
+  color: #0a0a0b;
 }
 
 .contact-body {
@@ -39,54 +34,61 @@
 }
 
 .contact-title {
-  font-size: var(--fs-xl);
-  font-weight: 300;
-  line-height: 1.05;
+  /* Scoped to this heading — 60px is smaller than the shared --fs-hero
+     ceiling used by the actual page h1, so it can't reuse that variable. */
+  font-size: clamp(2rem, 1.4rem + 3vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  max-width: 698px;
+}
+
+.contact-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  font-family: var(--font);
+  font-size: var(--fs-company);
+  font-weight: 500;
+  line-height: 1.25rem;
   letter-spacing: -0.02em;
 }
 
-.contact-title strong {
-  font-weight: 700;
+.contact-links a {
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s var(--ease);
 }
 
-.contact-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-  align-self: flex-end;
-  text-align: center;
-}
-
-.contact-mail {
-  font-size: var(--fs-sm);
-  font-weight: 300;
-  opacity: 0.85;
-}
-
-.contact-mail a {
-  font-weight: 500;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.3s var(--ease);
-}
-
-.contact-mail a:hover {
+.contact-links a:hover {
   border-color: currentColor;
 }
 
-@media (max-width: 860px) {
-  .contact-card {
-    min-height: 0;
-  }
+.contact-copy {
+  font-family: var(--font);
+  font-size: var(--fs-company);
+  font-weight: 500;
+  line-height: 1.25rem;
+  letter-spacing: -0.02em;
+}
 
+@media (max-width: 860px) {
   .contact-body {
     align-items: center;
     text-align: center;
   }
 
-  .contact-actions {
-    align-self: center;
+  .contact-footer {
+    flex-direction: column;
     align-items: center;
-    text-align: center;
   }
 }
