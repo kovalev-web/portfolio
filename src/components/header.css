@@ -49,18 +49,10 @@
 .nav-pill {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 32px;
   flex-shrink: 0;
   height: 60px;
-  padding: 21px 25px;
-  border-radius: 18px;
-  background: #000000;
-  color: #f9f8f6;
-}
-
-:root[data-theme='dark'] .nav-pill {
-  background: #f9f8f6;
-  color: #14171f;
+  color: var(--ink);
 }
 
 .nav-pill a {
@@ -71,32 +63,38 @@
   transition: opacity 0.2s var(--ease);
 }
 
-/* The pill's own background flips with the theme, so its theme toggle needs
-   fixed colours too — var(--ink-soft)/var(--line) would be near-invisible
-   here. Scoped to the pill: the same ThemeToggle in the footer sits on the
-   page's own (theme-driven) background and keeps the default. */
+.nav-pill a:hover {
+  opacity: 0.6;
+}
+
+/* Standalone squircle — black on the light page, flips to white once the
+   site is in dark mode, rather than a pill that just recolours in place. */
 .nav-pill .theme-toggle {
+  width: 60px;
+  height: 60px;
   border: none;
-  width: 18px;
-  height: 18px;
+  border-radius: 18px;
+  background: #000000;
   color: #f9f8f6;
+  transition: transform 0.3s var(--ease), background-color 0.3s var(--ease),
+    color 0.3s var(--ease);
 }
 
 .nav-pill .theme-toggle:hover {
+  transform: rotate(45deg);
   color: #f9f8f6;
   border-color: transparent;
+  background: #000000;
 }
 
 :root[data-theme='dark'] .nav-pill .theme-toggle {
+  background: #f9f8f6;
   color: #14171f;
 }
 
 :root[data-theme='dark'] .nav-pill .theme-toggle:hover {
   color: #14171f;
-}
-
-.nav-pill a:hover {
-  opacity: 0.6;
+  background: #f9f8f6;
 }
 
 /* ---------- Mobile ---------- */

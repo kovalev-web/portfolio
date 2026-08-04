@@ -52,8 +52,8 @@ export default function Work() {
               }}
             >
               <span className="work-text">
-                <span className="work-kicker">{p.kicker}</span>
                 <span className="work-title">{p.title}</span>
+                <span className="work-kicker">{p.kicker}</span>
               </span>
               <span className="work-arrow" aria-hidden="true">
                 <ArrowRight size={18} strokeWidth={1.75} />

@@ -56,9 +56,9 @@
 
 /* These shots are dark UI, which disappears into the dark page background
    with no border to mark the edge — same reasoning as the fixlist case.
-   Plain var(--line), same as every other border on the site. */
+   Lighter than var(--line) so the edge stays subtle against the dark shots. */
 :root[data-theme='dark'] .ai-shot {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(249, 248, 246, 0.04);
 }
 
 @media (max-width: 860px) {
