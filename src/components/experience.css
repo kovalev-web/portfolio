@@ -132,6 +132,14 @@
   color: var(--ink-soft);
 }
 
+/* One step down the ramp in the dark theme, for the reason spelled out over
+   the matching `.hero-title` rule in hero.css: light ink on a dark ground
+   optically gains weight. The company name above keeps its 500 — the point is
+   the contrast between the two lines, and thinning both would flatten it. */
+:root[data-theme='dark'] .exp-role {
+  font-weight: 400;
+}
+
 .exp-period {
   flex-shrink: 0;
   font-family: var(--font);

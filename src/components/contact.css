@@ -87,6 +87,14 @@
   letter-spacing: -0.02em;
 }
 
+/* Dark-theme step down, as on `.hero-title` and the two list rows. Both halves
+   of the card's bottom line move together — the links and the copyright are
+   one visual row, and thinning only one would split it in two. */
+:root[data-theme='dark'] .contact-links,
+:root[data-theme='dark'] .contact-copy {
+  font-weight: 400;
+}
+
 @media (max-width: 860px) {
   /* Fixed height was sized for the desktop one-line layout — content stacks
      taller than that once the links go one-per-line below. */

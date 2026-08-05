@@ -82,6 +82,13 @@
   transition: color 0.35s var(--ease);
 }
 
+/* Same dark-theme step down as `.exp-role` and `.hero-title` — these tags sit
+   under the project title exactly as the role sits under the company, and the
+   two lists are meant to read at the same weight. */
+:root[data-theme='dark'] .work-kicker {
+  font-weight: 400;
+}
+
 @media (hover: hover) {
   .work-row:hover .work-kicker {
     color: var(--ink);
