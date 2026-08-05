@@ -16,10 +16,29 @@
  */
 const KEY = 'phc_ouJze8EtH2Dkt4PMzDSaKm7mVb7A5v5Hy3DD93T2g4bE';
 
+/**
+ * My own visits. Loading any page with `?noph=1` sets this flag; `?noph=0`
+ * clears it. It has to be a client-side switch: the `phc_` key is public and
+ * shared with every visitor, so there is nothing to exclude on server, and
+ * PostHog's "internal and test users" setting only hides rows in the UI —
+ * events and replays are still ingested.
+ *
+ * localStorage, so it survives across visits, but it is per browser profile
+ * and per device: set it once on each, and again after clearing site data.
+ */
+const OPT_OUT = 'ph_opt_out';
+
 export function initAnalytics() {
   // `npm run dev` and `vite preview` would otherwise post real events, and the
   // /ingest proxy is a Vercel rewrite that does not exist locally either.
   if (window.location.hostname === 'localhost') return;
+
+  const noph = new URLSearchParams(window.location.search).get('noph');
+  if (noph === '1') localStorage.setItem(OPT_OUT, '1');
+  if (noph === '0') localStorage.removeItem(OPT_OUT);
+  // Checked before the import below, so an opted-out browser does not even
+  // download the tracker.
+  if (localStorage.getItem(OPT_OUT)) return;
 
   // Deferred and dynamically imported: the tracker is ~60 kB gzipped and
   // nothing on screen waits for it, so it stays out of the entry chunk and
